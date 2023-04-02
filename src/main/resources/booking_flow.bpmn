@@ -18,11 +18,11 @@
         <bpmn:incoming>Flow_00d45ai</bpmn:incoming>
         <bpmn:outgoing>Flow_010u7i8</bpmn:outgoing>
       </bpmn:userTask>
-      <bpmn:serviceTask id="Activity_1ub1ha4" name="Send Invalid map location" camunda:class="com.example.workflow.camunda.service.booking.DestinationLocation">
+      <bpmn:serviceTask id="Activity_1ub1ha4" name="Send Invalid map location" camunda:class="com.example.workflow.camunda.service.booking.InvalidMessage">
         <bpmn:incoming>Flow_1v0obqi</bpmn:incoming>
         <bpmn:outgoing>Flow_0mjohxt</bpmn:outgoing>
       </bpmn:serviceTask>
-      <bpmn:serviceTask id="Activity_0nyght1" name="Request pickup location" camunda:class="com.example.workflow.camunda.service.booking.DestinationLocation">
+      <bpmn:serviceTask id="Activity_0nyght1" name="Request pickup location" camunda:class="com.example.workflow.camunda.service.booking.PickupLocation">
         <bpmn:incoming>Flow_010u7i8</bpmn:incoming>
         <bpmn:incoming>Flow_0e153eo</bpmn:incoming>
         <bpmn:outgoing>Flow_1ovid2i</bpmn:outgoing>
@@ -31,15 +31,15 @@
         <bpmn:incoming>Flow_1ovid2i</bpmn:incoming>
         <bpmn:outgoing>Flow_07drqtv</bpmn:outgoing>
       </bpmn:userTask>
-      <bpmn:serviceTask id="Activity_06b3z30" name="Send Invalid map location" camunda:class="com.example.workflow.camunda.service.booking.DestinationLocation">
+      <bpmn:serviceTask id="Activity_06b3z30" name="Send Invalid map location" camunda:class="com.example.workflow.camunda.service.booking.InvalidMessage">
         <bpmn:incoming>Flow_0qcbl60</bpmn:incoming>
         <bpmn:outgoing>Flow_0e153eo</bpmn:outgoing>
       </bpmn:serviceTask>
-      <bpmn:serviceTask id="Activity_1v5ix7a" name="Calculate fare details for selected route" camunda:class="com.example.workflow.camunda.service.booking.DestinationLocation">
+      <bpmn:serviceTask id="Activity_1v5ix7a" name="Calculate fare details for selected route" camunda:class="src/main/java/com/example/workflow/camunda/service/booking/CalculateFare.java">
         <bpmn:incoming>Flow_07drqtv</bpmn:incoming>
         <bpmn:outgoing>Flow_15aykjq</bpmn:outgoing>
       </bpmn:serviceTask>
-      <bpmn:serviceTask id="Activity_1p0dboh" name="Request booking type" camunda:class="com.example.workflow.camunda.service.booking.DestinationLocation">
+      <bpmn:serviceTask id="Activity_1p0dboh" name="Request booking type" camunda:class="com.example.workflow.camunda.service.booking.BookingType">
         <bpmn:incoming>Flow_15aykjq</bpmn:incoming>
         <bpmn:outgoing>Flow_16s7vwm</bpmn:outgoing>
       </bpmn:serviceTask>
@@ -54,22 +54,22 @@
         <bpmn:outgoing>Flow_03cgzig</bpmn:outgoing>
         <bpmn:outgoing>Flow_1lmowla</bpmn:outgoing>
       </bpmn:exclusiveGateway>
-      <bpmn:serviceTask id="Activity_0gbj2bq" name="Fetch nearby rides without bid" camunda:class="com.example.workflow.camunda.service.booking.DestinationLocation">
+      <bpmn:serviceTask id="Activity_0gbj2bq" name="Fetch nearby rides without bid" camunda:class="com.example.workflow.camunda.service.booking.AutoRideSearch">
         <bpmn:incoming>Flow_18vvjnm</bpmn:incoming>
         <bpmn:incoming>Flow_1oakly3</bpmn:incoming>
         <bpmn:outgoing>Flow_15sfk17</bpmn:outgoing>
       </bpmn:serviceTask>
-      <bpmn:serviceTask id="Activity_02vd4lf" name="Assign the ride" camunda:class="com.example.workflow.camunda.service.booking.DestinationLocation">
+      <bpmn:serviceTask id="Activity_02vd4lf" name="Assign the ride" camunda:class="com.example.workflow.camunda.service.booking.RideAssignment">
         <bpmn:incoming>Flow_15sfk17</bpmn:incoming>
         <bpmn:incoming>Flow_0mur090</bpmn:incoming>
         <bpmn:incoming>Flow_0rynzpk</bpmn:incoming>
         <bpmn:outgoing>Flow_1v3ept5</bpmn:outgoing>
       </bpmn:serviceTask>
-      <bpmn:serviceTask id="Activity_1kup6x6" name="Fetch nearby rides with bid" camunda:class="com.example.workflow.camunda.service.booking.DestinationLocation">
+      <bpmn:serviceTask id="Activity_1kup6x6" name="Fetch nearby rides with bid" camunda:class="com.example.workflow.camunda.service.booking.ManualRideSearch">
         <bpmn:incoming>Flow_03cgzig</bpmn:incoming>
         <bpmn:outgoing>Flow_1ddhanm</bpmn:outgoing>
       </bpmn:serviceTask>
-      <bpmn:serviceTask id="Activity_1kufz2j" name="Request to choose the ride" camunda:class="com.example.workflow.camunda.service.booking.DestinationLocation">
+      <bpmn:serviceTask id="Activity_1kufz2j" name="Request to choose the ride" camunda:class="com.example.workflow.camunda.service.booking.ManualRideSelection">
         <bpmn:incoming>Flow_1ddhanm</bpmn:incoming>
         <bpmn:outgoing>Flow_0r12gzb</bpmn:outgoing>
       </bpmn:serviceTask>
@@ -85,7 +85,7 @@
         <bpmn:outgoing>Flow_1e7wcwx</bpmn:outgoing>
         <bpmn:linkEventDefinition id="LinkEventDefinition_1era5at" name="Manual_Ride_Not_Found" />
       </bpmn:intermediateCatchEvent>
-      <bpmn:serviceTask id="Activity_1e10fmr" name="Retrying the ride search" camunda:class="com.example.workflow.camunda.service.booking.DestinationLocation">
+      <bpmn:serviceTask id="Activity_1e10fmr" name="Retrying the ride search" camunda:class="com.example.workflow.camunda.service.booking.RetryRideSearch">
         <bpmn:incoming>Flow_1e7wcwx</bpmn:incoming>
         <bpmn:incoming>Flow_1125gkx</bpmn:incoming>
         <bpmn:outgoing>Flow_1oakly3</bpmn:outgoing>
@@ -134,15 +134,15 @@
         <bpmn:incoming>Flow_1lw9x5y</bpmn:incoming>
         <bpmn:signalEventDefinition id="SignalEventDefinition_011t2jt" signalRef="Signal_3pb3n4j" />
       </bpmn:intermediateThrowEvent>
-      <bpmn:serviceTask id="Activity_1am18zs" name="Closing  conversation for no response" camunda:class="com.example.workflow.camunda.service.booking.DestinationLocation">
+      <bpmn:serviceTask id="Activity_1am18zs" name="Closing  conversation for no response" camunda:class="com.example.workflow.camunda.service.booking.NoResponseClose">
         <bpmn:incoming>Flow_1tlftgo</bpmn:incoming>
         <bpmn:outgoing>Flow_0d4g76q</bpmn:outgoing>
       </bpmn:serviceTask>
-      <bpmn:serviceTask id="Activity_0celfcj" name="Closing conversation for no response" camunda:class="com.example.workflow.camunda.service.booking.DestinationLocation">
+      <bpmn:serviceTask id="Activity_0celfcj" name="Closing conversation for no response" camunda:class="com.example.workflow.camunda.service.booking.NoResponseClose">
         <bpmn:incoming>Flow_0pou8ew</bpmn:incoming>
         <bpmn:outgoing>Flow_0v8esmm</bpmn:outgoing>
       </bpmn:serviceTask>
-      <bpmn:serviceTask id="Activity_0b08dpz" name="Closing conversation for no response" camunda:class="com.example.workflow.camunda.service.booking.DestinationLocation">
+      <bpmn:serviceTask id="Activity_0b08dpz" name="Closing conversation for no response" camunda:class="com.example.workflow.camunda.service.booking.NoResponseClose">
         <bpmn:incoming>Flow_0hs6tph</bpmn:incoming>
         <bpmn:outgoing>Flow_1lw9x5y</bpmn:outgoing>
       </bpmn:serviceTask>
@@ -262,11 +262,11 @@
         <bpmn:endEvent id="Event_0gb1zdn">
           <bpmn:incoming>Flow_0q2goiz</bpmn:incoming>
         </bpmn:endEvent>
-        <bpmn:serviceTask id="Activity_10hmp4v" name="Cancel the ride booking" camunda:class="com.example.workflow.camunda.service.booking.DestinationLocation">
+        <bpmn:serviceTask id="Activity_10hmp4v" name="Cancel the ride booking" camunda:class="com.example.workflow.camunda.service.booking.CancelBooking">
           <bpmn:incoming>Flow_0g2o97r</bpmn:incoming>
           <bpmn:outgoing>Flow_1ydy1j7</bpmn:outgoing>
         </bpmn:serviceTask>
-        <bpmn:serviceTask id="Activity_17xmo7e" name="Send ride request cancelled" camunda:class="com.example.workflow.camunda.service.booking.DestinationLocation">
+        <bpmn:serviceTask id="Activity_17xmo7e" name="Send ride request cancelled" camunda:class="com.example.workflow.camunda.service.booking.RideCancelled">
           <bpmn:incoming>Flow_1ydy1j7</bpmn:incoming>
           <bpmn:outgoing>Flow_0q2goiz</bpmn:outgoing>
         </bpmn:serviceTask>
@@ -482,7 +482,7 @@
     <bpmn:endEvent id="Event_0z205ox">
       <bpmn:incoming>Flow_1js28t0</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:serviceTask id="Activity_1q96mvq" name="Handle Error" camunda:class="com.example.workflow.camunda.service.booking.DestinationLocation">
+    <bpmn:serviceTask id="Activity_1q96mvq" name="Handle Error" camunda:class="com.example.workflow.camunda.service.booking.ErrorHandler">
       <bpmn:incoming>Flow_06ygmk9</bpmn:incoming>
       <bpmn:outgoing>Flow_1js28t0</bpmn:outgoing>
     </bpmn:serviceTask>
