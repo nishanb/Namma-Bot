@@ -1,0 +1,304 @@
+{
+  "uuid": "94baddcc-c645-4777-90b5-a7220151668f",
+  "lastMigration": 27,
+  "name": "Namma Yathri",
+  "endpointPrefix": "api/v1",
+  "latency": 0,
+  "port": 3001,
+  "hostname": "",
+  "folders": [],
+  "routes": [
+    {
+      "uuid": "dc814f37-4807-4b36-9b38-d2a80ee9d19c",
+      "type": "crud",
+      "documentation": "CRUD operations on users starred places",
+      "method": "",
+      "endpoint": "starred-places",
+      "responses": [
+        {
+          "uuid": "4ca1b36e-6a18-49f4-b2d7-ee7595e9dd55",
+          "body": "{}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "DATABUCKET",
+          "filePath": "",
+          "databucketID": "5gxr",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true
+        }
+      ],
+      "enabled": true,
+      "responseMode": null
+    },
+    {
+      "uuid": "a3399b66-aa37-455a-8332-97ae012337f3",
+      "type": "http",
+      "documentation": "Get price , distance and time estimatation based on users shared lat and long ",
+      "method": "post",
+      "endpoint": "ride-estimate",
+      "responses": [
+        {
+          "uuid": "a7504eb8-6a74-46f6-b010-1b7b8707739a",
+          "body": "{\n  \"data\": {\n    \"distance\": \"{{int 3 15}}\",\n    \"time\": \"{{int 10 120}}\",\n    \"price_est_low\": \"{{int 20 60}}\",\n    \"price_est_high\": \"{{int 70 200}}\",\n    \"currency\": \"RS\"\n  },\n  \"success\": \"true\"\n}\n",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true
+        },
+        {
+          "uuid": "9f33c898-8cff-4bbb-87f7-4c2ab12c0bab",
+          "body": "{\n  \"message\" : \"ride is not allowed between intercities\"\n  \"success\": \"false\"\n}\n",
+          "latency": 0,
+          "statusCode": 400,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "body",
+              "modifier": "",
+              "value": "",
+              "invert": false,
+              "operator": "equals"
+            }
+          ],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false
+        }
+      ],
+      "enabled": true,
+      "responseMode": null
+    },
+    {
+      "uuid": "58521875-7f57-41d4-8d35-4a59306bb1b3",
+      "type": "http",
+      "documentation": "Search nearby autos ",
+      "method": "post",
+      "endpoint": "nearby-pickups",
+      "responses": [
+        {
+          "uuid": "e07c6777-b872-4bae-816c-841ec785b004",
+          "body": "{\"data\": \n  {\n    \"ride_id\": \"{{faker 'datatype.uuid'}}\",\n    \"rides\" : [\n    {{#repeat 3 }}\n    {\n      \"driver_id\": \"{{faker 'datatype.uuid'}}\",\n      \"driver_name\": \"{{ oneOf (array 'Raju' 'Ram' 'Vinod' 'Mahi' 'Sumit') }}\",\n      \"vehicle_number\": \"KA-{{int 40 51}}-{{oneOf (array 'GJ' 'KC' 'JJ' 'HJ' 'HH')}}-{{int 10 50}}{{int 30 80}}\",\n      \"driver_rating\" : \"{{float 1 5}}\",\n      \"ride_fare\": \"{{int 25 250}}\",\n      \"distance_from_pickup_location\" : \"{{int 1 4}}\",\n      \"eta_to_pickup_location\" : \"{{int 8 15}}\"\n    }\n    {{/repeat}}\n  ]\n  },\n  \"success\": \"true\"\n}\n\n",
+          "latency": 5,
+          "statusCode": 200,
+          "label": "Bidders nearby",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "query",
+              "modifier": "choose",
+              "value": "manual",
+              "invert": false,
+              "operator": "equals"
+            }
+          ],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true
+        },
+        {
+          "uuid": "77a3ee8f-dd06-46d2-a3d9-95657f752bf8",
+          "body": "{\n    \"data\": {\n        \"ride_id\": \"{{faker 'datatype.uuid'}}\",\n        \"ride\": {\n            \"driver_id\": \"{{faker 'datatype.uuid'}}\",\n            \"driver_name\": \"{{ oneOf (array 'Raju' 'Ram' 'Vinod' 'Mahi' 'Sumit') }}\",\n            \"vehicle_number\": \"KA-{{int 10 50}}-{{oneOf (array 'GJ' 'KC' 'JJ' 'HJ' 'HH')}}-{{int 10 50}}{{int 10 50}}\",\n            \"driver_rating\": \"{{float 1 5}}\",\n            \"ride_fare\": \"{{int 25 250}}\",\n            \"distance_from_pickup_location\": \"{{int 1 4}}\",\n            \"eta_to_pickup_location\": \"{{int 8 15}}\"\n        }\n    },\n    \"success\": \"true\"\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "Bid Auto",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "query",
+              "modifier": "choose",
+              "value": "auto",
+              "invert": false,
+              "operator": "equals"
+            }
+          ],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false
+        }
+      ],
+      "enabled": true,
+      "responseMode": null
+    },
+    {
+      "uuid": "fc2b5dfb-296f-422f-abb9-6177000da501",
+      "type": "http",
+      "documentation": "Book ride ( details coming from manual / auto pickup )",
+      "method": "post",
+      "endpoint": "book-ride",
+      "responses": [
+        {
+          "uuid": "3a3fcb70-3011-4440-a013-6bfd97d884b4",
+          "body": "{\n    \"data\": {\n        \"otp\" : \"{{int 1000 9999}}\",\n        \"distance_from_pickup_location\": \"{{int 1 4}}\",\n        \"eta_to_pickup_location\": \"{{int 8 15}}\",\n        \"driver_phone\" : \"+91-{{int 80 90 }}{{int 10 99}}{{int 10 99}}{{int 10 99}}{{int 10 99}}\"\n    },\n    \"success\": \"true\",\n    \"message\" : \"Ride booked successfully\"\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "Successfull booking ",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true
+        }
+      ],
+      "enabled": true,
+      "responseMode": null
+    },
+    {
+      "uuid": "f67b89e4-afa0-4617-9318-02443afcbe40",
+      "type": "http",
+      "documentation": "Book ride ( details coming from manual / auto pickup )",
+      "method": "post",
+      "endpoint": "cancel-ride/",
+      "responses": [
+        {
+          "uuid": "b821621f-237b-484f-a04f-bde67e883c36",
+          "body": "{\n    \"success\": \"true\",\n    \"message\" : \"Ride canceld successfully\"\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "Successfull booking ",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true
+        }
+      ],
+      "enabled": true,
+      "responseMode": null
+    },
+    {
+      "uuid": "63c2f1ee-9252-474a-a1a6-ad043c68d17e",
+      "type": "http",
+      "documentation": "Book ride ( details coming from manual / auto pickup )",
+      "method": "post",
+      "endpoint": "rate-ride/",
+      "responses": [
+        {
+          "uuid": "9a49244f-4cf2-488e-b11d-7b7d156a6d42",
+          "body": "{\n    \"success\": \"true\",\n    \"message\" : \"Ride rated successfully\"\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "Successfull booking ",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true
+        }
+      ],
+      "enabled": true,
+      "responseMode": null
+    }
+  ],
+  "rootChildren": [
+    {
+      "type": "route",
+      "uuid": "dc814f37-4807-4b36-9b38-d2a80ee9d19c"
+    },
+    {
+      "type": "route",
+      "uuid": "a3399b66-aa37-455a-8332-97ae012337f3"
+    },
+    {
+      "type": "route",
+      "uuid": "58521875-7f57-41d4-8d35-4a59306bb1b3"
+    },
+    {
+      "type": "route",
+      "uuid": "fc2b5dfb-296f-422f-abb9-6177000da501"
+    },
+    {
+      "type": "route",
+      "uuid": "f67b89e4-afa0-4617-9318-02443afcbe40"
+    },
+    {
+      "type": "route",
+      "uuid": "63c2f1ee-9252-474a-a1a6-ad043c68d17e"
+    }
+  ],
+  "proxyMode": false,
+  "proxyHost": "",
+  "proxyRemovePrefix": false,
+  "tlsOptions": {
+    "enabled": false,
+    "type": "CERT",
+    "pfxPath": "",
+    "certPath": "",
+    "keyPath": "",
+    "caPath": "",
+    "passphrase": ""
+  },
+  "cors": true,
+  "headers": [
+    {
+      "key": "Content-Type",
+      "value": "application/json"
+    }
+  ],
+  "proxyReqHeaders": [
+    {
+      "key": "",
+      "value": ""
+    }
+  ],
+  "proxyResHeaders": [
+    {
+      "key": "",
+      "value": ""
+    }
+  ],
+  "data": [
+    {
+      "uuid": "032cf9c6-686f-4c76-b10d-add5e339f2a1",
+      "id": "5gxr",
+      "name": "Places",
+      "documentation": "",
+      "value": "\n  [\n    {\n          \"id\": \"{{faker 'datatype.uuid'}}\",\n          \"latitude\": \"{{faker 'address.latitude'}}\",\n          \"longitude\": \"{{faker 'address.longitude'}}\",\n          \"name\": \"Home\"\n    },\n    {\n          \"id\": \"{{faker 'datatype.uuid'}}\",\n          \"latitude\": \"{{faker 'address.latitude'}}\",\n          \"longitude\": \"{{faker 'address.longitude'}}\",\n          \"name\": \"Work - Bellandur\"\n    }\n  ]\n\n"
+    }
+  ]
+}
