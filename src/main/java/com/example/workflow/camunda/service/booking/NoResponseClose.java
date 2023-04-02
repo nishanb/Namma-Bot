@@ -17,7 +17,6 @@ public class NoResponseClose implements JavaDelegate {
             log.info("NoResponseClose: execute method is called......");
             //set relevant variables for future ref
             execution.setVariable("NoResponseClose", true);
-            throw new BpmnError("booking_flow_error","Error sending message.....");
         } catch (Exception e){
             log.warning("NoResponseClose: Exception occured......");
             throw new BpmnError("booking_flow_error","Error sending message.....");

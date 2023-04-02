@@ -17,7 +17,6 @@ public class RideCancelled implements JavaDelegate {
             log.info("RideCancelled: execute method is called......");
             //set relevant variables for future ref
             execution.setVariable("RideCancelled", true);
-            throw new BpmnError("booking_flow_error","Error sending message.....");
         } catch (Exception e){
             log.warning("RideCancelled: Exception occured......");
             throw new BpmnError("booking_flow_error","Error sending message.....");

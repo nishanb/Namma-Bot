@@ -17,7 +17,6 @@ public class BookingType implements JavaDelegate {
             log.info("BookingType: execute method is called......");
             //set relevant variables for future ref
             execution.setVariable("BookingType", true);
-            throw new BpmnError("booking_flow_error","Error sending message.....");
         } catch (Exception e){
             log.warning("BookingType: Exception occured......");
             throw new BpmnError("booking_flow_error","Error sending message.....");

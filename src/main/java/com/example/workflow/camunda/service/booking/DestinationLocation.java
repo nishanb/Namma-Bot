@@ -17,7 +17,6 @@ public class DestinationLocation implements JavaDelegate {
             log.info("DestinationLocation: execute method is called......");
             //set relevant variables for future ref
             execution.setVariable("DestinationLocation", true);
-            throw new BpmnError("booking_flow_error","Error sending message.....");
         } catch (Exception e){
             log.warning("DestinationLocation: Exception occured......");
             throw new BpmnError("booking_flow_error","Error sending message.....");

@@ -17,7 +17,6 @@ public class PickupLocation implements JavaDelegate {
             log.info("PickupLocation: execute method is called......");
             //set relevant variables for future ref
             execution.setVariable("PickupLocation", true);
-            throw new BpmnError("booking_flow_error","Error sending message.....");
         } catch (Exception e){
             log.warning("PickupLocation: Exception occured......");
             throw new BpmnError("booking_flow_error","Error sending message.....");

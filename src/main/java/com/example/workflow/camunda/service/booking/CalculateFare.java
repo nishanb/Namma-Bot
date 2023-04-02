@@ -17,7 +17,6 @@ public class CalculateFare implements JavaDelegate {
             log.info("CalculateFare: execute method is called......");
             //set relevant variables for future ref
             execution.setVariable("CalculateFare", true);
-            throw new BpmnError("booking_flow_error","Error sending message.....");
         } catch (Exception e){
             log.warning("CalculateFare: Exception occured......");
             throw new BpmnError("booking_flow_error","Error sending message.....");
