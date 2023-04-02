@@ -298,7 +298,7 @@
       "id": "5gxr",
       "name": "Places",
       "documentation": "",
-      "value": "\n  [\n    {\n          \"id\": \"{{faker 'datatype.uuid'}}\",\n          \"latitude\": \"{{faker 'address.latitude'}}\",\n          \"longitude\": \"{{faker 'address.longitude'}}\",\n          \"name\": \"Home\"\n    },\n    {\n          \"id\": \"{{faker 'datatype.uuid'}}\",\n          \"latitude\": \"{{faker 'address.latitude'}}\",\n          \"longitude\": \"{{faker 'address.longitude'}}\",\n          \"name\": \"Work - Bellandur\"\n    }\n  ]\n\n"
+      "value": "  [\n    {\n          \"id\": \"{{faker 'datatype.uuid'}}\",\n          \"latitude\": \"2.9137065\",\n          \"longitude\": \"77.6692418\",\n          \"name\": \"Home\"\n    },\n    {\n          \"id\": \"{{faker 'datatype.uuid'}}\",\n          \"latitude\": \"12.9185295\",\n          \"longitude\": \"77.6512542\",\n          \"name\": \"Work\"\n    }\n  ]\n"
     }
   ]
 }
