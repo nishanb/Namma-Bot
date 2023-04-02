@@ -13,4 +13,5 @@ to perform from chat-bot side
 ### Additional links
 https://mockoon.com/docs/latest/about/
 
-
+### Deploy to fly.io
+`fly launch` which builds the docker image and deploys the server 
