@@ -407,7 +407,7 @@
       <bpmn:sequenceFlow id="Flow_0cpveqo" sourceRef="Event_0fb86y0" targetRef="Event_154nctz" />
       <bpmn:endEvent id="Event_154nctz">
         <bpmn:incoming>Flow_0cpveqo</bpmn:incoming>
-        <bpmn:errorEventDefinition id="ErrorEventDefinition_155phoe" />
+        <bpmn:errorEventDefinition id="ErrorEventDefinition_155phoe" errorRef="Error_17oa7ve" />
       </bpmn:endEvent>
       <bpmn:boundaryEvent id="Event_0fb86y0" attachedToRef="Activity_06b3z30">
         <bpmn:outgoing>Flow_0cpveqo</bpmn:outgoing>

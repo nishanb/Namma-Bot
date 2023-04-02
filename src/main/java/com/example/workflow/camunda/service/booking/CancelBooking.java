@@ -17,7 +17,6 @@ public class CancelBooking implements JavaDelegate {
             log.info("CancelBooking: execute method is called......");
             //set relevant variables for future ref
             execution.setVariable("CancelBooking", true);
-            throw new BpmnError("booking_flow_error","Error sending message.....");
         } catch (Exception e){
             log.warning("CancelBooking: Exception occured......");
             throw new BpmnError("booking_flow_error","Error sending message.....");

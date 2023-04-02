@@ -17,7 +17,6 @@ public class ManualRideSearch implements JavaDelegate {
             log.info("ManualRideSearch: execute method is called......");
             //set relevant variables for future ref
             execution.setVariable("ManualRideSearch", true);
-            throw new BpmnError("booking_flow_error","Error sending message.....");
         } catch (Exception e){
             log.warning("ManualRideSearch: Exception occured......");
             throw new BpmnError("booking_flow_error","Error sending message.....");

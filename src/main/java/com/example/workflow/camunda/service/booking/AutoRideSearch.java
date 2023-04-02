@@ -17,7 +17,6 @@ public class AutoRideSearch implements JavaDelegate {
             log.info("AutoRideSearch: execute method is called......");
             //set relevant variables for future ref
             execution.setVariable("AutoRideSearch", true);
-            throw new BpmnError("booking_flow_error","Error sending message.....");
         } catch (Exception e){
             log.warning("AutoRideSearch: Exception occured......");
             throw new BpmnError("booking_flow_error","Error sending message.....");

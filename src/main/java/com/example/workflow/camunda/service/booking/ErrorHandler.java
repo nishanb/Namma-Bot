@@ -17,7 +17,6 @@ public class ErrorHandler implements JavaDelegate {
             log.info("ErrorHandler: execute method is called......");
             //set relevant variables for future ref
             execution.setVariable("ErrorHandler", true);
-            throw new BpmnError("booking_flow_error","Error sending message.....");
         } catch (Exception e){
             log.warning("ErrorHandler: Exception occured......");
             throw new BpmnError("booking_flow_error","Error sending message.....");
