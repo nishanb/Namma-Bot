@@ -1,8 +1,7 @@
 spring.datasource.url: jdbc:h2:file:./camunda-h2-database
-
 camunda.bpm.admin-user:
-  id: cpo
-  password: givemeaccess
+  id: demo
+  password: demo
 server:
   port: 8080
 ny-backend-host: "http://localhost:3001/api/v1"
@@ -11,3 +10,11 @@ gupshup-api-key: "zy34whfcvkisweigfskw4sskyxw9o7ld"
 gupshup-app-name: "AtherSales2"
 gupshup-source-contact: "917834811114"
 cb-auth-key: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc19tYWNoaW5lIjp0cnVlLCJpYXQiOjE2NzgxMDY0ODl9.GPwlZdmg2fZm2ME22q54cNuz-PrPxMqVDhNR32A8VJk"
+ny-backend-host: "https://ny-mock-api.fly.dev/api/v1"
+spring:
+  data:
+    mongodb:
+      uri: ${DB_URI}
+      database: "cpo"
+camunda.process-definition-id:
+  booking-flow: Process_1bgrwav:4:85067cd4-d17f-11ed-a26d-921397077b9b #id of the deployed BPMN process, every change in BPMN will lead to a new ID.

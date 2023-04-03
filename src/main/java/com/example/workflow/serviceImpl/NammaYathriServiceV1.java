@@ -20,19 +20,19 @@ public class NammaYathriServiceV1 implements NammaYathriService {
     private NammaYathriApiHelper nammaYathriApiHelper;
 
     @Override
-    public JsonElement getStarredPlaces() throws IOException {
-        return nammaYathriApiHelper.get("/starred-places");
+    public JsonElement getStarredPlaces(String userPhone) throws IOException {
+        return nammaYathriApiHelper.get(String.format("/starred-places?user=%s", userPhone));
     }
 
     @Override
-    public JsonElement createStarredPlace(String latitude, String longitude, String name) throws IOException {
+    public JsonElement createStarredPlace(String latitude, String longitude, String name, String userPhone) throws IOException {
         FormBody body = new FormBody.Builder()
                 .add("latitude", latitude)
                 .add("longitude", longitude)
                 .add("name", name)
                 .build();
 
-        return nammaYathriApiHelper.post("/starred-places", body);
+        return nammaYathriApiHelper.post(String.format("/starred-places?user=%s", userPhone), body);
     }
 
     @Override

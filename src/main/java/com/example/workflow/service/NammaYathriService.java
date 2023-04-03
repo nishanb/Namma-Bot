@@ -8,9 +8,9 @@ import java.io.IOException;
 public interface NammaYathriService {
 
     //TODO: For now will return JsonElement if time permits will make model mapping and create getter and setter methods
-    public JsonElement getStarredPlaces() throws IOException;
+    public JsonElement getStarredPlaces(String userPhone) throws IOException;
 
-    public JsonElement createStarredPlace(String latitude, String longitude, String name) throws IOException;
+    public JsonElement createStarredPlace(String latitude, String longitude, String name, String userPhone) throws IOException;
 
     public JsonElement deleteStarredPlace(String placeId) throws IOException;
 
