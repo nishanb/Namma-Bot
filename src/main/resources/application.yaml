@@ -4,9 +4,15 @@ camunda.bpm.admin-user:
   password: demo
 server:
   port: 8080
+<<<<<<< Updated upstream
 ny-backend-host: "https://ny-mock-api.fly.dev/api/v1"
 spring:
   data:
     mongodb:
       uri: ${DB_URI}
       database: "cpo"
+=======
+ny-backend-host: "http://localhost:3001/api/v1"
+camunda.process-definition-id:
+  booking-flow: Process_1bgrwav:4:85067cd4-d17f-11ed-a26d-921397077b9b
+>>>>>>> Stashed changes

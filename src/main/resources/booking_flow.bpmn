@@ -13,7 +13,7 @@
         <bpmn:incoming>Flow_1a0jnhw</bpmn:incoming>
         <bpmn:outgoing>Flow_00d45ai</bpmn:outgoing>
       </bpmn:serviceTask>
-      <bpmn:userTask id="Activity_1i1kz37" name="Receive destination location">
+      <bpmn:userTask id="Activity_1i1kz37" name="Receive destination location" camunda:assignee="demo">
         <bpmn:extensionElements />
         <bpmn:incoming>Flow_00d45ai</bpmn:incoming>
         <bpmn:outgoing>Flow_010u7i8</bpmn:outgoing>
@@ -27,7 +27,7 @@
         <bpmn:incoming>Flow_0e153eo</bpmn:incoming>
         <bpmn:outgoing>Flow_1ovid2i</bpmn:outgoing>
       </bpmn:serviceTask>
-      <bpmn:userTask id="Activity_1as5mem" name="Receive pickup location">
+      <bpmn:userTask id="Activity_1as5mem" name="Receive pickup location" camunda:assignee="demo">
         <bpmn:incoming>Flow_1ovid2i</bpmn:incoming>
         <bpmn:outgoing>Flow_07drqtv</bpmn:outgoing>
       </bpmn:userTask>
@@ -35,7 +35,7 @@
         <bpmn:incoming>Flow_0qcbl60</bpmn:incoming>
         <bpmn:outgoing>Flow_0e153eo</bpmn:outgoing>
       </bpmn:serviceTask>
-      <bpmn:serviceTask id="Activity_1v5ix7a" name="Calculate fare details for selected route" camunda:class="src/main/java/com/example/workflow/camunda/service/booking/CalculateFare.java">
+      <bpmn:serviceTask id="Activity_1v5ix7a" name="Calculate fare details for selected route" camunda:class="com.example.workflow.camunda.service.booking.CalculateFare">
         <bpmn:incoming>Flow_07drqtv</bpmn:incoming>
         <bpmn:outgoing>Flow_15aykjq</bpmn:outgoing>
       </bpmn:serviceTask>
@@ -73,7 +73,7 @@
         <bpmn:incoming>Flow_1ddhanm</bpmn:incoming>
         <bpmn:outgoing>Flow_0r12gzb</bpmn:outgoing>
       </bpmn:serviceTask>
-      <bpmn:userTask id="Activity_11vkkh3" name="Ride confirmation">
+      <bpmn:userTask id="Activity_11vkkh3" name="Ride confirmation" camunda:assignee="demo">
         <bpmn:incoming>Flow_0r12gzb</bpmn:incoming>
         <bpmn:outgoing>Flow_0mur090</bpmn:outgoing>
       </bpmn:userTask>
@@ -126,7 +126,7 @@
         <bpmn:incoming>Flow_0v8esmm</bpmn:incoming>
         <bpmn:signalEventDefinition id="SignalEventDefinition_0z6n6n2" signalRef="Signal_3pb3n4j" />
       </bpmn:intermediateThrowEvent>
-      <bpmn:userTask id="Activity_0xs50wc" name="Receive booking type">
+      <bpmn:userTask id="Activity_0xs50wc" name="Receive booking type" camunda:assignee="demo">
         <bpmn:incoming>Flow_16s7vwm</bpmn:incoming>
         <bpmn:outgoing>Flow_0oombgd</bpmn:outgoing>
       </bpmn:userTask>
@@ -165,7 +165,7 @@
       <bpmn:boundaryEvent id="Event_0dbbd81" attachedToRef="Activity_1as5mem">
         <bpmn:outgoing>Flow_0qcbl60</bpmn:outgoing>
         <bpmn:conditionalEventDefinition id="ConditionalEventDefinition_193jf1e">
-          <bpmn:condition xsi:type="bpmn:tFormalExpression">${1==1}</bpmn:condition>
+          <bpmn:condition xsi:type="bpmn:tFormalExpression">${1==0}</bpmn:condition>
         </bpmn:conditionalEventDefinition>
       </bpmn:boundaryEvent>
       <bpmn:boundaryEvent id="Event_05e77lz" attachedToRef="Activity_1as5mem">
