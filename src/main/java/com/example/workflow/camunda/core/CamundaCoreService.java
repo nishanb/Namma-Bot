@@ -2,6 +2,7 @@ package com.example.workflow.camunda.core;
 
 import org.camunda.bpm.engine.RuntimeService;
 import org.camunda.bpm.engine.TaskService;
+import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.camunda.bpm.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,8 +22,8 @@ public class CamundaCoreService {
     @Autowired
     public TaskService taskService;
 
-    public void startProcessInstance(String processDefinitionId, String businessKey){
-        runtimeService.startProcessInstanceById(processDefinitionId, businessKey);
+    public ProcessInstance startProcessInstance(String processDefinitionId, String businessKey){
+        return runtimeService.startProcessInstanceById(processDefinitionId, businessKey);
     }
 
     public Task getTasksByBusinessKey(String businessKey, String processDefinitionId){

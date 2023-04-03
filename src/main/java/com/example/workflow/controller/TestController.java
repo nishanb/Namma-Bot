@@ -1,22 +1,12 @@
 package com.example.workflow.controller;
 
-import camundajar.impl.com.google.gson.Gson;
-import camundajar.impl.com.google.gson.JsonElement;
-import camundajar.impl.com.google.gson.JsonObject;
-import com.example.workflow.dto.*;
-import com.example.workflow.models.ListMessage;
 import com.example.workflow.service.MessageService;
 import com.example.workflow.service.MessageServiceWebhookHandler;
 import com.example.workflow.service.NammaYathriService;
-import com.example.workflow.service.UserService;
-import model.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.util.Optional;
 
 // Use this controller to test service / anything :( anything .... :()
 //TODO: Remove this before release
@@ -32,7 +22,6 @@ public class TestController {
 
     @Autowired
     MessageServiceWebhookHandler messageServiceWebhookHandler;
-    UserService userService;
 
     @GetMapping
     public void test() throws IOException {
@@ -74,77 +63,63 @@ public class TestController {
 //            userService.updateUserLanguageByPhoneNumber("7892693018", "kannada");
 
     }
-
-    @PostMapping("/message/send")
-    public ResponseEntity<Object> sendMessage(@RequestBody SendMessageRequestDto sendMessageRequestDto) throws Exception {
-        try {
-            Boolean isMessageSent = messageService.sendTextMessage(sendMessageRequestDto);
-            return WorkflowServiceResponseDto.transformResponse("Random Message posted successfully", HttpStatus.OK, isMessageSent, null);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return WorkflowServiceResponseDto.transformResponse(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR, null, null);
-        }
-
-    }
-
-    @PostMapping("/message/list/send")
-    public ResponseEntity<Object> sendListMessage(@RequestBody SendListMessageRequestDto sendListMessageRequestDto) throws Exception {
-        try {
-            Boolean isMessageSent = messageService.sendListMessage(sendListMessageRequestDto);
-            return WorkflowServiceResponseDto.transformResponse("Random Message posted successfully", HttpStatus.OK, isMessageSent, null);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return WorkflowServiceResponseDto.transformResponse(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR, null, null);
-        }
-
-    }
-
-    @PostMapping("/message/attachment/send")
-    public ResponseEntity<Object> sendMessageWithAttachment(@RequestBody SendAttachmentMessageDto sendAttachmentMessageDto) {
-        try {
-            Boolean isMessageSent = messageService.sendAttachment(sendAttachmentMessageDto);
-            return WorkflowServiceResponseDto.transformResponse("Message with attachment posted successfully", HttpStatus.OK, isMessageSent, null);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return WorkflowServiceResponseDto.transformResponse(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR, null, null);
-        }
-
-    }
-
-    @PostMapping("/message/list/generate")
-    public ResponseEntity<Object> generateListMessage(@RequestBody GenerateListMessageDto generateListMessageDto) {
-        try {
-            ListMessage listMessage = messageService.generateListMessage(generateListMessageDto.getListMessageData(), generateListMessageDto.getListData(), generateListMessageDto.getMessageId());
-            return WorkflowServiceResponseDto.transformResponse("Message with attachment posted successfully", HttpStatus.OK, listMessage, null);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return WorkflowServiceResponseDto.transformResponse(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR, null, null);
-        }
-    }
-
-    @PostMapping("/message/quick-reply/send")
-    public ResponseEntity<Object> sendQuickReplyMessage(@RequestBody SendQuickReplyMessageDto sendQuickReplyMessageDto) {
-        try {
-            Boolean isMessageSent = messageService.sendQuickReplyMessage(sendQuickReplyMessageDto);
-            return WorkflowServiceResponseDto.transformResponse("Quick reply message posted successfully", HttpStatus.OK, isMessageSent, null);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return WorkflowServiceResponseDto.transformResponse(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR, null, null);
-        }
-
-    }
-
-    @PostMapping("/message/webhook")
-    public ResponseEntity<Object> handleWebhookEvent(@RequestBody WebhookEventRequestDto webhookEventRequestDto) throws Exception {
-        try {
-            Boolean isMessageSent = messageServiceWebhookHandler.handleWebhookEvent(webhookEventRequestDto);
-
-            return WorkflowServiceResponseDto.transformResponse("Webhook event handled successfully", HttpStatus.OK, isMessageSent, null);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return WorkflowServiceResponseDto.transformResponse(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR, null, null);
-        }
-
-    }
-
+//
+//    @PostMapping("/message/send")
+//    public ResponseEntity<Object> sendMessage(@RequestBody SendMessageRequestDto sendMessageRequestDto) throws Exception {
+//        try {
+//            Boolean isMessageSent = messageService.sendTextMessage(sendMessageRequestDto);
+//            return WorkflowServiceResponseDto.transformResponse("Random Message posted successfully", HttpStatus.OK, isMessageSent, null);
+//        } catch (Exception e) {
+//            System.out.println(e.getMessage());
+//            return WorkflowServiceResponseDto.transformResponse(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR, null, null);
+//        }
+//
+//    }
+//
+//    @PostMapping("/message/list/send")
+//    public ResponseEntity<Object> sendListMessage(@RequestBody SendListMessageRequestDto sendListMessageRequestDto) throws Exception {
+//        try {
+//            Boolean isMessageSent = messageService.sendListMessage(sendListMessageRequestDto);
+//            return WorkflowServiceResponseDto.transformResponse("Random Message posted successfully", HttpStatus.OK, isMessageSent, null);
+//        } catch (Exception e) {
+//            System.out.println(e.getMessage());
+//            return WorkflowServiceResponseDto.transformResponse(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR, null, null);
+//        }
+//
+//    }
+//
+//    @PostMapping("/message/attachment/send")
+//    public ResponseEntity<Object> sendMessageWithAttachment(@RequestBody SendAttachmentMessageDto sendAttachmentMessageDto) {
+//        try {
+//            Boolean isMessageSent = messageService.sendAttachment(sendAttachmentMessageDto);
+//            return WorkflowServiceResponseDto.transformResponse("Message with attachment posted successfully", HttpStatus.OK, isMessageSent, null);
+//        } catch (Exception e) {
+//            System.out.println(e.getMessage());
+//            return WorkflowServiceResponseDto.transformResponse(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR, null, null);
+//        }
+//
+//    }
+//
+//    @PostMapping("/message/list/generate")
+//    public ResponseEntity<Object> generateListMessage(@RequestBody GenerateListMessageDto generateListMessageDto) {
+//        try {
+//            ListMessage listMessage = messageService.generateListMessage(generateListMessageDto.getListMessageData(), generateListMessageDto.getListData(), generateListMessageDto.getMessageId());
+//            return WorkflowServiceResponseDto.transformResponse("Message with attachment posted successfully", HttpStatus.OK, listMessage, null);
+//        } catch (Exception e) {
+//            System.out.println(e.getMessage());
+//            return WorkflowServiceResponseDto.transformResponse(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR, null, null);
+//        }
+//    }
+//
+//    @PostMapping("/message/quick-reply/send")
+//    public ResponseEntity<Object> sendQuickReplyMessage(@RequestBody SendQuickReplyMessageDto sendQuickReplyMessageDto) {
+//        try {
+//            Boolean isMessageSent = messageService.sendQuickReplyMessage(sendQuickReplyMessageDto);
+//            return WorkflowServiceResponseDto.transformResponse("Quick reply message posted successfully", HttpStatus.OK, isMessageSent, null);
+//        } catch (Exception e) {
+//            System.out.println(e.getMessage());
+//            return WorkflowServiceResponseDto.transformResponse(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR, null, null);
+//        }
+//
+//    }
 }

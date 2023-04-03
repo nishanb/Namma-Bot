@@ -18,4 +18,9 @@ public interface MessageService {
     ListMessage generateListMessage(ListMessageData messageData, List listData, String messageId) throws Exception;
 
     QuickReplyMessage generateQuickReplyMessage(MessageContent messageContent, List<QuickReplyMessage> listData, String messageId) throws Exception;
+
+    public void sendGreetingMessage(User user) throws Exception;
+
+    public void sendErrorMessage(User user) throws Exception;
+
 }

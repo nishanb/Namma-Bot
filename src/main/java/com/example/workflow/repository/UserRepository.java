@@ -1,7 +1,7 @@
 package com.example.workflow.repository;
 
 
-import model.User;
+import com.example.workflow.models.User;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 

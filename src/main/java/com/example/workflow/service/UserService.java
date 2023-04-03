@@ -1,6 +1,6 @@
 package com.example.workflow.service;
 
-import model.User;
+import com.example.workflow.models.User;
 
 import java.util.Optional;
 
