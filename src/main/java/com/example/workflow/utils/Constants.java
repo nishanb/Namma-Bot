@@ -1,9 +1,7 @@
 package com.example.workflow.utils;
 
-import camundajar.javax.activation.MimeType;
 import okhttp3.MediaType;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public class Constants {
@@ -42,5 +40,14 @@ public class Constants {
     public static final String SUBMITTED = "submitted";
 
     public static final String STATUS = "status";
+
+    public static final Map<String, String> CAMUNDA_WORKFLOW_PROCESS_NAME_MAP = Map.of(
+            "BOOK_RIDE", "Boooking_Flow",
+            "PREVIOUS_RIDE", "camunda_id_goes_here",
+            "ADD_PLACE", "camunda_id_goes_here",
+            "DELETE_PLACE", "camunda_id_goes_here",
+            "SUPPORT", "camunda_id_goes_here",
+            "OTHER", "camunda_id_goes_here"
+    );
 
 }

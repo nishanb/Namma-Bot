@@ -1,4 +1,4 @@
-package model;
+package com.example.workflow.models;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -16,6 +16,8 @@ public class User {
 
     private String phoneNumber;
 
+    private String name;
+
     @Field
     private String preferredLanguage = "en";
 
@@ -28,6 +30,14 @@ public class User {
     public User(String processInstanceId, String phoneNumber) {
         this.processInstanceId = processInstanceId;
         this.phoneNumber = phoneNumber;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getPreferredLanguage() {

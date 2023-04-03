@@ -19,10 +19,10 @@ import java.util.*;
 
 import static com.example.workflow.utils.Constants.*;
 
+// TODO : make this as factory
 @Service
-
 public class WhatsappMessageServiceImpl implements MessageService {
-    private Logger logger = LoggerFactory.getLogger(WhatsappMessageServiceImpl.class);
+    private final Logger logger = LoggerFactory.getLogger(WhatsappMessageServiceImpl.class);
 
     @Value("${gupshup-source-contact}")
     private String sourceContactNo;
@@ -64,7 +64,6 @@ public class WhatsappMessageServiceImpl implements MessageService {
             RequestBody requestBodyTransformed = prepareRequestHelper.prepareRequestBodyForXUrlEncodedType(requestString);
 
             String url = String.format("%ssm/api/v1/msg", gupShupHost);
-
 
             JsonElement response = whatsappMsgServiceApiHelper.post(url, requestBodyTransformed, requestHeaders);
             if (response != null) {
@@ -246,5 +245,17 @@ public class WhatsappMessageServiceImpl implements MessageService {
                 System.out.println(item.getClass());
             }
         }
+    }
+
+    // TODO : format message from template service
+    @Override
+    public void sendGreetingMessage(User user) throws Exception {
+        sendTextMessage(new SendMessageRequestDto(user.getPhoneNumber(), "Hello " + user.getName() + " How may i help you today !"));
+        // TODO : send text message with service offering
+    }
+
+    @Override
+    public void sendErrorMessage(User user) throws Exception {
+        sendTextMessage(new SendMessageRequestDto(user.getPhoneNumber(), "Hello " + user.getName() + " I did not understand that !"));
     }
 }

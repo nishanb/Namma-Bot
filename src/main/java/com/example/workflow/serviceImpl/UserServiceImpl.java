@@ -3,7 +3,7 @@ package com.example.workflow.serviceImpl;
 
 import com.example.workflow.repository.UserRepository;
 import com.example.workflow.service.UserService;
-import model.User;
+import com.example.workflow.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
