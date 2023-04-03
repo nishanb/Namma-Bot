@@ -6,3 +6,8 @@ camunda.bpm.admin-user:
 server:
   port: 8080
 ny-backend-host: "http://localhost:3001/api/v1"
+gupshup-host: "https://api.gupshup.io/"
+gupshup-api-key: "zy34whfcvkisweigfskw4sskyxw9o7ld"
+gupshup-app-name: "AtherSales2"
+gupshup-source-contact: "917834811114"
+cb-auth-key: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc19tYWNoaW5lIjp0cnVlLCJpYXQiOjE2NzgxMDY0ODl9.GPwlZdmg2fZm2ME22q54cNuz-PrPxMqVDhNR32A8VJk"
