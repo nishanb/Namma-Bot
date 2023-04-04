@@ -15,7 +15,7 @@ public interface MessageService {
 
     Boolean sendQuickReplyMessage(SendQuickReplyMessageDto sendQuickReplyMessageDto) throws Exception;
 
-    ListMessage generateListMessage(ListMessageData messageData, List listData, String messageId) throws Exception;
+    ListMessage generateListMessage(ListMessageDto listMessageDto) throws Exception;
 
     QuickReplyMessage generateQuickReplyMessage(MessageContent messageContent, List<Map<String, String>> listData, String messageId) throws Exception;
 
