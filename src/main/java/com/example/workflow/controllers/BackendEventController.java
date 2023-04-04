@@ -1,7 +1,7 @@
-package com.example.workflow.controller;
+package com.example.workflow.controllers;
 
 import com.example.workflow.dto.BackendEventRequestDto;
-import com.example.workflow.service.BackendEventHandler;
+import com.example.workflow.services.BackendEventHandlerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1")
 public class BackendEventController {
     @Autowired
-    private BackendEventHandler eventWebhookHandlerService;
+    private BackendEventHandlerService eventWebhookHandlerService;
 
     @PostMapping("/backend-events")
     public boolean createEvent(@RequestBody BackendEventRequestDto event) {

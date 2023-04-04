@@ -2,11 +2,11 @@ package com.example.workflow.serviceImpl;
 
 import com.example.workflow.constants.BackendEventType;
 import com.example.workflow.dto.BackendEventRequestDto;
-import com.example.workflow.service.BackendEventHandler;
+import com.example.workflow.services.BackendEventHandlerService;
 import org.springframework.stereotype.Service;
 
 @Service
-public class BackendEventHandlerImpl implements BackendEventHandler {
+public class BackendEventHandlerServiceImpl implements BackendEventHandlerService {
 
     // TODO :  get user phone and manage bpm logic here
     @Override

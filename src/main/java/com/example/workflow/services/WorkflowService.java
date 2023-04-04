@@ -1,7 +1,5 @@
-package com.example.workflow.service;
+package com.example.workflow.services;
 
-import com.example.workflow.dto.WebhookEventRequestDto;
-import com.example.workflow.models.InBoundUserDetails;
 import com.example.workflow.models.User;
 import com.example.workflow.models.WebhookMessagePayload;
 

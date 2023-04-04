@@ -1,8 +1,8 @@
-package com.example.workflow.controller;
+package com.example.workflow.controllers;
 
-import com.example.workflow.service.MessageService;
-import com.example.workflow.service.MessageServiceWebhookHandler;
-import com.example.workflow.service.NammaYathriService;
+import com.example.workflow.services.MessageService;
+import com.example.workflow.services.MessageWebhookHandlerService;
+import com.example.workflow.services.NammaYathriService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,7 +21,7 @@ public class TestController {
     MessageService messageService;
 
     @Autowired
-    MessageServiceWebhookHandler messageServiceWebhookHandler;
+    MessageWebhookHandlerService messageWebhookHandlerService;
 
     @GetMapping
     public void test() throws IOException {

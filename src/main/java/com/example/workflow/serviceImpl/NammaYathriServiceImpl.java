@@ -1,18 +1,17 @@
 package com.example.workflow.serviceImpl;
 
 import camundajar.impl.com.google.gson.JsonElement;
-import com.example.workflow.service.NammaYathriService;
+import com.example.workflow.services.NammaYathriService;
 import com.example.workflow.helpers.NammaYathriApiHelper;
 import okhttp3.FormBody;
 import okhttp3.MediaType;
-import okhttp3.RequestBody;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 
 @Service
-public class NammaYathriServiceV1 implements NammaYathriService {
+public class NammaYathriServiceImpl implements NammaYathriService {
 
     private final MediaType mediaType = MediaType.parse("application/json");
 

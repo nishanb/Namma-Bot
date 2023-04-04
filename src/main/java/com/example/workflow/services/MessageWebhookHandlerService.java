@@ -1,9 +1,8 @@
-package com.example.workflow.service;
+package com.example.workflow.services;
 
 import com.example.workflow.dto.WebhookEventRequestDto;
 import org.json.JSONException;
-import org.json.JSONObject;
 
-public interface MessageServiceWebhookHandler {
+public interface MessageWebhookHandlerService {
     Boolean handleWebhookEvent(WebhookEventRequestDto webhookEventRequestDto) throws JSONException;
 }
