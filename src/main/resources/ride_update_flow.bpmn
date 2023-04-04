@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_07r8ozk" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.7.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.18.0">
+  <bpmn:process id="Process_1hhq3j4" name="ride_update_flow" isExecutable="true">
+    <bpmn:sequenceFlow id="Flow_08ex9i0" sourceRef="StartEvent_1" targetRef="Activity_081p6af" />
+    <bpmn:userTask id="Activity_081p6af" name="Driver arrived">
+      <bpmn:incoming>Flow_08ex9i0</bpmn:incoming>
+      <bpmn:outgoing>Flow_1c6zi02</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_1c6zi02" sourceRef="Activity_081p6af" targetRef="Activity_0m1wvwi" />
+    <bpmn:sendTask id="Activity_0m1wvwi" name="Driver arrived update" camunda:class="com.example.workflow.camunda.service.ride.DriverArrived">
+      <bpmn:incoming>Flow_1c6zi02</bpmn:incoming>
+      <bpmn:outgoing>Flow_1dnkdug</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:sequenceFlow id="Flow_1dnkdug" sourceRef="Activity_0m1wvwi" targetRef="Activity_0durcrc" />
+    <bpmn:userTask id="Activity_0durcrc" name="Ride started">
+      <bpmn:incoming>Flow_1dnkdug</bpmn:incoming>
+      <bpmn:outgoing>Flow_07s3kqn</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_07s3kqn" sourceRef="Activity_0durcrc" targetRef="Activity_1cir3ij" />
+    <bpmn:sendTask id="Activity_1cir3ij" name="Ride started update" camunda:class="com.example.workflow.camunda.service.ride.RideStarted">
+      <bpmn:incoming>Flow_07s3kqn</bpmn:incoming>
+      <bpmn:outgoing>Flow_1oys3ro</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:sequenceFlow id="Flow_1oys3ro" sourceRef="Activity_1cir3ij" targetRef="Activity_0bgvf14" />
+    <bpmn:sequenceFlow id="Flow_0b32icv" sourceRef="Activity_0bgvf14" targetRef="Activity_088icqz" />
+    <bpmn:userTask id="Activity_0bgvf14" name="Ride ended">
+      <bpmn:incoming>Flow_1oys3ro</bpmn:incoming>
+      <bpmn:outgoing>Flow_0b32icv</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sendTask id="Activity_088icqz" name="Ride ended update" camunda:class="com.example.workflow.camunda.service.ride.RideEnded">
+      <bpmn:incoming>Flow_0b32icv</bpmn:incoming>
+      <bpmn:outgoing>Flow_0iyxrpm</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:endEvent id="Event_08972c4">
+      <bpmn:incoming>Flow_0iyxrpm</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0iyxrpm" sourceRef="Activity_088icqz" targetRef="Event_08972c4" />
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_08ex9i0</bpmn:outgoing>
+    </bpmn:startEvent>
+  </bpmn:process>
+  <bpmn:message id="Message_253hr41" name="driver_arrived_for_ride" />
+  <bpmn:message id="Message_3t1ietq" name="booking_confirmed_message" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1hhq3j4">
+      <bpmndi:BPMNShape id="Activity_1e5tn5m_di" bpmnElement="Activity_081p6af">
+        <dc:Bounds x="240" y="80" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1rugni4_di" bpmnElement="Activity_0m1wvwi">
+        <dc:Bounds x="400" y="80" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_15vw4zc_di" bpmnElement="Activity_0durcrc">
+        <dc:Bounds x="560" y="80" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_06899gf_di" bpmnElement="Activity_1cir3ij">
+        <dc:Bounds x="720" y="80" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0xgl3ld_di" bpmnElement="Activity_0bgvf14">
+        <dc:Bounds x="880" y="80" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1y0rhm3_di" bpmnElement="Activity_088icqz">
+        <dc:Bounds x="1040" y="80" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_08972c4_di" bpmnElement="Event_08972c4">
+        <dc:Bounds x="1202" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0sxkv8a_di" bpmnElement="StartEvent_1">
+        <dc:Bounds x="152" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_08ex9i0_di" bpmnElement="Flow_08ex9i0">
+        <di:waypoint x="188" y="120" />
+        <di:waypoint x="240" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1c6zi02_di" bpmnElement="Flow_1c6zi02">
+        <di:waypoint x="340" y="120" />
+        <di:waypoint x="400" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1dnkdug_di" bpmnElement="Flow_1dnkdug">
+        <di:waypoint x="500" y="120" />
+        <di:waypoint x="560" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_07s3kqn_di" bpmnElement="Flow_07s3kqn">
+        <di:waypoint x="660" y="120" />
+        <di:waypoint x="720" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1oys3ro_di" bpmnElement="Flow_1oys3ro">
+        <di:waypoint x="820" y="120" />
+        <di:waypoint x="880" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0b32icv_di" bpmnElement="Flow_0b32icv">
+        <di:waypoint x="980" y="120" />
+        <di:waypoint x="1040" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0iyxrpm_di" bpmnElement="Flow_0iyxrpm">
+        <di:waypoint x="1140" y="120" />
+        <di:waypoint x="1202" y="120" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
