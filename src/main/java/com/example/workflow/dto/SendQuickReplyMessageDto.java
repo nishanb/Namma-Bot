@@ -15,6 +15,12 @@ public class SendQuickReplyMessageDto {
     public SendQuickReplyMessageDto() {
     }
 
+    public SendQuickReplyMessageDto(String type, String receiverContactNumber, QuickReplyMessage quickReplyMessage) {
+        this.type = type;
+        this.receiverContactNumber = receiverContactNumber;
+        this.quickReplyMessage = quickReplyMessage;
+    }
+
     public String getType() {
         return type;
     }

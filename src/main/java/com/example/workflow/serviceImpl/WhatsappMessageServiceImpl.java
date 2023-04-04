@@ -1,6 +1,7 @@
 package com.example.workflow.serviceImpl;
 
 import camundajar.impl.com.google.gson.JsonElement;
+import com.example.workflow.constants.ConversationFlowType;
 import com.example.workflow.dto.*;
 import com.example.workflow.helpers.PrepareRequestHelper;
 import com.example.workflow.helpers.TransformResponseHelper;
@@ -218,7 +219,7 @@ public class WhatsappMessageServiceImpl implements MessageService {
     }
 
     @Override
-    public QuickReplyMessage generateQuickReplyMessage(MessageContent messageContent, List listData, String messageId) throws Exception {
+    public QuickReplyMessage generateQuickReplyMessage(MessageContent messageContent, List<Map<String, String>> listData, String messageId) throws Exception {
         QuickReplyMessage generatedMessage = new QuickReplyMessage();
 
         Map<String, String> content = new HashMap<>();
@@ -227,13 +228,10 @@ public class WhatsappMessageServiceImpl implements MessageService {
         content.put("text", messageContent.getText());
         content.put("caption", messageContent.getCaption());
 
-        List<Map<String, Object>> optionsList = new ArrayList<>();
-
-
         generatedMessage.setType(MESSAGE_TYPE_QUICK_REPLY);
         generatedMessage.setMsgId(messageId);
         generatedMessage.setContent(content);
-        generatedMessage.setOptions(optionsList);
+        generatedMessage.setOptions(listData);
 
         return generatedMessage;
     }
@@ -250,8 +248,60 @@ public class WhatsappMessageServiceImpl implements MessageService {
     // TODO : format message from template service
     @Override
     public void sendGreetingMessage(User user) throws Exception {
-        sendTextMessage(new SendMessageRequestDto(user.getPhoneNumber(), "Hello " + user.getName() + " How may i help you today !"));
-        // TODO : send text message with service offering
+        SendQuickReplyMessageDto greetingMessage = new SendQuickReplyMessageDto();
+
+        greetingMessage.setReceiverContactNumber(user.getPhoneNumber());
+        greetingMessage.setType(MESSAGE_TYPE_QUICK_REPLY);
+
+        List<Map<String, String>> options = new ArrayList<>(new ArrayList<>(Arrays.asList(
+                new HashMap<>() {{
+                    put("type", "text");
+                    put("title", "Book a ride");
+                    put("postbackText", ConversationFlowType.BOOK_RIDE);
+                }},
+                new HashMap<>() {{
+                    put("type", "text");
+                    put("title", "View past rides");
+                    put("postbackText", ConversationFlowType.PREVIOUS_RIDE);
+                }},
+                new HashMap<>() {{
+                    put("type", "text");
+                    put("title", "Other");
+                    put("postbackText", ConversationFlowType.OTHER);
+                }}
+        )));
+
+        greetingMessage.setQuickReplyMessage(generateQuickReplyMessage(new MessageContent("Hello " + user.getName() + " !!", "Choose from below options to get started"), options, "dss"));
+        sendQuickReplyMessage(greetingMessage);
+    }
+
+    @Override
+    public void sendOtherOptions(User user) throws Exception {
+        SendQuickReplyMessageDto greetingMessage = new SendQuickReplyMessageDto();
+
+        greetingMessage.setReceiverContactNumber(user.getPhoneNumber());
+        greetingMessage.setType(MESSAGE_TYPE_QUICK_REPLY);
+
+        List<Map<String, String>> options = new ArrayList<>(new ArrayList<>(Arrays.asList(
+                new HashMap<>() {{
+                    put("type", "text");
+                    put("title", "Manage stared places");
+                    put("postbackText", ConversationFlowType.MANAGE_PLACES);
+                }},
+                new HashMap<>() {{
+                    put("type", "text");
+                    put("title", "Change language");
+                    put("postbackText", ConversationFlowType.CHANGE_LANGUAGE);
+                }},
+                new HashMap<>() {{
+                    put("type", "text");
+                    put("title", "Raise support ticket");
+                    put("postbackText", ConversationFlowType.SUPPORT);
+                }}
+        )));
+
+        greetingMessage.setQuickReplyMessage(generateQuickReplyMessage(new MessageContent("Cool", "Choose from below options to get started"), options, "dsx"));
+        sendQuickReplyMessage(greetingMessage);
     }
 
     @Override

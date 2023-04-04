@@ -59,25 +59,25 @@ public class MessageWebhookHandlerImpl implements MessageServiceWebhookHandler {
         try {
             // Collect user info from DB if exists or create new user
             Optional<User> userDetails = userService.findUserByPhoneNumber(inboundUserDetails.getPhone());
-            User user = userDetails.orElseGet(() -> userService.createUser(new User(null, inboundUserDetails.getPhone())));
+            User user = null;
+            user = userDetails.orElseGet(() -> userService.createUser(new User(null, inboundUserDetails.getPhone())));
             user.setName(inboundUserDetails.getName());
 
-            if (user.getProcessInstanceId() == null || user.getProcessInstanceId().isEmpty()) {
+            if (user.getProcessInstanceId() == null) {
                 // if user has chosen option to initiate flow
                 if (messageType.equals(MESSAGE_TYPE_BUTTON_REPLY)) {
-                    switch (webhookMessagePayload.getPostBackText()) {
+                    switch (webhookMessagePayload.getPostbackText()) {
                         case ConversationFlowType.BOOK_RIDE ->
                                 workflowService.initiateWorkflow(user, Constants.CAMUNDA_WORKFLOW_PROCESS_NAME_MAP.get(ConversationFlowType.BOOK_RIDE));
                         case ConversationFlowType.PREVIOUS_RIDE ->
                                 workflowService.initiateWorkflow(user, Constants.CAMUNDA_WORKFLOW_PROCESS_NAME_MAP.get(ConversationFlowType.PREVIOUS_RIDE));
-                        case ConversationFlowType.ADD_PLACE ->
-                                workflowService.initiateWorkflow(user, Constants.CAMUNDA_WORKFLOW_PROCESS_NAME_MAP.get(ConversationFlowType.ADD_PLACE));
-                        case ConversationFlowType.DELETE_PLACE ->
-                                workflowService.initiateWorkflow(user, Constants.CAMUNDA_WORKFLOW_PROCESS_NAME_MAP.get(ConversationFlowType.DELETE_PLACE));
+                        case ConversationFlowType.MANAGE_PLACES ->
+                                workflowService.initiateWorkflow(user, Constants.CAMUNDA_WORKFLOW_PROCESS_NAME_MAP.get(ConversationFlowType.MANAGE_PLACES));
                         case ConversationFlowType.SUPPORT ->
                                 workflowService.initiateWorkflow(user, Constants.CAMUNDA_WORKFLOW_PROCESS_NAME_MAP.get(ConversationFlowType.SUPPORT));
-                        case ConversationFlowType.OTHER ->
-                                workflowService.initiateWorkflow(user, Constants.CAMUNDA_WORKFLOW_PROCESS_NAME_MAP.get(ConversationFlowType.OTHER));
+                        case ConversationFlowType.CHANGE_LANGUAGE ->
+                                workflowService.initiateWorkflow(user, Constants.CAMUNDA_WORKFLOW_PROCESS_NAME_MAP.get(ConversationFlowType.CHANGE_LANGUAGE));
+                        case ConversationFlowType.OTHER -> messageService.sendOtherOptions(user);
                         case default -> messageService.sendErrorMessage(user);
                     }
 
