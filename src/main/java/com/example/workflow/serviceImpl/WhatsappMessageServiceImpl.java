@@ -6,8 +6,9 @@ import com.example.workflow.dto.*;
 import com.example.workflow.helpers.PrepareRequestHelper;
 import com.example.workflow.helpers.TransformResponseHelper;
 import com.example.workflow.models.*;
-import com.example.workflow.service.MessageService;
+import com.example.workflow.services.MessageService;
 import com.example.workflow.utils.Constants;
+import com.example.workflow.utils.WhatsappMsgServiceApiHelper;
 import okhttp3.RequestBody;
 import org.json.JSONObject;
 import org.slf4j.Logger;
@@ -31,9 +32,6 @@ public class WhatsappMessageServiceImpl implements MessageService {
     @Value("${gupshup-app-name}")
     private String vendorAppName;
 
-    @Value("${gupshup-api-key}")
-    private String vendorApiKey;
-
     @Value("${gupshup-host}")
     private String gupShupHost;
 
@@ -49,34 +47,24 @@ public class WhatsappMessageServiceImpl implements MessageService {
     @Override
     public Boolean sendTextMessage(SendMessageRequestDto sendMessageRequestDto) throws Exception {
         try {
-            // create the msg payload object
+
             Map<String, String> messagePayload = new HashMap<>();
             messagePayload.put("text", sendMessageRequestDto.getMessage());
             messagePayload.put("type", MESSAGE_TYPE_TEXT);
 
-
             String requestString = PrepareRequestHelper.stringifyRequestBody(WHATSAPP_CHANNEL, sourceContactNo, sendMessageRequestDto.getReceiverContactNumber(), PrepareRequestHelper.stringifyJson(messagePayload), vendorAppName);
-
-            Map<String, String> requestHeaders = new HashMap<>();
-
-            requestHeaders.put("Content-Type", "application/x-www-form-urlencoded");
-            requestHeaders.put("apikey", vendorApiKey);
-
-            RequestBody requestBodyTransformed = prepareRequestHelper.prepareRequestBodyForXUrlEncodedType(requestString);
-
             String url = String.format("%ssm/api/v1/msg", gupShupHost);
 
-            JsonElement response = whatsappMsgServiceApiHelper.post(url, requestBodyTransformed, requestHeaders);
+            JsonElement response = whatsappMsgServiceApiHelper.post(url, prepareRequestHelper.prepareRequestBodyForXUrlEncodedType(requestString));
             if (response != null) {
                 MessageServiceResponseDto messageServiceResponseDto = TransformResponseHelper.transformMessageServiceResponse(response.toString());
                 if (messageServiceResponseDto.getStatus().equals(SUBMITTED)) {
                     return true;
                 }
-                return false;
             }
             return false;
         } catch (Exception e) {
-            throw e;
+            return false;
         }
     }
 
@@ -84,11 +72,6 @@ public class WhatsappMessageServiceImpl implements MessageService {
     public Boolean sendListMessage(SendListMessageRequestDto sendListMessageRequestDto) throws Exception {
         try {
             String requestString = PrepareRequestHelper.stringifyRequestBody(WHATSAPP_CHANNEL, sourceContactNo, sendListMessageRequestDto.getReceiverContactNumber(), PrepareRequestHelper.stringifyJson(sendListMessageRequestDto.getListMessage()), vendorAppName);
-
-            Map<String, String> requestHeaders = new HashMap<>();
-
-            requestHeaders.put("Content-Type", "application/x-www-form-urlencoded");
-            requestHeaders.put("apikey", vendorApiKey);
 
             RequestBody requestBodyTransformed = prepareRequestHelper.prepareRequestBodyForXUrlEncodedType(requestString);
 
@@ -100,7 +83,7 @@ public class WhatsappMessageServiceImpl implements MessageService {
 
             System.out.println("<<<<<<<<<<<<<< successfully printed all items in message list >>>>>>>>>");
 
-            JsonElement response = whatsappMsgServiceApiHelper.post(url, requestBodyTransformed, requestHeaders);
+            JsonElement response = whatsappMsgServiceApiHelper.post(url, requestBodyTransformed);
 
             if (response != null) {
                 MessageServiceResponseDto messageServiceResponseDto = TransformResponseHelper.transformMessageServiceResponse(response.toString());
@@ -141,16 +124,11 @@ public class WhatsappMessageServiceImpl implements MessageService {
 
             String requestString = PrepareRequestHelper.stringifyRequestBody(WHATSAPP_CHANNEL, sourceContactNo, sendAttachmentMessageDto.getReceiverContactNumber(), PrepareRequestHelper.stringifyJson(message), vendorAppName);
 
-            Map<String, String> requestHeaders = new HashMap<>();
-
-            requestHeaders.put("Content-Type", "application/x-www-form-urlencoded");
-            requestHeaders.put("apikey", vendorApiKey);
-
             RequestBody transformedRequestBody = prepareRequestHelper.prepareRequestBodyForXUrlEncodedType(requestString);
 
             String url = String.format("%ssm/api/v1/msg", gupShupHost);
 
-            JsonElement response = whatsappMsgServiceApiHelper.post(url, transformedRequestBody, requestHeaders);
+            JsonElement response = whatsappMsgServiceApiHelper.post(url, transformedRequestBody);
 
             if (response != null) {
                 MessageServiceResponseDto messageServiceResponseDto = TransformResponseHelper.transformMessageServiceResponse(response.toString());
@@ -179,16 +157,12 @@ public class WhatsappMessageServiceImpl implements MessageService {
 
             String requestString = PrepareRequestHelper.stringifyRequestBody(WHATSAPP_CHANNEL, sourceContactNo, sendQuickReplyMessageDto.getReceiverContactNumber(), PrepareRequestHelper.stringifyJson(sendQuickReplyMessageDto.getQuickReplyMessage()), vendorAppName);
 
-            Map<String, String> requestHeaders = new HashMap<>();
-
-            requestHeaders.put("Content-Type", "application/x-www-form-urlencoded");
-            requestHeaders.put("apikey", vendorApiKey);
 
             RequestBody transformedRequestBody = prepareRequestHelper.prepareRequestBodyForXUrlEncodedType(requestString);
 
             String url = String.format("%ssm/api/v1/msg", gupShupHost);
 
-            JsonElement response = whatsappMsgServiceApiHelper.post(url, transformedRequestBody, requestHeaders);
+            JsonElement response = whatsappMsgServiceApiHelper.post(url, transformedRequestBody);
 
             if (response != null) {
                 MessageServiceResponseDto messageServiceResponseDto = TransformResponseHelper.transformMessageServiceResponse(response.toString());
@@ -202,9 +176,9 @@ public class WhatsappMessageServiceImpl implements MessageService {
             logger.error("<<<<< Some error occurred while sending attachment >>>>>" + e.getMessage());
             return false;
         }
-
     }
 
+    // Section : Message generators & Helpers
     @Override
     public ListMessage generateListMessage(ListMessageData messageData, List listData, String messageId) throws Exception {
         ListMessage listMessage = new ListMessage();
@@ -219,7 +193,7 @@ public class WhatsappMessageServiceImpl implements MessageService {
     }
 
     @Override
-    public QuickReplyMessage generateQuickReplyMessage(MessageContent messageContent, List<Map<String, String>> listData, String messageId) throws Exception {
+    public QuickReplyMessage generateQuickReplyMessage(MessageContent messageContent, List<Map<String, String>> options, String messageId) throws Exception {
         QuickReplyMessage generatedMessage = new QuickReplyMessage();
 
         Map<String, String> content = new HashMap<>();
@@ -231,7 +205,7 @@ public class WhatsappMessageServiceImpl implements MessageService {
         generatedMessage.setType(MESSAGE_TYPE_QUICK_REPLY);
         generatedMessage.setMsgId(messageId);
         generatedMessage.setContent(content);
-        generatedMessage.setOptions(listData);
+        generatedMessage.setOptions(options);
 
         return generatedMessage;
     }
@@ -244,6 +218,8 @@ public class WhatsappMessageServiceImpl implements MessageService {
             }
         }
     }
+
+    // Section : Default messages
 
     // TODO : format message from template service
     @Override
@@ -275,12 +251,13 @@ public class WhatsappMessageServiceImpl implements MessageService {
         sendQuickReplyMessage(greetingMessage);
     }
 
+    // TODO : integrate template manager
     @Override
     public void sendOtherOptions(User user) throws Exception {
-        SendQuickReplyMessageDto greetingMessage = new SendQuickReplyMessageDto();
+        SendQuickReplyMessageDto otherOptionsMessage = new SendQuickReplyMessageDto();
 
-        greetingMessage.setReceiverContactNumber(user.getPhoneNumber());
-        greetingMessage.setType(MESSAGE_TYPE_QUICK_REPLY);
+        otherOptionsMessage.setReceiverContactNumber(user.getPhoneNumber());
+        otherOptionsMessage.setType(MESSAGE_TYPE_QUICK_REPLY);
 
         List<Map<String, String>> options = new ArrayList<>(new ArrayList<>(Arrays.asList(
                 new HashMap<>() {{
@@ -300,10 +277,11 @@ public class WhatsappMessageServiceImpl implements MessageService {
                 }}
         )));
 
-        greetingMessage.setQuickReplyMessage(generateQuickReplyMessage(new MessageContent("Cool", "Choose from below options to get started"), options, "dsx"));
-        sendQuickReplyMessage(greetingMessage);
+        otherOptionsMessage.setQuickReplyMessage(generateQuickReplyMessage(new MessageContent("Cool", "Choose from below options to get started"), options, "dsx"));
+        sendQuickReplyMessage(otherOptionsMessage);
     }
 
+    // TODO : integrate template manager
     @Override
     public void sendErrorMessage(User user) throws Exception {
         sendTextMessage(new SendMessageRequestDto(user.getPhoneNumber(), "Hello " + user.getName() + " I did not understand that !"));

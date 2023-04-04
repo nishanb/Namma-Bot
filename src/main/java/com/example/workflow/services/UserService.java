@@ -1,4 +1,4 @@
-package com.example.workflow.service;
+package com.example.workflow.services;
 
 import com.example.workflow.models.User;
 

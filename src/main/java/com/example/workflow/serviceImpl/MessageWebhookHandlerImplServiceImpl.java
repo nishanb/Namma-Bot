@@ -3,11 +3,11 @@ package com.example.workflow.serviceImpl;
 import com.example.workflow.dto.WebhookEventRequestDto;
 import com.example.workflow.models.InBoundUserDetails;
 import com.example.workflow.models.WebhookMessagePayload;
-import com.example.workflow.service.MessageService;
-import com.example.workflow.service.MessageServiceWebhookHandler;
-import com.example.workflow.service.UserService;
+import com.example.workflow.services.MessageService;
+import com.example.workflow.services.MessageWebhookHandlerService;
+import com.example.workflow.services.UserService;
 import com.example.workflow.models.User;
-import com.example.workflow.service.WorkflowService;
+import com.example.workflow.services.WorkflowService;
 import com.example.workflow.utils.Constants;
 import org.json.JSONException;
 import org.slf4j.Logger;
@@ -23,7 +23,7 @@ import static com.example.workflow.utils.Constants.INBOUND_WEBHOOK_EVENTS;
 import static com.example.workflow.utils.Constants.MESSAGE_TYPE_BUTTON_REPLY;
 
 @Service
-public class MessageWebhookHandlerImpl implements MessageServiceWebhookHandler {
+public class MessageWebhookHandlerImplServiceImpl implements MessageWebhookHandlerService {
     @Autowired
     MessageService messageService;
 
@@ -33,7 +33,7 @@ public class MessageWebhookHandlerImpl implements MessageServiceWebhookHandler {
     @Autowired
     WorkflowService workflowService;
 
-    private static final Logger logger = LoggerFactory.getLogger(MessageWebhookHandlerImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(MessageWebhookHandlerImplServiceImpl.class);
 
     // validate webhook is message and handle message
     @Override

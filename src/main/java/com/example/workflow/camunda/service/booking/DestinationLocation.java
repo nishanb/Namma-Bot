@@ -1,7 +1,7 @@
 package com.example.workflow.camunda.service.booking;
 
 import com.example.workflow.dto.SendMessageRequestDto;
-import com.example.workflow.service.MessageService;
+import com.example.workflow.services.MessageService;
 import org.camunda.bpm.engine.delegate.BpmnError;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
