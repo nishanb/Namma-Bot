@@ -23,14 +23,7 @@ public class MessageWebhookController {
     MessageServiceWebhookHandler messageServiceWebhookHandler;
 
     @PostMapping("/message/webhook")
-    public ResponseEntity<Object> handleWebhookEvent(@RequestBody WebhookEventRequestDto webhookEventRequestDto) throws Exception {
-        try {
-            Boolean isMessageSent = messageServiceWebhookHandler.handleWebhookEvent(webhookEventRequestDto);
-            return WorkflowServiceResponseDto.transformResponse("Webhook event handled", HttpStatus.OK, isMessageSent, null);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return WorkflowServiceResponseDto.transformResponse(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR, null, null);
-        }
-
+    public void handleWebhookEvent(@RequestBody WebhookEventRequestDto webhookEventRequestDto) throws Exception {
+        messageServiceWebhookHandler.handleWebhookEvent(webhookEventRequestDto);
     }
 }

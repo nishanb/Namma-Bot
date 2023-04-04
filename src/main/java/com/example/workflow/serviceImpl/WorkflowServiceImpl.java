@@ -5,6 +5,7 @@ import com.example.workflow.dto.WebhookEventRequestDto;
 import com.example.workflow.models.InBoundUserDetails;
 import com.example.workflow.models.User;
 import com.example.workflow.models.WebhookMessagePayload;
+import com.example.workflow.service.UserService;
 import com.example.workflow.service.WorkflowService;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.slf4j.Logger;
@@ -18,6 +19,9 @@ public class WorkflowServiceImpl implements WorkflowService {
     @Autowired
     CamundaCoreService camundaCoreService;
 
+    @Autowired
+    UserService userService;
+
     private static final Logger logger = LoggerFactory.getLogger(WorkflowServiceImpl.class);
 
     @Override
@@ -29,7 +33,7 @@ public class WorkflowServiceImpl implements WorkflowService {
     @Override
     public void initiateWorkflow(User user, String processDefinitionId) {
         ProcessInstance processInstance = camundaCoreService.startProcessInstance(processDefinitionId, user.getPhoneNumber());
-        user.setProcessInstanceId(processInstance.getRootProcessInstanceId());
+        userService.updateUserLanguageByPhoneNumber(user.getPhoneNumber(), processInstance.getProcessInstanceId());
         logger.info(String.format("Process %s started for user %s with processInstance ID %s", processDefinitionId, user.getPhoneNumber(), processInstance.getProcessInstanceId()));
     }
 }
