@@ -19,7 +19,7 @@ public class User {
     private String name;
 
     @Field
-    private String preferredLanguage = "en";
+    private String preferredLanguage = "english";
 
     @Field
     private Date createdAt = new Date();

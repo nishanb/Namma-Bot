@@ -21,14 +21,10 @@ public class DestinationLocation implements JavaDelegate {
     @Override
     public void execute(DelegateExecution execution) throws Exception {
         try {
-            //call gupshup to send message
             log.info("DestinationLocation: execute method is called......");
             messageService.sendTextMessage(new SendMessageRequestDto(execution.getBusinessKey(), "Please share your destination address"));
-            //set relevant variables for future ref
-            execution.setVariable("DestinationLocation", true);
         } catch (Exception e) {
-
-            log.warning("DestinationLocation: Exception occured......");
+            log.warning("DestinationLocation: Exception occurred......");
             throw new BpmnError("booking_flow_error", "Error sending message.....");
         }
     }
