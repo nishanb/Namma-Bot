@@ -2,9 +2,19 @@ package com.example.workflow.dto;
 
 public class SendAttachmentMessageDto {
     private String receiverContactNumber;
+
     private String attachmentType;
-    private String attachmentURL;
-    private String messageText;
+
+    // for image attachments
+    private String originalUrl;
+
+    private String previewUrl;
+    private String caption;
+
+    // for file attachments
+    private String url;
+
+    private String filename;
 
     public SendAttachmentMessageDto() {
     }
@@ -25,19 +35,43 @@ public class SendAttachmentMessageDto {
         this.attachmentType = attachmentType;
     }
 
-    public String getAttachmentURL() {
-        return attachmentURL;
+    public String getOriginalUrl() {
+        return originalUrl;
     }
 
-    public void setAttachmentURL(String attachmentURL) {
-        this.attachmentURL = attachmentURL;
+    public void setOriginalUrl(String originalUrl) {
+        this.originalUrl = originalUrl;
     }
 
-    public String getMessageText() {
-        return messageText;
+    public String getPreviewUrl() {
+        return previewUrl;
     }
 
-    public void setMessageText(String messageText) {
-        this.messageText = messageText;
+    public void setPreviewUrl(String previewUrl) {
+        this.previewUrl = previewUrl;
+    }
+
+    public String getCaption() {
+        return caption;
+    }
+
+    public void setCaption(String caption) {
+        this.caption = caption;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getFilename() {
+        return filename;
+    }
+
+    public void setFilename(String filename) {
+        this.filename = filename;
     }
 }
