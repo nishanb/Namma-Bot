@@ -1,7 +1,7 @@
 package com.example.workflow.dto;
 
-import com.example.workflow.models.GlobalButtons;
-import com.example.workflow.models.ListMessageItem;
+import com.example.workflow.models.gupshup.GlobalButtons;
+import com.example.workflow.models.gupshup.ListMessageItem;
 
 import java.util.List;
 
@@ -10,7 +10,7 @@ public class ListMessageDto {
     private String msgId;
     private String title;
     private String body;
-    private List<GlobalButtons> globalButtonsList;
+    private List<GlobalButtons> globalButtons;
     private List<ListMessageItem> items;
 
     public ListMessageDto() {
@@ -48,12 +48,12 @@ public class ListMessageDto {
         this.body = body;
     }
 
-    public List<GlobalButtons> getGlobalButtonsList() {
-        return globalButtonsList;
+    public List<GlobalButtons> getGlobalButtons() {
+        return globalButtons;
     }
 
-    public void setGlobalButtonsList(List<GlobalButtons> globalButtonsList) {
-        this.globalButtonsList = globalButtonsList;
+    public void setGlobalButtons(List<GlobalButtons> globalButtons) {
+        this.globalButtons = globalButtons;
     }
 
     public List<?> getItems() {

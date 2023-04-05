@@ -1,12 +1,12 @@
 package com.example.workflow.serviceImpl;
 
 import com.example.workflow.dto.WebhookEventRequestDto;
-import com.example.workflow.models.InBoundUserDetails;
-import com.example.workflow.models.WebhookMessagePayload;
+import com.example.workflow.models.*;
+import com.example.workflow.models.gupshup.InBoundUserDetails;
+import com.example.workflow.models.gupshup.WebhookMessagePayload;
 import com.example.workflow.services.MessageService;
 import com.example.workflow.services.MessageWebhookHandlerService;
 import com.example.workflow.services.UserService;
-import com.example.workflow.models.User;
 import com.example.workflow.services.WorkflowService;
 import com.example.workflow.utils.Constants;
 import org.json.JSONException;

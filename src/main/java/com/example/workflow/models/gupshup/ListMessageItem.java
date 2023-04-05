@@ -1,4 +1,4 @@
-package com.example.workflow.models;
+package com.example.workflow.models.gupshup;
 
 import java.util.List;
 
@@ -6,7 +6,8 @@ public class ListMessageItem {
     private String title;
     private List<ListMessageItemOption> options;
 
-    public ListMessageItem() {
+    public ListMessageItem(String title) {
+        this.title = title;
     }
 
     public String getTitle() {

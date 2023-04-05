@@ -1,13 +1,19 @@
-package com.example.workflow.models;
+package com.example.workflow.models.gupshup;
 
 public class ListMessageItemOption {
     private String type;
     private String title;
     private String description;
+
+    public ListMessageItemOption(String title, String description, String postbackText) {
+        this.type = "text";
+        this.title = title;
+        this.description = description;
+        this.postbackText = postbackText;
+    }
+
     private String postbackText;
 
-    public ListMessageItemOption() {
-    }
 
     public String getType() {
         return type;

@@ -1,10 +1,14 @@
-package com.example.workflow.models;
+package com.example.workflow.models.gupshup;
 
 public class GlobalButtons {
     private String type;
+
     private String title;
 
-    public GlobalButtons() {
+
+    public GlobalButtons(String type, String title) {
+        this.type = type;
+        this.title = title;
     }
 
     public String getType() {

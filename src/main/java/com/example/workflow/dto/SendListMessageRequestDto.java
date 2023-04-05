@@ -1,13 +1,18 @@
 package com.example.workflow.dto;
 
-import com.example.workflow.models.ListMessage;
-
-import java.util.HashMap;
+import com.example.workflow.models.gupshup.ListMessage;
 
 public class SendListMessageRequestDto {
+
     private String receiverContactNumber;
 
     private ListMessage listMessage;
+
+
+    public SendListMessageRequestDto(String receiverContactNumber, ListMessage listMessage) {
+        this.receiverContactNumber = receiverContactNumber;
+        this.listMessage = listMessage;
+    }
 
     public SendListMessageRequestDto() {
     }
@@ -16,9 +21,6 @@ public class SendListMessageRequestDto {
         return receiverContactNumber;
     }
 
-    public void setReceiverContactNumber(String receiverContactNumber) {
-        this.receiverContactNumber = receiverContactNumber;
-    }
 
     public ListMessage getListMessage() {
         return listMessage;

@@ -6,6 +6,7 @@ import com.example.workflow.dto.*;
 import com.example.workflow.helpers.PrepareRequestHelper;
 import com.example.workflow.helpers.TransformResponseHelper;
 import com.example.workflow.models.*;
+import com.example.workflow.models.gupshup.*;
 import com.example.workflow.services.MessageService;
 import com.example.workflow.utils.Constants;
 import com.example.workflow.utils.WhatsappMsgServiceApiHelper;
@@ -185,9 +186,9 @@ public class WhatsappMessageServiceImpl implements MessageService {
 
         listMessage.setType(MESSAGE_TYPE_LIST);
         listMessage.setTitle(listMessageDto.getTitle());
-        listMessage.setMsgId(listMessageDto.getMsgId());
+        listMessage.setMsgId(UUID.randomUUID().toString());
         listMessage.setBody(listMessageDto.getBody());
-        listMessage.setGlobalButtonsList(listMessageDto.getGlobalButtonsList());
+        listMessage.setGlobalButtons(listMessageDto.getGlobalButtons());
         listMessage.setItems((List<ListMessageItem>) listMessageDto.getItems());
 
         return listMessage;
@@ -209,15 +210,6 @@ public class WhatsappMessageServiceImpl implements MessageService {
         generatedMessage.setOptions(options);
 
         return generatedMessage;
-    }
-
-    public void printAllItems(List<?> items) {
-        for (Object item : items) {
-            if (item != null) {
-                System.out.println(item);
-                System.out.println(item.getClass());
-            }
-        }
     }
 
     // Section : Default messages
@@ -255,31 +247,35 @@ public class WhatsappMessageServiceImpl implements MessageService {
     // TODO : integrate template manager
     @Override
     public void sendOtherOptions(User user) throws Exception {
-        SendQuickReplyMessageDto otherOptionsMessage = new SendQuickReplyMessageDto();
+        ListMessageDto listMessageDto = new ListMessageDto();
+        listMessageDto.setTitle("How can I help you today ?");
+        listMessageDto.setBody("You can choose from the options below.");
 
-        otherOptionsMessage.setReceiverContactNumber(user.getPhoneNumber());
-        otherOptionsMessage.setType(MESSAGE_TYPE_QUICK_REPLY);
+        // Set Global button
+        List<GlobalButtons> globalButtonsList = new ArrayList<>(List.of(new GlobalButtons("text", "Choose From Here")));
+        listMessageDto.setGlobalButtons(globalButtonsList);
 
-        List<Map<String, String>> options = new ArrayList<>(new ArrayList<>(Arrays.asList(
-                new HashMap<>() {{
-                    put("type", "text");
-                    put("title", "Manage stared places");
-                    put("postbackText", ConversationFlowType.MANAGE_PLACES);
-                }},
-                new HashMap<>() {{
-                    put("type", "text");
-                    put("title", "Change language");
-                    put("postbackText", ConversationFlowType.CHANGE_LANGUAGE);
-                }},
-                new HashMap<>() {{
-                    put("type", "text");
-                    put("title", "Raise support ticket");
-                    put("postbackText", ConversationFlowType.SUPPORT);
-                }}
-        )));
+        // List Group
+        List<ListMessageItem> listMessageGroup = new ArrayList<>();
 
-        otherOptionsMessage.setQuickReplyMessage(generateQuickReplyMessage(new MessageContent("Cool", "Choose from below options to get started"), options, "dsx"));
-        sendQuickReplyMessage(otherOptionsMessage);
+        //Other section list
+        ListMessageItem otherOptions = new ListMessageItem("Choose from below");
+        otherOptions.setOptions(Arrays.asList(
+                new ListMessageItemOption("Manage Stared places", "", ConversationFlowType.MANAGE_PLACES),
+                new ListMessageItemOption("Change conversation language", "", ConversationFlowType.CHANGE_LANGUAGE),
+                new ListMessageItemOption("Raise Support Ticket", "", ConversationFlowType.SUPPORT),
+                new ListMessageItemOption("Give Feedback", "", ConversationFlowType.SUPPORT),
+                new ListMessageItemOption("Know More", "", "d"),
+                new ListMessageItemOption("FAQs", "", "x")
+        ));
+
+        // Add others section to group
+        listMessageGroup.add(otherOptions);
+
+        // set list-message group to main message
+        listMessageDto.setItems(listMessageGroup);
+
+        sendListMessage(new SendListMessageRequestDto(user.getPhoneNumber(), generateListMessage(listMessageDto)));
     }
 
     // TODO : integrate template manager
@@ -287,4 +283,14 @@ public class WhatsappMessageServiceImpl implements MessageService {
     public void sendErrorMessage(User user) throws Exception {
         sendTextMessage(new SendMessageRequestDto(user.getPhoneNumber(), "Hello " + user.getName() + " I did not understand that !"));
     }
+
+    public void printAllItems(List<?> items) {
+        for (Object item : items) {
+            if (item != null) {
+                System.out.println(item);
+                System.out.println(item.getClass());
+            }
+        }
+    }
+
 }

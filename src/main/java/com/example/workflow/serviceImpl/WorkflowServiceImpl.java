@@ -1,9 +1,9 @@
 package com.example.workflow.serviceImpl;
 
 import com.example.workflow.camunda.core.CamundaCoreService;
-import com.example.workflow.camunda.service.booking.PickupLocation;
+import com.example.workflow.camunda.service.booking.userTasks.ReceiveDestinationUserTask;
 import com.example.workflow.models.User;
-import com.example.workflow.models.WebhookMessagePayload;
+import com.example.workflow.models.gupshup.WebhookMessagePayload;
 import com.example.workflow.services.UserService;
 import com.example.workflow.services.WorkflowService;
 import org.camunda.bpm.engine.runtime.ActivityInstance;
@@ -26,20 +26,29 @@ public class WorkflowServiceImpl implements WorkflowService {
     @Autowired
     UserService userService;
 
+    @Autowired
+    ReceiveDestinationUserTask receiveDestinationUserTask;
+
+
     private static final Logger logger = LoggerFactory.getLogger(WorkflowServiceImpl.class);
 
     @Override
-    public void handleWorkflow(String processInstanceId, User user, String messageType, WebhookMessagePayload webhookMessagePayload) {
+    public void handleWorkflow(String processInstanceId, User user, String messageType, WebhookMessagePayload webhookMessagePayload) throws Exception {
         ActivityInstance activityInstance = camundaCoreService.runtimeService.getActivityInstance(processInstanceId);
         List<ActivityInstance> activeInstances = List.of(activityInstance.getChildActivityInstances());
-        if(activeInstances.size() > 0 ){
+        if (activeInstances.size() > 0) {
             ActivityInstance currentActivityInstance = activeInstances.get(0);
             logger.info(String.format("Currently %s is in activity %s on process instance %s", user.getPhoneNumber(), currentActivityInstance.getId(), processInstanceId));
-        }
 
-//        switch (activityInstance.getActivityId()){
-//            case ActivityType.RECEIVE_DESTINATION_LOCATION ->
-//        }
+            switch (currentActivityInstance.getActivityId()) {
+                case ActivityType.RECEIVE_DESTINATION_LOCATION -> {
+                    receiveDestinationUserTask.execute(currentActivityInstance, user, messageType, webhookMessagePayload);
+                }
+                case default -> {
+                    logger.info(String.format(">>>>>>>> No user task class found for %s  %s<<<<<<<<<", currentActivityInstance.getActivityName(), currentActivityInstance.getActivityId()));
+                }
+            }
+        }
     }
 
     @Override

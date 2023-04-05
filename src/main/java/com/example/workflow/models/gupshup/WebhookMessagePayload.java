@@ -1,4 +1,4 @@
-package com.example.workflow.models;
+package com.example.workflow.models.gupshup;
 
 import java.util.Map;
 
@@ -13,8 +13,6 @@ public class WebhookMessagePayload {
      */
     private Map<String, String> payload;
     private Map<String, String> sender;
-
-    private String postbackText;
 
     public WebhookMessagePayload() {
     }
@@ -61,9 +59,5 @@ public class WebhookMessagePayload {
 
     public String getPostbackText() {
         return this.getPayload().get("postbackText");
-    }
-
-    public void setPostbackText(String postbackText) {
-        this.postbackText = postbackText;
     }
 }

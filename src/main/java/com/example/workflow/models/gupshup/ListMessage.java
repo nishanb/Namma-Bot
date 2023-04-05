@@ -1,4 +1,4 @@
-package com.example.workflow.models;
+package com.example.workflow.models.gupshup;
 
 import java.util.List;
 
@@ -7,7 +7,7 @@ public class ListMessage {
     private String msgId;
     private String title;
     private String body;
-    private List<GlobalButtons> globalButtonsList;
+    private List<GlobalButtons> globalButtons;
     private List<ListMessageItem> items;
 
     public ListMessage() {
@@ -45,12 +45,12 @@ public class ListMessage {
         this.body = body;
     }
 
-    public List<GlobalButtons> getGlobalButtonsList() {
-        return globalButtonsList;
+    public List<GlobalButtons> getGlobalButtons() {
+        return globalButtons;
     }
 
-    public void setGlobalButtonsList(List<GlobalButtons> globalButtonsList) {
-        this.globalButtonsList = globalButtonsList;
+    public void setGlobalButtons(List<GlobalButtons> globalButtons) {
+        this.globalButtons = globalButtons;
     }
 
     public List<ListMessageItem> getItems() {
