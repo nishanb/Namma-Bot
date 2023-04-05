@@ -2,12 +2,14 @@ package com.example.workflow.serviceImpl;
 
 import camundajar.impl.com.google.gson.JsonElement;
 import com.example.workflow.constants.ConversationFlowType;
+import com.example.workflow.constants.TemplateType;
 import com.example.workflow.dto.*;
 import com.example.workflow.helpers.PrepareRequestHelper;
 import com.example.workflow.helpers.TransformResponseHelper;
 import com.example.workflow.models.*;
 import com.example.workflow.models.gupshup.*;
 import com.example.workflow.services.MessageService;
+import com.example.workflow.services.TemplateService;
 import com.example.workflow.utils.Constants;
 import com.example.workflow.utils.WhatsappMsgServiceApiHelper;
 import okhttp3.RequestBody;
@@ -24,8 +26,8 @@ import static com.example.workflow.utils.Constants.*;
 
 // TODO : make this as factory
 @Service
-public class WhatsappMessageServiceImpl implements MessageService {
-    private final Logger logger = LoggerFactory.getLogger(WhatsappMessageServiceImpl.class);
+public class MessageServiceImpl implements MessageService {
+    private final Logger logger = LoggerFactory.getLogger(MessageServiceImpl.class);
 
     @Value("${gupshup-source-contact}")
     private String sourceContactNo;
@@ -44,6 +46,9 @@ public class WhatsappMessageServiceImpl implements MessageService {
 
     @Autowired
     private PrepareRequestHelper prepareRequestHelper;
+
+    @Autowired
+    TemplateService templateService;
 
     @Override
     public Boolean sendTextMessage(SendMessageRequestDto sendMessageRequestDto) throws Exception {
@@ -240,7 +245,11 @@ public class WhatsappMessageServiceImpl implements MessageService {
                 }}
         )));
 
-        greetingMessage.setQuickReplyMessage(generateQuickReplyMessage(new MessageContent("Hello " + user.getName() + " !!", "Choose from below options to get started"), options, "dss"));
+        greetingMessage.setQuickReplyMessage(generateQuickReplyMessage(
+                new MessageContent(
+                        templateService.format(TemplateType.USER_GREET, user.getPreferredLanguage(), new ArrayList<>(Collections.singletonList(user.getName()))),
+                        templateService.format(TemplateType.USER_GREET_DESCRIPTION, user.getPreferredLanguage(), new ArrayList<>())
+                ), options, UUID.randomUUID().toString()));
         sendQuickReplyMessage(greetingMessage);
     }
 
@@ -261,12 +270,12 @@ public class WhatsappMessageServiceImpl implements MessageService {
         //Other section list
         ListMessageItem otherOptions = new ListMessageItem("Choose from below");
         otherOptions.setOptions(Arrays.asList(
-                new ListMessageItemOption("Manage Stared places", "", ConversationFlowType.MANAGE_PLACES),
-                new ListMessageItemOption("Change conversation language", "", ConversationFlowType.CHANGE_LANGUAGE),
-                new ListMessageItemOption("Raise Support Ticket", "", ConversationFlowType.SUPPORT),
-                new ListMessageItemOption("Give Feedback", "", ConversationFlowType.SUPPORT),
-                new ListMessageItemOption("Know More", "", "d"),
-                new ListMessageItemOption("FAQs", "", "x")
+                new ListMessageItemOption("Manage Stared places", "Manage Stared places", ConversationFlowType.MANAGE_PLACES),
+                new ListMessageItemOption("Change Language", "Choose conversation language", ConversationFlowType.CHANGE_LANGUAGE),
+                new ListMessageItemOption("Raise Support Ticket", "Raise Support Ticket", ConversationFlowType.SUPPORT),
+                new ListMessageItemOption("Give Feedback", "FeedBack", ConversationFlowType.SUPPORT),
+                new ListMessageItemOption("Know More", "Know More", ConversationFlowType.KNOW_MORE),
+                new ListMessageItemOption("FAQs", "FAQs", ConversationFlowType.FAQ)
         ));
 
         // Add others section to group
@@ -278,10 +287,15 @@ public class WhatsappMessageServiceImpl implements MessageService {
         sendListMessage(new SendListMessageRequestDto(user.getPhoneNumber(), generateListMessage(listMessageDto)));
     }
 
+    @Override
+    public void sendFeatureNotImplemented(User user) throws Exception {
+        sendTextMessage(new SendMessageRequestDto(user.getPhoneNumber(), "This feature is not supported yet"));
+    }
+
     // TODO : integrate template manager
     @Override
-    public void sendErrorMessage(User user) throws Exception {
-        sendTextMessage(new SendMessageRequestDto(user.getPhoneNumber(), "Hello " + user.getName() + " I did not understand that !"));
+    public void sendErrorMessage(String receiverPhone) throws Exception {
+        sendTextMessage(new SendMessageRequestDto(receiverPhone, "Sorry, I did not understand that !"));
     }
 
     public void printAllItems(List<?> items) {

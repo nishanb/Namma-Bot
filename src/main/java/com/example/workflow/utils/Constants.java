@@ -25,6 +25,7 @@ public class Constants {
     public static final String MESSAGE_TYPE_QUICK_REPLY = "quick_reply";
 
     public static final String MESSAGE_TYPE_BUTTON_REPLY = "button_reply";
+    public static final String MESSAGE_TYPE_LOCATION_REPLY = "location";
 
     public static final String MESSAGE_TYPE_LIST_REPLY = "list_reply";
 
@@ -42,7 +43,7 @@ public class Constants {
     public static final String STATUS = "status";
 
     public static final Map<String, String> CAMUNDA_WORKFLOW_PROCESS_NAME_MAP = Map.of(
-            "BOOK_RIDE", "Process_1bgrwav:6:454ab604-d21a-11ed-8444-6efb47c1fefa",
+            "BOOK_RIDE", "Process_1bgrwav:2:379fa284-d370-11ed-92b9-168bf8a05279",
             "PREVIOUS_RIDE", "camunda_id_goes_here",
             "ADD_PLACE", "camunda_id_goes_here",
             "DELETE_PLACE", "camunda_id_goes_here",

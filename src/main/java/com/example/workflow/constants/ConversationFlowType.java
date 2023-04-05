@@ -10,4 +10,7 @@ public class ConversationFlowType {
     public static final String OTHER = "OTHER";
     public static final String CHANGE_LANGUAGE = "CHANGE_LANGUAGE";
     public static final String MANAGE_PLACES = "MANAGE_PLACES";
+    public static final String KNOW_MORE = "KNOW_MORE";
+    public static final String FEEDBACK = "FEEDBACK";
+    public static final String FAQ = "FAQ";
 }

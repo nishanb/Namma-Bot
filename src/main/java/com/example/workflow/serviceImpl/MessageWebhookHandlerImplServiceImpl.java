@@ -19,8 +19,7 @@ import com.example.workflow.constants.ConversationFlowType;
 
 import java.util.Optional;
 
-import static com.example.workflow.utils.Constants.INBOUND_WEBHOOK_EVENTS;
-import static com.example.workflow.utils.Constants.MESSAGE_TYPE_BUTTON_REPLY;
+import static com.example.workflow.utils.Constants.*;
 
 @Service
 public class MessageWebhookHandlerImplServiceImpl implements MessageWebhookHandlerService {
@@ -59,28 +58,44 @@ public class MessageWebhookHandlerImplServiceImpl implements MessageWebhookHandl
         try {
             // Collect user info from DB if exists or create new user
             Optional<User> userDetails = userService.findUserByPhoneNumber(inboundUserDetails.getPhone());
-            User user = null;
+            User user;
             user = userDetails.orElseGet(() -> userService.createUser(new User(null, inboundUserDetails.getPhone())));
             user.setName(inboundUserDetails.getName());
 
             if (user.getProcessInstanceId() == null) {
-                // if user has chosen option to initiate flow
+                // // Message callback coming from main section
                 if (messageType.equals(MESSAGE_TYPE_BUTTON_REPLY)) {
                     switch (webhookMessagePayload.getPostbackText()) {
                         case ConversationFlowType.BOOK_RIDE ->
                                 workflowService.initiateWorkflow(user, Constants.CAMUNDA_WORKFLOW_PROCESS_NAME_MAP.get(ConversationFlowType.BOOK_RIDE));
-                        case ConversationFlowType.PREVIOUS_RIDE ->
-                                workflowService.initiateWorkflow(user, Constants.CAMUNDA_WORKFLOW_PROCESS_NAME_MAP.get(ConversationFlowType.PREVIOUS_RIDE));
+                        case ConversationFlowType.PREVIOUS_RIDE -> messageService.sendFeatureNotImplemented(user);
+                        //workflowService.initiateWorkflow(user, Constants.CAMUNDA_WORKFLOW_PROCESS_NAME_MAP.get(ConversationFlowType.PREVIOUS_RIDE));
+                        case ConversationFlowType.OTHER -> messageService.sendOtherOptions(user);
+                        case default -> messageService.sendErrorMessage(user.getPhoneNumber());
+                    }
+
+                } // Message callback coming from others section
+                else if (messageType.equals(MESSAGE_TYPE_LIST_REPLY)) {
+                    switch (webhookMessagePayload.getPostbackText()) {
                         case ConversationFlowType.MANAGE_PLACES ->
                                 workflowService.initiateWorkflow(user, Constants.CAMUNDA_WORKFLOW_PROCESS_NAME_MAP.get(ConversationFlowType.MANAGE_PLACES));
                         case ConversationFlowType.SUPPORT ->
-                                workflowService.initiateWorkflow(user, Constants.CAMUNDA_WORKFLOW_PROCESS_NAME_MAP.get(ConversationFlowType.SUPPORT));
+                            //workflowService.initiateWorkflow(user, Constants.CAMUNDA_WORKFLOW_PROCESS_NAME_MAP.get(ConversationFlowType.SUPPORT));
+                                messageService.sendFeatureNotImplemented(user);
                         case ConversationFlowType.CHANGE_LANGUAGE ->
-                                workflowService.initiateWorkflow(user, Constants.CAMUNDA_WORKFLOW_PROCESS_NAME_MAP.get(ConversationFlowType.CHANGE_LANGUAGE));
-                        case ConversationFlowType.OTHER -> messageService.sendOtherOptions(user);
-                        case default -> messageService.sendErrorMessage(user);
+                            //workflowService.initiateWorkflow(user, Constants.CAMUNDA_WORKFLOW_PROCESS_NAME_MAP.get(ConversationFlowType.CHANGE_LANGUAGE));
+                                messageService.sendFeatureNotImplemented(user);
+                        case ConversationFlowType.FEEDBACK ->
+                            //workflowService.initiateWorkflow(user, Constants.CAMUNDA_WORKFLOW_PROCESS_NAME_MAP.get(ConversationFlowType.FEEDBACK));
+                                messageService.sendFeatureNotImplemented(user);
+                        case ConversationFlowType.KNOW_MORE ->
+                            //workflowService.initiateWorkflow(user, Constants.CAMUNDA_WORKFLOW_PROCESS_NAME_MAP.get(ConversationFlowType.KNOW_MORE));
+                                messageService.sendFeatureNotImplemented(user);
+                        case ConversationFlowType.FAQ ->
+                            //workflowService.initiateWorkflow(user, Constants.CAMUNDA_WORKFLOW_PROCESS_NAME_MAP.get(ConversationFlowType.FAQ));
+                                messageService.sendFeatureNotImplemented(user);
+                        case default -> messageService.sendErrorMessage(user.getPhoneNumber());
                     }
-
                 } else {
                     // user without any process running
                     messageService.sendGreetingMessage(user);
