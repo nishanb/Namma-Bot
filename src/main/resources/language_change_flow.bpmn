@@ -8,23 +8,23 @@
         <bpmn:outgoing>Flow_0c2gi0x</bpmn:outgoing>
       </bpmn:startEvent>
       <bpmn:sequenceFlow id="Flow_0c2gi0x" sourceRef="Event_1a79578" targetRef="Activity_01yx7lh" />
-      <bpmn:sequenceFlow id="Flow_0nrkmwu" sourceRef="Activity_01yx7lh" targetRef="Activity_1ql44k8" />
+      <bpmn:sequenceFlow id="Flow_0nrkmwu" sourceRef="Activity_01yx7lh" targetRef="Language_Selection" />
       <bpmn:serviceTask id="Activity_01yx7lh" name="Request preferred language" camunda:class="com.example.workflow.camunda.service.languageSelection.PreferredLanguage">
         <bpmn:incoming>Flow_0c2gi0x</bpmn:incoming>
         <bpmn:incoming>Flow_0nm9jm0</bpmn:incoming>
         <bpmn:outgoing>Flow_0nrkmwu</bpmn:outgoing>
       </bpmn:serviceTask>
-      <bpmn:userTask id="Activity_1ql44k8" name="Language selection">
+      <bpmn:userTask id="Language_Selection" name="Language selection">
         <bpmn:incoming>Flow_0nrkmwu</bpmn:incoming>
         <bpmn:outgoing>Flow_1lk05sc</bpmn:outgoing>
       </bpmn:userTask>
-      <bpmn:sequenceFlow id="Flow_1lk05sc" sourceRef="Activity_1ql44k8" targetRef="Activity_0bosvce" />
+      <bpmn:sequenceFlow id="Flow_1lk05sc" sourceRef="Language_Selection" targetRef="Activity_0bosvce" />
       <bpmn:serviceTask id="Activity_0bosvce" name="Request language confirmation" camunda:class="com.example.workflow.camunda.service.languageSelection.ConfirmLanguage">
         <bpmn:incoming>Flow_1lk05sc</bpmn:incoming>
         <bpmn:outgoing>Flow_0i0uuwi</bpmn:outgoing>
       </bpmn:serviceTask>
-      <bpmn:sequenceFlow id="Flow_0i0uuwi" sourceRef="Activity_0bosvce" targetRef="Activity_1r6wazl" />
-      <bpmn:userTask id="Activity_1r6wazl" name="Language change confirmation">
+      <bpmn:sequenceFlow id="Flow_0i0uuwi" sourceRef="Activity_0bosvce" targetRef="Language_Change_Confirmation" />
+      <bpmn:userTask id="Language_Change_Confirmation" name="Language change confirmation">
         <bpmn:incoming>Flow_0i0uuwi</bpmn:incoming>
         <bpmn:outgoing>Flow_17wzzdj</bpmn:outgoing>
       </bpmn:userTask>
@@ -34,7 +34,7 @@
         <bpmn:outgoing>Flow_01to24s</bpmn:outgoing>
         <bpmn:outgoing>Flow_0nffa8m</bpmn:outgoing>
       </bpmn:exclusiveGateway>
-      <bpmn:sequenceFlow id="Flow_17wzzdj" sourceRef="Activity_1r6wazl" targetRef="Activity_181udzi" />
+      <bpmn:sequenceFlow id="Flow_17wzzdj" sourceRef="Language_Change_Confirmation" targetRef="Activity_181udzi" />
       <bpmn:sequenceFlow id="Flow_0nm9jm0" sourceRef="Gateway_1xo17tv" targetRef="Activity_01yx7lh">
         <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${languageConfirmationDecision=='changeSelection'}</bpmn:conditionExpression>
       </bpmn:sequenceFlow>
@@ -98,13 +98,13 @@
         <bpmn:incoming>Flow_1lq8554</bpmn:incoming>
         <bpmn:signalEventDefinition id="SignalEventDefinition_10mrflm" signalRef="Signal_2k7jphm" />
       </bpmn:intermediateThrowEvent>
-      <bpmn:boundaryEvent id="Event_1nx59pw" attachedToRef="Activity_1ql44k8">
+      <bpmn:boundaryEvent id="Event_1nx59pw" attachedToRef="Language_Selection">
         <bpmn:outgoing>Flow_0cpcvwa</bpmn:outgoing>
         <bpmn:timerEventDefinition id="TimerEventDefinition_1tjnkap">
           <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT15M</bpmn:timeDuration>
         </bpmn:timerEventDefinition>
       </bpmn:boundaryEvent>
-      <bpmn:boundaryEvent id="Event_1o14bsx" attachedToRef="Activity_1r6wazl">
+      <bpmn:boundaryEvent id="Event_1o14bsx" attachedToRef="Language_Change_Confirmation">
         <bpmn:outgoing>Flow_15j8ms4</bpmn:outgoing>
         <bpmn:timerEventDefinition id="TimerEventDefinition_166okfm">
           <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT15M</bpmn:timeDuration>
@@ -154,7 +154,7 @@
         <dc:Bounds x="420" y="180" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1eipv6w_di" bpmnElement="Activity_1ql44k8">
+      <bpmndi:BPMNShape id="Activity_1eipv6w_di" bpmnElement="Language_Selection">
         <dc:Bounds x="580" y="180" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
@@ -162,7 +162,7 @@
         <dc:Bounds x="740" y="180" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0w42ohv_di" bpmnElement="Activity_1r6wazl">
+      <bpmndi:BPMNShape id="Activity_0w42ohv_di" bpmnElement="Language_Change_Confirmation">
         <dc:Bounds x="900" y="180" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
