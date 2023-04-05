@@ -107,17 +107,17 @@ public class WhatsappMessageServiceImpl implements MessageService {
                 Map<String, String> requestMap = new HashMap<>();
 
                 requestMap.put("type", sendAttachmentMessageDto.getAttachmentType());
-                requestMap.put("originalUrl", sendAttachmentMessageDto.getAttachmentURL());
-                requestMap.put("previewUrl", sendAttachmentMessageDto.getAttachmentURL());
-                requestMap.put("caption", sendAttachmentMessageDto.getMessageText());
+                requestMap.put("originalUrl", sendAttachmentMessageDto.getOriginalUrl());
+                requestMap.put("previewUrl", sendAttachmentMessageDto.getPreviewUrl());
+                requestMap.put("caption", sendAttachmentMessageDto.getCaption());
 
                 message = PrepareRequestHelper.stringifyJson(requestMap);
             } else if (sendAttachmentMessageDto.getAttachmentType().equals(ATTACHMENT_TYPES_FILE)) {
                 Map<String, String> requestMap = new HashMap<>();
 
                 requestMap.put("type", sendAttachmentMessageDto.getAttachmentType());
-                requestMap.put("url", sendAttachmentMessageDto.getAttachmentURL());
-                requestMap.put("filename", sendAttachmentMessageDto.getMessageText());
+                requestMap.put("url", sendAttachmentMessageDto.getUrl());
+                requestMap.put("filename", sendAttachmentMessageDto.getFilename());
 
                 message = PrepareRequestHelper.stringifyJson(requestMap);
             }
@@ -180,14 +180,15 @@ public class WhatsappMessageServiceImpl implements MessageService {
 
     // Section : Message generators & Helpers
     @Override
-    public ListMessage generateListMessage(ListMessageData messageData, List listData, String messageId) throws Exception {
+    public ListMessage generateListMessage(ListMessageDto listMessageDto) throws Exception {
         ListMessage listMessage = new ListMessage();
 
         listMessage.setType(MESSAGE_TYPE_LIST);
-        listMessage.setMessageId(messageId);
-        listMessage.setBody(messageData.getBody());
-        listMessage.setGlobalButtonsList(List.of(messageData.getGlobalButtons()));
-        listMessage.setItems(listData);
+        listMessage.setTitle(listMessageDto.getTitle());
+        listMessage.setMsgId(listMessageDto.getMsgId());
+        listMessage.setBody(listMessageDto.getBody());
+        listMessage.setGlobalButtonsList(listMessageDto.getGlobalButtonsList());
+        listMessage.setItems((List<ListMessageItem>) listMessageDto.getItems());
 
         return listMessage;
     }

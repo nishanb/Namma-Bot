@@ -27,6 +27,7 @@ public class CamundaCoreService {
     }
 
     public Task getTasksByBusinessKey(String businessKey, String processDefinitionId){
+        System.out.println("businesskey >> "+businessKey+" processid >> "+processDefinitionId);
         Task task = taskService.createTaskQuery()
                 .processDefinitionId(processDefinitionId)
                 .taskAssignee(camundaUserName)
@@ -37,6 +38,10 @@ public class CamundaCoreService {
 
     public void completeUserTaskByTaskId(Task task, Map<String, Object> variables){
         taskService.complete(task.getId(), variables);
+    }
+
+    public void createMessageCorrelation(String businessKey, String messageName, Map<String, Object> variables){
+        runtimeService.correlateMessage(messageName, businessKey, variables);
     }
 
 }

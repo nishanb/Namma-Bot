@@ -7,6 +7,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import camundajar.impl.com.google.gson.JsonElement;
+import camundajar.impl.com.google.gson.JsonObject;
+import com.example.workflow.camunda.core.CamundaCoreService;
+//import model.User;
+import org.camunda.bpm.engine.task.Task;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 
 // Use this controller to test service / anything :( anything .... :()
 //TODO: Remove this before release
@@ -22,6 +37,12 @@ public class TestController {
 
     @Autowired
     MessageWebhookHandlerService messageWebhookHandlerService;
+
+    @Autowired
+    CamundaCoreService camundaCoreService;
+
+    @Value("${camunda.process-definition-id.language-change-flow}")
+    String processId;
 
     @GetMapping
     public void test() throws IOException {
@@ -61,6 +82,16 @@ public class TestController {
 //        userService.updateProcessInstanceIdByUserId("64296a988c39bf662dacc064", "dora");
 
 //            userService.updateUserLanguageByPhoneNumber("7892693018", "kannada");
+
+//        Task task = camundaCoreService.getTasksByBusinessKey("testUserComplete1",processId);
+//        Map<String, Object> variables = new HashMap<>();
+//        variables.put("booking_type",2);
+//        camundaCoreService.completeUserTaskByTaskId(task,variables);
+
+        Task task = camundaCoreService.getTasksByBusinessKey("testUserComplete",processId);
+        Map<String, Object> variables = new HashMap<>();
+        variables.put("languageConfirmation",1);
+        camundaCoreService.completeUserTaskByTaskId(task,variables);
 
     }
 //
