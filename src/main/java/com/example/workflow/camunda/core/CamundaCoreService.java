@@ -27,6 +27,7 @@ public class CamundaCoreService {
     }
 
     public Task getTasksByBusinessKey(String businessKey, String processDefinitionId){
+        System.out.println("businesskey >> "+businessKey+" processid >> "+processDefinitionId);
         Task task = taskService.createTaskQuery()
                 .processDefinitionId(processDefinitionId)
                 .taskAssignee(camundaUserName)
