@@ -6,6 +6,7 @@ import com.example.workflow.dto.*;
 import com.example.workflow.helpers.PrepareRequestHelper;
 import com.example.workflow.helpers.TransformResponseHelper;
 import com.example.workflow.models.*;
+import com.example.workflow.models.gupshup.*;
 import com.example.workflow.services.MessageService;
 import com.example.workflow.utils.Constants;
 import com.example.workflow.utils.WhatsappMsgServiceApiHelper;

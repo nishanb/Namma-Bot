@@ -1,9 +1,6 @@
 package com.example.workflow.dto;
 
-import com.example.workflow.models.QuickReplyMessage;
-
-import java.util.List;
-import java.util.Map;
+import com.example.workflow.models.gupshup.QuickReplyMessage;
 
 public class SendQuickReplyMessageDto {
     private String type;

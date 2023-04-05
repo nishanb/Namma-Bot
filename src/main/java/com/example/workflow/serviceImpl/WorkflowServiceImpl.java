@@ -1,10 +1,9 @@
 package com.example.workflow.serviceImpl;
 
 import com.example.workflow.camunda.core.CamundaCoreService;
-import com.example.workflow.camunda.service.booking.PickupLocation;
 import com.example.workflow.camunda.service.booking.userTasks.ReceiveDestinationUserTask;
 import com.example.workflow.models.User;
-import com.example.workflow.models.WebhookMessagePayload;
+import com.example.workflow.models.gupshup.WebhookMessagePayload;
 import com.example.workflow.services.UserService;
 import com.example.workflow.services.WorkflowService;
 import org.camunda.bpm.engine.runtime.ActivityInstance;

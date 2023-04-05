@@ -4,7 +4,7 @@ import com.example.workflow.camunda.core.CamundaCoreService;
 import com.example.workflow.camunda.service.UserTask;
 import com.example.workflow.dto.SendMessageRequestDto;
 import com.example.workflow.models.User;
-import com.example.workflow.models.WebhookMessagePayload;
+import com.example.workflow.models.gupshup.WebhookMessagePayload;
 import com.example.workflow.services.MessageService;
 import org.camunda.bpm.engine.runtime.ActivityInstance;
 import org.springframework.beans.factory.annotation.Autowired;

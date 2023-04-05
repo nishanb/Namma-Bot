@@ -1,12 +1,16 @@
 package com.example.workflow.controllers;
 
+import com.example.workflow.models.Template;
+import com.example.workflow.repository.TemplateRepository;
 import com.example.workflow.services.MessageService;
 import com.example.workflow.services.MessageWebhookHandlerService;
 import com.example.workflow.services.NammaYathriService;
+import com.example.workflow.services.TemplateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+
 import camundajar.impl.com.google.gson.JsonElement;
 import camundajar.impl.com.google.gson.JsonObject;
 import com.example.workflow.camunda.core.CamundaCoreService;
@@ -19,9 +23,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.lang.reflect.Array;
+import java.util.*;
 
 // Use this controller to test service / anything :( anything .... :()
 //TODO: Remove this before release
@@ -44,8 +47,25 @@ public class TestController {
     @Value("${camunda.process-definition-id.language-change-flow}")
     String processId;
 
+    @Autowired
+    TemplateService templateService;
+
+    @Autowired
+    TemplateRepository templateRepository;
+
     @GetMapping
     public void test() throws IOException {
+
+
+//        templateRepository.save(new Template("GREETING", new HashMap<>() {{
+//            put("english", "Hello $1, How are you");
+//            put("kannada", "ಹಲೋ $1, ಹೇಗಿದ್ದೀಯಾ");
+//            put("hindi", "हैलो $1, कैसे हो");
+//        }}));
+
+//        templateService.format("GREETING", "kannada", new ArrayList<>(Arrays.asList("ಬಕ್ಕು", "")));
+//        templateService.format("GREETING", "hindi",  new ArrayList<>(Arrays.asList("बक्कू")));
+        templateService.format("GREETING", "english",  new ArrayList<>(Arrays.asList("Bakku", "ಬಕ್ಕು")));
 
         /* Test Backend
         nammaYathriService.getStarredPlaces();
@@ -88,10 +108,10 @@ public class TestController {
 //        variables.put("booking_type",2);
 //        camundaCoreService.completeUserTaskByTaskId(task,variables);
 
-        Task task = camundaCoreService.getTasksByBusinessKey("testUserComplete",processId);
-        Map<String, Object> variables = new HashMap<>();
-        variables.put("languageConfirmation",1);
-        camundaCoreService.completeUserTaskByTaskId(task,variables);
+//        Task task = camundaCoreService.getTasksByBusinessKey("testUserComplete",processId);
+//        Map<String, Object> variables = new HashMap<>();
+//        variables.put("languageConfirmation",1);
+//        camundaCoreService.completeUserTaskByTaskId(task,variables);
 
     }
 //
@@ -153,4 +173,6 @@ public class TestController {
 //        }
 //
 //    }
+
+
 }

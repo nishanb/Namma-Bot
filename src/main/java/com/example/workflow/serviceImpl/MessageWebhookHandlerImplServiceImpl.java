@@ -1,9 +1,9 @@
 package com.example.workflow.serviceImpl;
 
-import com.example.workflow.dto.ListMessageDto;
-import com.example.workflow.dto.SendListMessageRequestDto;
 import com.example.workflow.dto.WebhookEventRequestDto;
 import com.example.workflow.models.*;
+import com.example.workflow.models.gupshup.InBoundUserDetails;
+import com.example.workflow.models.gupshup.WebhookMessagePayload;
 import com.example.workflow.services.MessageService;
 import com.example.workflow.services.MessageWebhookHandlerService;
 import com.example.workflow.services.UserService;
@@ -17,8 +17,6 @@ import org.springframework.stereotype.Service;
 import com.example.workflow.constants.ConversationFlowType;
 
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 import static com.example.workflow.utils.Constants.INBOUND_WEBHOOK_EVENTS;

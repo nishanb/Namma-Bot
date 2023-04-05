@@ -1,8 +1,6 @@
 package com.example.workflow.dto;
 
-import com.example.workflow.models.ListMessage;
-
-import java.util.HashMap;
+import com.example.workflow.models.gupshup.ListMessage;
 
 public class SendListMessageRequestDto {
 

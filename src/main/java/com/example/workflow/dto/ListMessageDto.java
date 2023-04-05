@@ -1,7 +1,7 @@
 package com.example.workflow.dto;
 
-import com.example.workflow.models.GlobalButtons;
-import com.example.workflow.models.ListMessageItem;
+import com.example.workflow.models.gupshup.GlobalButtons;
+import com.example.workflow.models.gupshup.ListMessageItem;
 
 import java.util.List;
 

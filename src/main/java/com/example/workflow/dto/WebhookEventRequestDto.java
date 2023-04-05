@@ -1,6 +1,6 @@
 package com.example.workflow.dto;
 
-import com.example.workflow.models.WebhookMessagePayload;
+import com.example.workflow.models.gupshup.WebhookMessagePayload;
 
 public class WebhookEventRequestDto {
     private String type;

@@ -1,4 +1,4 @@
-package com.example.workflow.models;
+package com.example.workflow.models.gupshup;
 
 public class GlobalButtons {
     private String type;
