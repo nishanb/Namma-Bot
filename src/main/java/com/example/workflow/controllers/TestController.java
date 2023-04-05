@@ -10,8 +10,6 @@ import java.io.IOException;
 import camundajar.impl.com.google.gson.JsonElement;
 import camundajar.impl.com.google.gson.JsonObject;
 import com.example.workflow.camunda.core.CamundaCoreService;
-import com.example.workflow.service.NammaYathriService;
-import com.example.workflow.service.UserService;
 //import model.User;
 import org.camunda.bpm.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +41,7 @@ public class TestController {
     @Autowired
     CamundaCoreService camundaCoreService;
 
-    @Value("${camunda.process-definition-id.booking-flow}")
+    @Value("${camunda.process-definition-id.language-change-flow}")
     String processId;
 
     @GetMapping
@@ -85,9 +83,14 @@ public class TestController {
 
 //            userService.updateUserLanguageByPhoneNumber("7892693018", "kannada");
 
-        Task task = camundaCoreService.getTasksByBusinessKey("testUserComplete1",processId);
+//        Task task = camundaCoreService.getTasksByBusinessKey("testUserComplete1",processId);
+//        Map<String, Object> variables = new HashMap<>();
+//        variables.put("booking_type",2);
+//        camundaCoreService.completeUserTaskByTaskId(task,variables);
+
+        Task task = camundaCoreService.getTasksByBusinessKey("testUserComplete",processId);
         Map<String, Object> variables = new HashMap<>();
-        variables.put("booking_type",2);
+        variables.put("languageConfirmation",1);
         camundaCoreService.completeUserTaskByTaskId(task,variables);
 
     }

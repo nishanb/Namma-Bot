@@ -122,15 +122,15 @@
         <bpmn:incoming>Flow_1lw9x5y</bpmn:incoming>
         <bpmn:signalEventDefinition id="SignalEventDefinition_011t2jt" signalRef="Signal_3pb3n4j" />
       </bpmn:intermediateThrowEvent>
-      <bpmn:serviceTask id="Activity_1am18zs" name="Closing  conversation for no response" camunda:class="com.example.workflow.camunda.service.booking.NoResponseClose">
+      <bpmn:serviceTask id="Activity_1am18zs" name="Closing  conversation for no response" camunda:class="com.example.workflow.camunda.service.common.NoResponseClose">
         <bpmn:incoming>Flow_1tlftgo</bpmn:incoming>
         <bpmn:outgoing>Flow_0d4g76q</bpmn:outgoing>
       </bpmn:serviceTask>
-      <bpmn:serviceTask id="Activity_0celfcj" name="Closing conversation for no response" camunda:class="com.example.workflow.camunda.service.booking.NoResponseClose">
+      <bpmn:serviceTask id="Activity_0celfcj" name="Closing conversation for no response" camunda:class="com.example.workflow.camunda.service.common.NoResponseClose">
         <bpmn:incoming>Flow_0pou8ew</bpmn:incoming>
         <bpmn:outgoing>Flow_0v8esmm</bpmn:outgoing>
       </bpmn:serviceTask>
-      <bpmn:serviceTask id="Activity_0b08dpz" name="Closing conversation for no response" camunda:class="com.example.workflow.camunda.service.booking.NoResponseClose">
+      <bpmn:serviceTask id="Activity_0b08dpz" name="Closing conversation for no response" camunda:class="com.example.workflow.camunda.service.common.NoResponseClose">
         <bpmn:incoming>Flow_0hs6tph</bpmn:incoming>
         <bpmn:outgoing>Flow_1lw9x5y</bpmn:outgoing>
       </bpmn:serviceTask>
@@ -661,6 +661,7 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_1apzmqy" bpmnElement="Activity_1am18zs">
         <dc:Bounds x="710" y="401" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_0ny8kso" bpmnElement="Activity_0celfcj">
         <dc:Bounds x="1030" y="401" width="100" height="80" />
