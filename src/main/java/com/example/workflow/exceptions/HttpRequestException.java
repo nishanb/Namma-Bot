@@ -1,4 +1,4 @@
-package com.example.workflow.exception;
+package com.example.workflow.exceptions;
 
 public class HttpRequestException extends Exception {
 

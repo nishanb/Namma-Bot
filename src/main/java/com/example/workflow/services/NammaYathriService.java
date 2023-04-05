@@ -1,7 +1,6 @@
-package com.example.workflow.service;
+package com.example.workflow.services;
 
 import camundajar.impl.com.google.gson.JsonElement;
-import com.fasterxml.jackson.databind.JsonNode;
 
 import java.io.IOException;
 
