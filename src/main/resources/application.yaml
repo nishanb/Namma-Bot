@@ -16,4 +16,5 @@ spring:
       uri: ${DB_URI}
       database: "cpo"
 camunda.process-definition-id:
-  booking-flow: Process_1bgrwav:4:85067cd4-d17f-11ed-a26d-921397077b9b #id of the deployed BPMN process, every change in BPMN will lead to a new ID.
+  booking-flow: Process_1bgrwav:8:312c6b52-d312-11ed-8bc5-f6a8ace2dc6a #id of the deployed BPMN process, every change in BPMN will lead to a new ID.
+  ride-flow: Process_1hhq3j4:3:312c4441-d312-11ed-8bc5-f6a8ace2dc6a

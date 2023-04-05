@@ -13,7 +13,7 @@
           <text>1</text>
         </inputEntry>
         <outputEntry id="LiteralExpression_1f25g47">
-          <text>autoProcess</text>
+          <text>"autoProcess"</text>
         </outputEntry>
       </rule>
       <rule id="DecisionRule_0rjqccx">
@@ -21,7 +21,7 @@
           <text>2</text>
         </inputEntry>
         <outputEntry id="LiteralExpression_0dwl271">
-          <text>manualProcess</text>
+          <text>"manualProcess"</text>
         </outputEntry>
       </rule>
       <rule id="DecisionRule_1qdzjgf">
@@ -29,7 +29,7 @@
           <text>3</text>
         </inputEntry>
         <outputEntry id="LiteralExpression_1juxnyk">
-          <text>changeLocation</text>
+          <text>"changeLocation"</text>
         </outputEntry>
       </rule>
       <rule id="DecisionRule_0g2cw0b">
@@ -37,7 +37,7 @@
           <text>4</text>
         </inputEntry>
         <outputEntry id="LiteralExpression_189pz4v">
-          <text>cancelBooking</text>
+          <text>"cancelBooking"</text>
         </outputEntry>
       </rule>
     </decisionTable>
