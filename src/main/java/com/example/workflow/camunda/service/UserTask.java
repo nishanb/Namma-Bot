@@ -1,4 +1,4 @@
-package com.example.workflow.camunda.service.booking.userTasks;
+package com.example.workflow.camunda.service;
 
 import com.example.workflow.models.User;
 import com.example.workflow.models.WebhookMessagePayload;

@@ -10,7 +10,7 @@ public class ListMessageDto {
     private String msgId;
     private String title;
     private String body;
-    private List<GlobalButtons> globalButtonsList;
+    private List<GlobalButtons> globalButtons;
     private List<ListMessageItem> items;
 
     public ListMessageDto() {
@@ -48,12 +48,12 @@ public class ListMessageDto {
         this.body = body;
     }
 
-    public List<GlobalButtons> getGlobalButtonsList() {
-        return globalButtonsList;
+    public List<GlobalButtons> getGlobalButtons() {
+        return globalButtons;
     }
 
-    public void setGlobalButtonsList(List<GlobalButtons> globalButtonsList) {
-        this.globalButtonsList = globalButtonsList;
+    public void setGlobalButtons(List<GlobalButtons> globalButtons) {
+        this.globalButtons = globalButtons;
     }
 
     public List<?> getItems() {
