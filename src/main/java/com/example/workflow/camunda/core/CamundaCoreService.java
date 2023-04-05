@@ -39,4 +39,8 @@ public class CamundaCoreService {
         taskService.complete(task.getId(), variables);
     }
 
+    public void createMessageCorrelation(String businessKey, String messageName, Map<String, Object> variables){
+        runtimeService.correlateMessage(messageName, businessKey, variables);
+    }
+
 }

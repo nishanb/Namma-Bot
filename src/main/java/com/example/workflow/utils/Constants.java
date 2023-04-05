@@ -42,7 +42,7 @@ public class Constants {
     public static final String STATUS = "status";
 
     public static final Map<String, String> CAMUNDA_WORKFLOW_PROCESS_NAME_MAP = Map.of(
-            "BOOK_RIDE", "Process_1bgrwav:2:30d2c77a-d22b-11ed-bee8-824333d9ac02",
+            "BOOK_RIDE", "Process_1bgrwav:6:454ab604-d21a-11ed-8444-6efb47c1fefa",
             "PREVIOUS_RIDE", "camunda_id_goes_here",
             "ADD_PLACE", "camunda_id_goes_here",
             "DELETE_PLACE", "camunda_id_goes_here",

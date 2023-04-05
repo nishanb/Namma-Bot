@@ -5,11 +5,12 @@ import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
 import org.camunda.bpm.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
-
+@Service
 public class DriverArrived implements JavaDelegate {
 
     @Autowired
@@ -30,6 +31,7 @@ public class DriverArrived implements JavaDelegate {
             String businessKey = execution.getProcessBusinessKey();
             camundaCoreService.createMessageCorrelation(businessKey,"driver_arrived_update",variables);
         } catch (Exception e){
+            System.out.println("Exception >>>>>>"+e.getMessage());
             log.warning("ride.DriverArrived: Exception occured......");
             throw new BpmnError("booking_flow_error","Error sending message.....");
         }

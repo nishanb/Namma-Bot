@@ -6,11 +6,12 @@ import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
-
+@Service
 public class InitiateRide implements JavaDelegate {
 
     @Autowired
@@ -30,6 +31,7 @@ public class InitiateRide implements JavaDelegate {
             String businessKey = execution.getProcessBusinessKey();
             camundaCoreService.startProcessInstance(rideFlowProcessId,businessKey);
         } catch (Exception e){
+            System.out.println("error message>>>>"+e.getMessage());
             log.warning("book.InitiateRide: Exception occured......");
             throw new BpmnError("booking_flow_error","Error sending message.....");
         }

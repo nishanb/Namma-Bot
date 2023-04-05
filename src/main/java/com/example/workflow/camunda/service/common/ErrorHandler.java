@@ -1,4 +1,4 @@
-package com.example.workflow.camunda.service.booking;
+package com.example.workflow.camunda.service.common;
 
 import org.camunda.bpm.engine.delegate.BpmnError;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
