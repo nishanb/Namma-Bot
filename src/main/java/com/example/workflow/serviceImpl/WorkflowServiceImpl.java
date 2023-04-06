@@ -1,7 +1,7 @@
 package com.example.workflow.serviceImpl;
 
 import com.example.workflow.camunda.core.CamundaCoreService;
-import com.example.workflow.config.WorkFlowType;
+import com.example.workflow.config.BpmnWorkFlow;
 import com.example.workflow.models.User;
 import com.example.workflow.models.gupshup.WebhookMessagePayload;
 import com.example.workflow.serviceImpl.activityHandlers.RideBookingActivityHandler;
@@ -48,7 +48,7 @@ public class WorkflowServiceImpl implements WorkflowService {
 
             logger.info(String.format("Currently %s is in activity %s on process instance %s", user.getPhoneNumber(), currentActivityInstance.getId(), processInstanceId));
 
-            switch (WorkFlowType.fromProcessDefinitionName(camundaCoreService.getProcessDefinitionNameByProcessInstanceId(activityInstance.getProcessDefinitionId()))) {
+            switch (BpmnWorkFlow.fromProcessDefinitionName(camundaCoreService.getProcessDefinitionNameByProcessInstanceId(activityInstance.getProcessDefinitionId()))) {
                 case RIDE_BOOKING -> {
                     rideBookingActivityHandler.handle(task, user, messageType, webhookMessagePayload);
                 }
@@ -64,7 +64,7 @@ public class WorkflowServiceImpl implements WorkflowService {
 
     @Override
     public void initiateWorkflow(User user, String processDefinitionId) {
-        ProcessInstance processInstance = camundaCoreService.startProcessInstanceByName(WorkFlowType.RIDE_BOOKING.getProcessDefinitionName(), user.getPhoneNumber());
+        ProcessInstance processInstance = camundaCoreService.startProcessInstanceByName(BpmnWorkFlow.RIDE_BOOKING.getProcessDefinitionName(), user.getPhoneNumber());
         userService.updateProcessInstanceIdByPhoneNumber(user.getPhoneNumber(), processInstance.getProcessInstanceId());
         logger.info(String.format("Process %s started for user %s with processInstance ID %s", processDefinitionId, user.getPhoneNumber(), processInstance.getProcessInstanceId()));
     }

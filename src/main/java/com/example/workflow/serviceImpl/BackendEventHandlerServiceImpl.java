@@ -1,35 +1,75 @@
 package com.example.workflow.serviceImpl;
 
-import com.example.workflow.config.BackendEventType;
+import com.example.workflow.camunda.core.CamundaCoreService;
+import com.example.workflow.camunda.userTasks.rideBooking.DriverArrivedAlert;
+import com.example.workflow.camunda.userTasks.rideBooking.RideEndedAlert;
+import com.example.workflow.camunda.userTasks.rideBooking.RideStartedAlert;
+import com.example.workflow.config.BackendEvent;
+import com.example.workflow.config.BpmnUserTask;
 import com.example.workflow.dto.BackendEventRequestDto;
+import com.example.workflow.models.User;
 import com.example.workflow.services.BackendEventHandlerService;
+import com.example.workflow.services.UserService;
+import org.camunda.bpm.engine.task.Task;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class BackendEventHandlerServiceImpl implements BackendEventHandlerService {
 
+    @Autowired
+    UserService userService;
+
+    @Autowired
+    CamundaCoreService camundaCoreService;
+
+    @Autowired
+    DriverArrivedAlert driverArrivedAlert;
+
+    @Autowired
+    RideEndedAlert rideEndedAlert;
+
+    @Autowired
+    RideStartedAlert rideStartedAlert;
+
     // TODO :  get user phone and manage bpm logic here
     @Override
-    public boolean handelEvent(BackendEventRequestDto event) {
-        switch (event.getEvent()) {
-            case BackendEventType.DRIVER_ARRIVED:
-                System.out.println("Driver arrived " + event.getMessage());
+    public boolean handelEvent(BackendEventRequestDto event) throws Exception {
+
+        if (event.getRiderPhoneNumber() == null) return false;
+
+        User user = null;
+        Optional<User> UserSaved = userService.findUserByPhoneNumber(event.getRiderPhoneNumber());
+        user = UserSaved.orElse(null);
+        if (user == null) return false;
+
+        Task currentTask = camundaCoreService.getTaskByProcessDefinitionAndBusinessKey(user.getProcessInstanceId(), user.getPhoneNumber());
+
+        switch (BackendEvent.fromEventType(event.getEvent())) {
+            case DRIVER_ARRIVED:
+                // Before completing backend task Check event received is matching with the backend event
+                if (BpmnUserTask.fromTaskDefinitionKey(currentTask.getTaskDefinitionKey()) == BpmnUserTask.RIDE_DRIVER_ARRIVED) {
+                    driverArrivedAlert.complete(currentTask, user, event);
+                }
                 break;
-            case BackendEventType.RIDE_STARTED:
-                System.out.println("Ride Started " + event.getMessage());
+            case RIDE_STARTED:
+                if (BpmnUserTask.fromTaskDefinitionKey(currentTask.getTaskDefinitionKey()) == BpmnUserTask.RIDE_STARTED) {
+                    rideStartedAlert.complete(currentTask, user, event);
+                }
                 break;
-            case BackendEventType.RIDE_ENDED:
-                System.out.println("Ride ended " + event.getMessage());
+            case RIDE_ENDED:
+                if (BpmnUserTask.fromTaskDefinitionKey(currentTask.getTaskDefinitionKey()) == BpmnUserTask.RIDE_ENDED) {
+                    rideEndedAlert.complete(currentTask, user, event);
+                }
                 break;
-            case BackendEventType.RIDE_CANCELED_BY_DRIVER:
+            // TODO : handel this dude
+            case RIDE_CANCELED_BY_DRIVER:
                 System.out.println("Ride canceled by rider " + event.getMessage());
                 break;
             case default:
-                return false;
         }
-        System.out.println(event.getRiderPhoneNumber());
-        System.out.println(event.getMessage());
-        System.out.println(event.getData().toString());
-        return true;
+        return false;
     }
 }

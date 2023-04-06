@@ -3,15 +3,14 @@ package com.example.workflow.config;
 import java.util.HashMap;
 import java.util.Map;
 
-public enum WorkFlowType {
+public enum BpmnWorkFlow {
 
-    // TODO: update process definition key
     RIDE_BOOKING("Boooking_Flow"),
     UPDATE_LANGUAGE("language_change_flow");
 
     private final String processDefinitionName;
 
-    WorkFlowType(String processDefinitionName) {
+    BpmnWorkFlow(String processDefinitionName) {
         this.processDefinitionName = processDefinitionName;
     }
 
@@ -21,15 +20,15 @@ public enum WorkFlowType {
 
     // Default methods for enum reverse lookup
 
-    private static final Map<String, WorkFlowType> intToEnumMap = new HashMap<>();
+    private static final Map<String, BpmnWorkFlow> intToEnumMap = new HashMap<>();
 
     static {
-        for (WorkFlowType enumVal : WorkFlowType.values()) {
+        for (BpmnWorkFlow enumVal : BpmnWorkFlow.values()) {
             intToEnumMap.put(enumVal.getProcessDefinitionName(), enumVal);
         }
     }
 
-    public static WorkFlowType fromProcessDefinitionName(String processDefinitionKey) {
+    public static BpmnWorkFlow fromProcessDefinitionName(String processDefinitionKey) {
         return intToEnumMap.get(processDefinitionKey);
     }
 }

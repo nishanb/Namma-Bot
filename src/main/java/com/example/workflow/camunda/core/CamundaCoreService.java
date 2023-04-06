@@ -4,12 +4,14 @@ import org.camunda.bpm.engine.RepositoryService;
 import org.camunda.bpm.engine.RuntimeService;
 import org.camunda.bpm.engine.TaskService;
 import org.camunda.bpm.engine.repository.ProcessDefinition;
+import org.camunda.bpm.engine.runtime.ActivityInstance;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.camunda.bpm.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -72,5 +74,16 @@ public class CamundaCoreService {
             throw new RuntimeException("Process definition not found for ID: " + processDefinitionId);
         }
         return processDefinition.getName();
+    }
+
+    public Task getTaskByProcessDefinitionAndBusinessKey(String processInstanceId, String businessKey) {
+        ActivityInstance activityInstance = runtimeService.getActivityInstance(processInstanceId);
+        List<ActivityInstance> activeInstances = List.of(activityInstance.getChildActivityInstances());
+
+        if (activeInstances.size() > 0) {
+            ActivityInstance currentActivityInstance = activeInstances.get(0);
+            return getTasksByBusinessKey(businessKey, activityInstance.getProcessDefinitionId());
+        }
+        return null;
     }
 }
