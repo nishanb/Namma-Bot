@@ -5,10 +5,21 @@ public class ListMessageItemOption {
     private String title;
     private String description;
 
+    public ListMessageItemOption() {
+    }
+
     public ListMessageItemOption(String title, String description, String postbackText) {
         this.type = "text";
+        if (title.length() > 24) {
+            title = title.substring(0, 24);
+        }
         this.title = title;
+
+        if (description.length() > 72) {
+            description = description.substring(0, 72);
+        }
         this.description = description;
+
         this.postbackText = postbackText;
     }
 
@@ -28,6 +39,9 @@ public class ListMessageItemOption {
     }
 
     public void setTitle(String title) {
+        if (title.length() > 24) {
+            title = title.substring(0, 24);
+        }
         this.title = title;
     }
 
@@ -36,6 +50,9 @@ public class ListMessageItemOption {
     }
 
     public void setDescription(String description) {
+        if (description.length() > 72) {
+            description = description.substring(0, 72);
+        }
         this.description = description;
     }
 
