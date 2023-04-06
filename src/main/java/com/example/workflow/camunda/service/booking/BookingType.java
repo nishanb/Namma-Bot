@@ -1,7 +1,6 @@
 package com.example.workflow.camunda.service.booking;
 
-import com.example.workflow.constants.ConversationFlowType;
-import com.example.workflow.constants.TemplateType;
+import com.example.workflow.config.ConversationFlowType;
 import com.example.workflow.dto.SendQuickReplyMessageDto;
 import com.example.workflow.models.User;
 import com.example.workflow.models.gupshup.MessageContent;

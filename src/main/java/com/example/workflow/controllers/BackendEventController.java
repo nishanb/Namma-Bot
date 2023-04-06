@@ -17,7 +17,7 @@ public class BackendEventController {
     private BackendEventHandlerService eventWebhookHandlerService;
 
     @PostMapping("/backend-events")
-    public boolean createEvent(@RequestBody BackendEventRequestDto event) {
-        return eventWebhookHandlerService.handelEvent(event);
+    public void createEvent(@RequestBody BackendEventRequestDto event) throws Exception {
+        eventWebhookHandlerService.handelEvent(event);
     }
 }

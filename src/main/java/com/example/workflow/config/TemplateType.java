@@ -1,4 +1,4 @@
-package com.example.workflow.constants;
+package com.example.workflow.config;
 
 public class TemplateType {
     public static final String USER_GREET = "GREETING";
