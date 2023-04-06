@@ -4,7 +4,7 @@ import java.util.List;
 
 public class ListMessage {
     private String type;
-    private String msgId;
+    private String msgid;
     private String title;
     private String body;
     private List<GlobalButtons> globalButtons;
@@ -21,12 +21,12 @@ public class ListMessage {
         this.type = type;
     }
 
-    public String getMsgId() {
-        return msgId;
+    public String getMsgid() {
+        return msgid;
     }
 
-    public void setMsgId(String msgId) {
-        this.msgId = msgId;
+    public void setMsgid(String msgid) {
+        this.msgid = msgid;
     }
 
     public String getTitle() {
@@ -34,6 +34,10 @@ public class ListMessage {
     }
 
     public void setTitle(String title) {
+        if (title.length() > 30) {
+            title = title.substring(0, 30);
+        }
+
         this.title = title;
     }
 
@@ -42,6 +46,9 @@ public class ListMessage {
     }
 
     public void setBody(String body) {
+        if (body.length() > 1024) {
+            body = body.substring(0, 1024);
+        }
         this.body = body;
     }
 

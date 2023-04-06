@@ -25,7 +25,11 @@ public interface MessageService {
     public void sendGreetingMessage(User user) throws Exception;
 
     public void sendErrorMessage(String receiverNumber) throws Exception;
+
     public void sendOtherOptions(User user) throws Exception;
+
     public void sendFeatureNotImplemented(User user) throws Exception;
 
+    // TODO : integrate template manager
+    void sendErrorMessage(User user) throws Exception;
 }

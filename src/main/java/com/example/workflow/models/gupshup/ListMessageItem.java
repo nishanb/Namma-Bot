@@ -4,10 +4,14 @@ import java.util.List;
 
 public class ListMessageItem {
     private String title;
+    private String subtitle;
     private List<ListMessageItemOption> options;
 
     public ListMessageItem(String title) {
         this.title = title;
+    }
+
+    public ListMessageItem() {
     }
 
     public String getTitle() {
@@ -24,5 +28,13 @@ public class ListMessageItem {
 
     public void setOptions(List<ListMessageItemOption> options) {
         this.options = options;
+    }
+
+    public String getSubtitle() {
+        return subtitle;
+    }
+
+    public void setSubtitle(String subtitle) {
+        this.subtitle = subtitle;
     }
 }

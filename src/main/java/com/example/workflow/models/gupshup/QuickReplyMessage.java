@@ -5,7 +5,7 @@ import java.util.Map;
 
 public class QuickReplyMessage {
     private String type;
-    private String msgId;
+    private String msgid;
     private Map<String, String> content;
 
     public List<Map<String, String>> getOptions() {
@@ -29,12 +29,12 @@ public class QuickReplyMessage {
         this.type = type;
     }
 
-    public String getMsgId() {
-        return msgId;
+    public String getMsgid() {
+        return msgid;
     }
 
-    public void setMsgId(String msgId) {
-        this.msgId = msgId;
+    public void setMsgid(String msgid) {
+        this.msgid = msgid;
     }
 
     public Map<String, String> getContent() {
