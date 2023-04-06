@@ -11,6 +11,9 @@ public class GlobalButtons {
         this.title = title;
     }
 
+    public GlobalButtons() {
+    }
+
     public String getType() {
         return type;
     }
