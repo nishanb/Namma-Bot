@@ -7,7 +7,8 @@ import java.util.List;
 
 public class ListMessageDto {
     private String type;
-    private String msgId;
+
+    private String msgid;
     private String title;
     private String body;
     private List<GlobalButtons> globalButtons;
@@ -24,12 +25,12 @@ public class ListMessageDto {
         this.type = type;
     }
 
-    public String getMsgId() {
-        return msgId;
+    public String getMsgid() {
+        return msgid;
     }
 
-    public void setMsgId(String msgId) {
-        this.msgId = msgId;
+    public void setMsgid(String msgid) {
+        this.msgid = msgid;
     }
 
     public String getTitle() {
@@ -56,7 +57,7 @@ public class ListMessageDto {
         this.globalButtons = globalButtons;
     }
 
-    public List<?> getItems() {
+    public List<ListMessageItem> getItems() {
         return items;
     }
 

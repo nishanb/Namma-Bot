@@ -23,7 +23,18 @@ public class SendListMessageRequestDto {
 
 
     public ListMessage getListMessage() {
-        return listMessage;
+        ListMessage listMessageFormatted = new ListMessage();
+
+        listMessageFormatted.setTitle(listMessage.getTitle());
+        listMessageFormatted.setType(listMessage.getType());
+        listMessageFormatted.setGlobalButtons(listMessage.getGlobalButtons());
+        listMessageFormatted.setBody(listMessage.getBody());
+        listMessageFormatted.setItems(listMessage.getItems());
+        if (listMessage.getMsgid() != null) {
+            listMessageFormatted.setMsgid(listMessage.getMsgid());
+        }
+
+        return listMessageFormatted;
     }
 
     public void setListMessage(ListMessage listMessage) {

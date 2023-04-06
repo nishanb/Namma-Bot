@@ -1,5 +1,6 @@
 package com.example.workflow.serviceImpl;
 
+import camundajar.impl.com.google.gson.Gson;
 import camundajar.impl.com.google.gson.JsonElement;
 import com.example.workflow.config.ConversationFlowType;
 import com.example.workflow.config.TemplateType;
@@ -7,9 +8,10 @@ import com.example.workflow.dto.*;
 import com.example.workflow.helpers.PrepareRequestHelper;
 import com.example.workflow.helpers.TransformResponseHelper;
 import com.example.workflow.models.*;
-import com.example.workflow.models.gupshup.*;
+import com.example.workflow.models.gupshup.ListMessage;
+import com.example.workflow.models.gupshup.MessageContent;
+import com.example.workflow.models.gupshup.QuickReplyMessage;
 import com.example.workflow.services.MessageService;
-import com.example.workflow.services.TemplateService;
 import com.example.workflow.utils.Constants;
 import com.example.workflow.utils.WhatsappMsgServiceApiHelper;
 import okhttp3.RequestBody;
@@ -47,9 +49,6 @@ public class MessageServiceImpl implements MessageService {
     @Autowired
     private PrepareRequestHelper prepareRequestHelper;
 
-    @Autowired
-    TemplateService templateService;
-
     @Override
     public Boolean sendTextMessage(SendMessageRequestDto sendMessageRequestDto) throws Exception {
         try {
@@ -83,20 +82,11 @@ public class MessageServiceImpl implements MessageService {
 
             String url = String.format("%ssm/api/v1/msg", gupShupHost);
 
-            System.out.println("<<<<<<<<<<<<<< printing all items in message list >>>>>>>>>");
-
-            printAllItems(sendListMessageRequestDto.getListMessage().getItems());
-
-            System.out.println("<<<<<<<<<<<<<< successfully printed all items in message list >>>>>>>>>");
-
             JsonElement response = whatsappMsgServiceApiHelper.post(url, requestBodyTransformed);
 
             if (response != null) {
                 MessageServiceResponseDto messageServiceResponseDto = TransformResponseHelper.transformMessageServiceResponse(response.toString());
-                if (messageServiceResponseDto.getStatus().equals(SUBMITTED)) {
-                    return true;
-                }
-                return false;
+                return messageServiceResponseDto.getStatus().equals(SUBMITTED);
             }
             return false;
         } catch (Exception e) {
@@ -109,7 +99,10 @@ public class MessageServiceImpl implements MessageService {
     public Boolean sendAttachment(SendAttachmentMessageDto sendAttachmentMessageDto) throws Exception {
         try {
             String message = "";
+            Gson gson = new Gson();
             if (sendAttachmentMessageDto.getAttachmentType().equals(ATTACHMENT_TYPES_IMAGE)) {
+
+
                 Map<String, String> requestMap = new HashMap<>();
 
                 requestMap.put("type", sendAttachmentMessageDto.getAttachmentType());
@@ -128,7 +121,8 @@ public class MessageServiceImpl implements MessageService {
                 message = PrepareRequestHelper.stringifyJson(requestMap);
             }
 
-            String requestString = PrepareRequestHelper.stringifyRequestBody(WHATSAPP_CHANNEL, sourceContactNo, sendAttachmentMessageDto.getReceiverContactNumber(), PrepareRequestHelper.stringifyJson(message), vendorAppName);
+
+            String requestString = PrepareRequestHelper.stringifyRequestBody(WHATSAPP_CHANNEL, sourceContactNo, sendAttachmentMessageDto.getReceiverContactNumber(), message, vendorAppName);
 
             RequestBody transformedRequestBody = prepareRequestHelper.prepareRequestBodyForXUrlEncodedType(requestString);
 
@@ -138,10 +132,7 @@ public class MessageServiceImpl implements MessageService {
 
             if (response != null) {
                 MessageServiceResponseDto messageServiceResponseDto = TransformResponseHelper.transformMessageServiceResponse(response.toString());
-                if (messageServiceResponseDto.getStatus().equals(SUBMITTED)) {
-                    return true;
-                }
-                return false;
+                return messageServiceResponseDto.getStatus().equals(SUBMITTED);
             }
             return false;
         } catch (Exception e) {
@@ -172,10 +163,7 @@ public class MessageServiceImpl implements MessageService {
 
             if (response != null) {
                 MessageServiceResponseDto messageServiceResponseDto = TransformResponseHelper.transformMessageServiceResponse(response.toString());
-                if (messageServiceResponseDto.getStatus().equals(SUBMITTED)) {
-                    return true;
-                }
-                return false;
+                return messageServiceResponseDto.getStatus().equals(SUBMITTED);
             }
             return false;
         } catch (Exception e) {
@@ -191,10 +179,12 @@ public class MessageServiceImpl implements MessageService {
 
         listMessage.setType(MESSAGE_TYPE_LIST);
         listMessage.setTitle(listMessageDto.getTitle());
-        listMessage.setMsgId(UUID.randomUUID().toString());
+        if (listMessageDto.getMsgid() != null) {
+            listMessage.setMsgid(listMessageDto.getMsgid());
+        }
         listMessage.setBody(listMessageDto.getBody());
         listMessage.setGlobalButtons(listMessageDto.getGlobalButtons());
-        listMessage.setItems((List<ListMessageItem>) listMessageDto.getItems());
+        listMessage.setItems(listMessageDto.getItems());
 
         return listMessage;
     }
@@ -210,7 +200,7 @@ public class MessageServiceImpl implements MessageService {
         content.put("caption", messageContent.getCaption());
 
         generatedMessage.setType(MESSAGE_TYPE_QUICK_REPLY);
-        generatedMessage.setMsgId(messageId);
+        generatedMessage.setMsgid(messageId);
         generatedMessage.setContent(content);
         generatedMessage.setOptions(options);
 
@@ -226,6 +216,8 @@ public class MessageServiceImpl implements MessageService {
 
         greetingMessage.setReceiverContactNumber(user.getPhoneNumber());
         greetingMessage.setType(MESSAGE_TYPE_QUICK_REPLY);
+
+//        List<Lis>
 
         List<Map<String, String>> options = new ArrayList<>(new ArrayList<>(Arrays.asList(
                 new HashMap<>() {{
@@ -245,66 +237,59 @@ public class MessageServiceImpl implements MessageService {
                 }}
         )));
 
-        greetingMessage.setQuickReplyMessage(generateQuickReplyMessage(
-                new MessageContent(
-                        templateService.format(TemplateType.USER_GREET, user.getPreferredLanguage(), new ArrayList<>(Collections.singletonList(user.getName()))),
-                        templateService.format(TemplateType.USER_GREET_DESCRIPTION, user.getPreferredLanguage(), new ArrayList<>())
-                ), options, UUID.randomUUID().toString()));
+        greetingMessage.setQuickReplyMessage(generateQuickReplyMessage(new MessageContent("Hello " + user.getName() + " !!", "Choose from below options to get started"), options, "dss"));
         sendQuickReplyMessage(greetingMessage);
+    }
+
+    @Override
+    public void sendErrorMessage(String receiverNumber) throws Exception {
+        SendMessageRequestDto sendMessageRequestDto = new SendMessageRequestDto();
+
+        sendMessageRequestDto.setReceiverContactNumber(receiverNumber);
+        sendMessageRequestDto.setMessage("Some error occurred...please bear with us");
+
+        this.sendTextMessage(sendMessageRequestDto);
     }
 
     // TODO : integrate template manager
     @Override
     public void sendOtherOptions(User user) throws Exception {
-        ListMessageDto listMessageDto = new ListMessageDto();
-        listMessageDto.setTitle("How can I help you today ?");
-        listMessageDto.setBody("You can choose from the options below.");
+        SendQuickReplyMessageDto otherOptionsMessage = new SendQuickReplyMessageDto();
 
-        // Set Global button
-        List<GlobalButtons> globalButtonsList = new ArrayList<>(List.of(new GlobalButtons("text", "Choose From Here")));
-        listMessageDto.setGlobalButtons(globalButtonsList);
+        otherOptionsMessage.setReceiverContactNumber(user.getPhoneNumber());
+        otherOptionsMessage.setType(MESSAGE_TYPE_QUICK_REPLY);
 
-        // List Group
-        List<ListMessageItem> listMessageGroup = new ArrayList<>();
+        List<Map<String, String>> options = new ArrayList<>(new ArrayList<>(Arrays.asList(
+                new HashMap<>() {{
+                    put("type", "text");
+                    put("title", "Manage stared places");
+                    put("postbackText", ConversationFlowType.MANAGE_PLACES);
+                }},
 
-        //Other section list
-        ListMessageItem otherOptions = new ListMessageItem("Choose from below");
-        otherOptions.setOptions(Arrays.asList(
-                new ListMessageItemOption("Manage Stared places", "Manage Stared places", ConversationFlowType.MANAGE_PLACES),
-                new ListMessageItemOption("Change Language", "Choose conversation language", ConversationFlowType.CHANGE_LANGUAGE),
-                new ListMessageItemOption("Raise Support Ticket", "Raise Support Ticket", ConversationFlowType.SUPPORT),
-                new ListMessageItemOption("Give Feedback", "FeedBack", ConversationFlowType.SUPPORT),
-                new ListMessageItemOption("Know More", "Know More", ConversationFlowType.KNOW_MORE),
-                new ListMessageItemOption("FAQs", "FAQs", ConversationFlowType.FAQ)
-        ));
+                new HashMap<>() {{
+                    put("type", "text");
+                    put("title", "Change language");
+                    put("postbackText", ConversationFlowType.CHANGE_LANGUAGE);
+                }},
+                new HashMap<>() {{
+                    put("type", "text");
+                    put("title", "Raise support ticket");
+                    put("postbackText", ConversationFlowType.SUPPORT);
+                }}
+        )));
 
-        // Add others section to group
-        listMessageGroup.add(otherOptions);
-
-        // set list-message group to main message
-        listMessageDto.setItems(listMessageGroup);
-
-        sendListMessage(new SendListMessageRequestDto(user.getPhoneNumber(), generateListMessage(listMessageDto)));
+        otherOptionsMessage.setQuickReplyMessage(generateQuickReplyMessage(new MessageContent("Cool", "Choose from below options to get started"), options, "dsx"));
+        sendQuickReplyMessage(otherOptionsMessage);
     }
 
     @Override
     public void sendFeatureNotImplemented(User user) throws Exception {
-        sendTextMessage(new SendMessageRequestDto(user.getPhoneNumber(), "This feature is not supported yet"));
+
     }
 
     // TODO : integrate template manager
     @Override
-    public void sendErrorMessage(String receiverPhone) throws Exception {
-        sendTextMessage(new SendMessageRequestDto(receiverPhone, "Sorry, I did not understand that !"));
+    public void sendErrorMessage(User user) throws Exception {
+        sendTextMessage(new SendMessageRequestDto(user.getPhoneNumber(), "Hello " + user.getName() + " I did not understand that !"));
     }
-
-    public void printAllItems(List<?> items) {
-        for (Object item : items) {
-            if (item != null) {
-                System.out.println(item);
-                System.out.println(item.getClass());
-            }
-        }
-    }
-
 }
