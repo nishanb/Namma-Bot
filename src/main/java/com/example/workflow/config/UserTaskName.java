@@ -1,4 +1,4 @@
-package com.example.workflow.constants;
+package com.example.workflow.config;
 
 public class UserTaskName {
     public static final String RECEIVE_DESTINATION_LOCATION = "Receive destination location";
