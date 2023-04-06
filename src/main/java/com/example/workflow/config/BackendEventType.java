@@ -1,4 +1,4 @@
-package com.example.workflow.constants;
+package com.example.workflow.config;
 
 public class BackendEventType {
     public static final String DRIVER_ARRIVED = "DRIVER_ARRIVED";

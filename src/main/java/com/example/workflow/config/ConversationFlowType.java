@@ -1,4 +1,4 @@
-package com.example.workflow.constants;
+package com.example.workflow.config;
 
 public class ConversationFlowType {
     public static final String BOOK_RIDE = "BOOK_RIDE";

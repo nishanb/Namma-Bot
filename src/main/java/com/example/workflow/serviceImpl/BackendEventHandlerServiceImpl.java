@@ -1,6 +1,6 @@
 package com.example.workflow.serviceImpl;
 
-import com.example.workflow.constants.BackendEventType;
+import com.example.workflow.config.BackendEventType;
 import com.example.workflow.dto.BackendEventRequestDto;
 import com.example.workflow.services.BackendEventHandlerService;
 import org.springframework.stereotype.Service;

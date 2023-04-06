@@ -2,7 +2,8 @@ package com.example.workflow.serviceImpl;
 
 import camundajar.impl.com.google.gson.Gson;
 import camundajar.impl.com.google.gson.JsonElement;
-import com.example.workflow.constants.ConversationFlowType;
+import com.example.workflow.config.ConversationFlowType;
+import com.example.workflow.config.TemplateType;
 import com.example.workflow.dto.*;
 import com.example.workflow.helpers.PrepareRequestHelper;
 import com.example.workflow.helpers.TransformResponseHelper;
