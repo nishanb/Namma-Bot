@@ -1,5 +1,7 @@
 package com.example.workflow.camunda.service.common;
 
+import com.example.workflow.models.User;
+import com.example.workflow.serviceImpl.CommonMessageService;
 import com.example.workflow.services.MessageService;
 import com.example.workflow.services.UserService;
 import org.camunda.bpm.engine.delegate.BpmnError;
@@ -15,7 +17,7 @@ import java.util.logging.Logger;
 public class ErrorHandler implements JavaDelegate {
 
     @Autowired
-    MessageService messageService;
+    CommonMessageService messageService;
 
     @Autowired
     UserService userService;
@@ -27,7 +29,8 @@ public class ErrorHandler implements JavaDelegate {
         try {
             //call gupshup to send message
             log.info("ErrorHandler: execute method is called......");
-            messageService.sendErrorMessage(execution.getBusinessKey());
+            User user = userService.findUserByPhoneNumber(execution.getBusinessKey()).orElse(null);
+            messageService.sendErrorMessage(user);
             //set relevant variables for future ref
             execution.setVariable("ErrorHandler", true);
         } catch (Exception e) {

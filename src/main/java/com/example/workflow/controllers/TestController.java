@@ -1,5 +1,6 @@
 package com.example.workflow.controllers;
 
+import com.example.workflow.dto.TemplateRequestDto;
 import com.example.workflow.models.Template;
 import com.example.workflow.repository.TemplateRepository;
 import com.example.workflow.services.MessageService;
@@ -65,7 +66,7 @@ public class TestController {
 
 //        templateService.format("GREETING", "kannada", new ArrayList<>(Arrays.asList("ಬಕ್ಕು", "")));
 //        templateService.format("GREETING", "hindi",  new ArrayList<>(Arrays.asList("बक्कू")));
-        templateService.format("GREETING", "english",  new ArrayList<>(Arrays.asList("Bakku", "ಬಕ್ಕು")));
+        //templateService.format("GREETING", "english", new ArrayList<>(Arrays.asList("Bakku", "ಬಕ್ಕು")));
 
         /* Test Backend
         nammaYathriService.getStarredPlaces();
@@ -174,5 +175,12 @@ public class TestController {
 //
 //    }
 
-
+    @PostMapping("/template-seed")
+    public void test(@RequestBody TemplateRequestDto templateRequestDto) throws IOException {
+        templateRepository.save(new Template(templateRequestDto.getTemplateId(), new HashMap<>() {{
+            put("english", templateRequestDto.getMessage().get("english"));
+            put("kannada", templateRequestDto.getMessage().get("kannada"));
+            put("hindi", templateRequestDto.getMessage().get("hindi"));
+        }}));
+    }
 }
