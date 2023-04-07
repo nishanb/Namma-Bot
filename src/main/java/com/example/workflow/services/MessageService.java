@@ -21,15 +21,4 @@ public interface MessageService {
     ListMessage generateListMessage(ListMessageDto listMessageDto) throws Exception;
 
     QuickReplyMessage generateQuickReplyMessage(MessageContent messageContent, List<Map<String, String>> listData, String messageId) throws Exception;
-
-    public void sendGreetingMessage(User user) throws Exception;
-
-    public void sendErrorMessage(String receiverNumber) throws Exception;
-
-    public void sendOtherOptions(User user) throws Exception;
-
-    public void sendFeatureNotImplemented(User user) throws Exception;
-
-    // TODO : integrate template manager
-    void sendErrorMessage(User user) throws Exception;
 }

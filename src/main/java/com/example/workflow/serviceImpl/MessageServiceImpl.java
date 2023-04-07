@@ -2,16 +2,12 @@ package com.example.workflow.serviceImpl;
 
 import camundajar.impl.com.google.gson.Gson;
 import camundajar.impl.com.google.gson.JsonElement;
-import com.example.workflow.config.ConversationFlowType;
-import com.example.workflow.config.TemplateType;
 import com.example.workflow.dto.*;
 import com.example.workflow.helpers.PrepareRequestHelper;
 import com.example.workflow.helpers.TransformResponseHelper;
-import com.example.workflow.models.*;
-import com.example.workflow.models.gupshup.ListMessage;
-import com.example.workflow.models.gupshup.MessageContent;
-import com.example.workflow.models.gupshup.QuickReplyMessage;
+import com.example.workflow.models.gupshup.*;
 import com.example.workflow.services.MessageService;
+import com.example.workflow.services.TemplateService;
 import com.example.workflow.utils.Constants;
 import com.example.workflow.utils.WhatsappMsgServiceApiHelper;
 import okhttp3.RequestBody;
@@ -40,14 +36,14 @@ public class MessageServiceImpl implements MessageService {
     @Value("${gupshup-host}")
     private String gupShupHost;
 
-    @Value("${cb-auth-key}")
-    private String cbAuthKey;
-
     @Autowired
     private WhatsappMsgServiceApiHelper whatsappMsgServiceApiHelper;
 
     @Autowired
     private PrepareRequestHelper prepareRequestHelper;
+
+    @Autowired
+    TemplateService templateService;
 
     @Override
     public Boolean sendTextMessage(SendMessageRequestDto sendMessageRequestDto) throws Exception {
@@ -205,91 +201,5 @@ public class MessageServiceImpl implements MessageService {
         generatedMessage.setOptions(options);
 
         return generatedMessage;
-    }
-
-    // Section : Default messages
-
-    // TODO : format message from template service
-    @Override
-    public void sendGreetingMessage(User user) throws Exception {
-        SendQuickReplyMessageDto greetingMessage = new SendQuickReplyMessageDto();
-
-        greetingMessage.setReceiverContactNumber(user.getPhoneNumber());
-        greetingMessage.setType(MESSAGE_TYPE_QUICK_REPLY);
-
-//        List<Lis>
-
-        List<Map<String, String>> options = new ArrayList<>(new ArrayList<>(Arrays.asList(
-                new HashMap<>() {{
-                    put("type", "text");
-                    put("title", "Book a ride");
-                    put("postbackText", ConversationFlowType.BOOK_RIDE);
-                }},
-                new HashMap<>() {{
-                    put("type", "text");
-                    put("title", "View past rides");
-                    put("postbackText", ConversationFlowType.PREVIOUS_RIDE);
-                }},
-                new HashMap<>() {{
-                    put("type", "text");
-                    put("title", "Other");
-                    put("postbackText", ConversationFlowType.OTHER);
-                }}
-        )));
-
-        greetingMessage.setQuickReplyMessage(generateQuickReplyMessage(new MessageContent("Hello " + user.getName() + " !!", "Choose from below options to get started"), options, "dss"));
-        sendQuickReplyMessage(greetingMessage);
-    }
-
-    @Override
-    public void sendErrorMessage(String receiverNumber) throws Exception {
-        SendMessageRequestDto sendMessageRequestDto = new SendMessageRequestDto();
-
-        sendMessageRequestDto.setReceiverContactNumber(receiverNumber);
-        sendMessageRequestDto.setMessage("Some error occurred...please bear with us");
-
-        this.sendTextMessage(sendMessageRequestDto);
-    }
-
-    // TODO : integrate template manager
-    @Override
-    public void sendOtherOptions(User user) throws Exception {
-        SendQuickReplyMessageDto otherOptionsMessage = new SendQuickReplyMessageDto();
-
-        otherOptionsMessage.setReceiverContactNumber(user.getPhoneNumber());
-        otherOptionsMessage.setType(MESSAGE_TYPE_QUICK_REPLY);
-
-        List<Map<String, String>> options = new ArrayList<>(new ArrayList<>(Arrays.asList(
-                new HashMap<>() {{
-                    put("type", "text");
-                    put("title", "Manage stared places");
-                    put("postbackText", ConversationFlowType.MANAGE_PLACES);
-                }},
-
-                new HashMap<>() {{
-                    put("type", "text");
-                    put("title", "Change language");
-                    put("postbackText", ConversationFlowType.CHANGE_LANGUAGE);
-                }},
-                new HashMap<>() {{
-                    put("type", "text");
-                    put("title", "Raise support ticket");
-                    put("postbackText", ConversationFlowType.SUPPORT);
-                }}
-        )));
-
-        otherOptionsMessage.setQuickReplyMessage(generateQuickReplyMessage(new MessageContent("Cool", "Choose from below options to get started"), options, "dsx"));
-        sendQuickReplyMessage(otherOptionsMessage);
-    }
-
-    @Override
-    public void sendFeatureNotImplemented(User user) throws Exception {
-
-    }
-
-    // TODO : integrate template manager
-    @Override
-    public void sendErrorMessage(User user) throws Exception {
-        sendTextMessage(new SendMessageRequestDto(user.getPhoneNumber(), "Hello " + user.getName() + " I did not understand that !"));
     }
 }

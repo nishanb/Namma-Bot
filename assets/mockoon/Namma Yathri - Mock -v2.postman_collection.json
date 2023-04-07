@@ -1,0 +1,464 @@
+{
+	"info": {
+		"_postman_id": "43a05b21-b39a-4426-9c9e-70115e25194d",
+		"name": "Namma Yathri - Hackathon",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "5003982"
+	},
+	"item": [
+		{
+			"name": "CWS - Backend Events",
+			"item": [
+				{
+					"name": "Driver Arrived - Event",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"event\" : \"DRIVER_ARRIVED\",\n    \"message\" : \"Your ride has arrived\",\n    \"riderPhoneNumber\": \"{{USER}}\",\n    \"data\": {\n        \"key1\" : \"value1\",\n        \"key2\" : \"value2\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/v1/backend-events",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"backend-events"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Ride Started - Event",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"event\" : \"RIDE_STARTED\",\n    \"message\" : \"Your ride has started\",\n    \"riderPhoneNumber\": \"{{USER}}\",\n    \"data\": {\n        \"key1\" : \"value1\",\n        \"key2\" : \"value2\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/v1/backend-events",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"backend-events"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Ride Ended - Event",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"event\" : \"RIDE_ENDED\",\n    \"message\" : \"Your ride has ended\",\n    \"riderPhoneNumber\": \"{{USER}}\",\n    \"data\": {\n        \"key1\" : \"value1\",\n        \"key2\" : \"value2\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/v1/backend-events",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"backend-events"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Ride Canceled - Event",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"event\" : \"RIDE_CANCELED_BY_DRIVER\",\n    \"message\" : \"Your ride has cancelled by driver\",\n    \"riderPhoneNumber\": \"{{USER}}\",\n    \"data\": {\n        \"reason\" : \"fare is low\",\n        \"key2\" : \"value2\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/api/v1/backend-events",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"backend-events"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Backend - Mock",
+			"item": [
+				{
+					"name": "Places",
+					"item": [
+						{
+							"name": "List Place",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/api/v1/starred-places",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"starred-places"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Place",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"lattitude\": \"{{$randomLatitude}}\",\n    \"longitude\": \"{{$randomLongitude}}\",\n    \"name\": \"{{$randomStreetName}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/api/v1/starred-place?user=7892693018",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"starred-place"
+									],
+									"query": [
+										{
+											"key": "user",
+											"value": "7892693018"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Place",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"lattitude\": \"{{$randomLatitude}}\",\n    \"longitude\": \"{{$randomLongitude}}\",\n    \"name\": \"{{$randomStreetName}}\",\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/api/v1/starred-places/3157eb03-0377-40de-8840-409635948096",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"starred-places",
+										"3157eb03-0377-40de-8840-409635948096"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Estimation",
+					"item": [
+						{
+							"name": "Generate Estimate",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"source_lat\": {{$randomLatitude}},\n    \"source_long\": {{$randomLongitude}},\n    \"dest_lat\": {{$randomLatitude}},\n    \"dest_long\" : {{$randomLongitude}}\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/api/v1/ride-estimate",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"ride-estimate"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Find Ride",
+					"item": [
+						{
+							"name": "Find Nearby Ride ( manual pickup )",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"source_lat\" : \"{{$randomLatitude}}\",\n    \"source_long\": \"{{$randomLongitude}}\",\n    \"dest_lat\" : \"{{$randomLatitude}}\",\n    \"dest_long\": \"{{$randomLongitude}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/api/v1/nearby-pickups?choose=manual",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"nearby-pickups"
+									],
+									"query": [
+										{
+											"key": "choose",
+											"value": "manual"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Find Nearby Ride ( auto pickup )",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"source_lat\" : \"{{$randomLatitude}}\",\n    \"source_long\": \"{{$randomLongitude}}\",\n    \"dest_lat\" : \"{{$randomLatitude}}\",\n    \"dest_long\": \"{{$randomLongitude}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/api/v1/nearby-pickups?choose=auto",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"nearby-pickups"
+									],
+									"query": [
+										{
+											"key": "choose",
+											"value": "auto"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Ride Flow",
+					"item": [
+						{
+							"name": "Book Ride",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"driver_id\": \"{{$randomUUID}}\",\n    \"ride_id\": \"{{$randomUUID}}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/api/v1/book-ride",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"book-ride"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Cancel Booking",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"ride_id\": \"{{$randomUUID}}}\",\n    \"cancellation_reason\": \"{{$randomLoremText}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/api/v1/cancel-ride/",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"cancel-ride",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Rate Driver",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"ride_id\": \"{{$randomUUID}}}\",\n    \"rating\": \"{{$randomInt}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/api/v1/rate-ride/",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"rate-ride",
+										""
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Test Endpoint CPO",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/test",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"test"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Seed Template",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"templateId\": \"{{Activity_key_selector}}\",\n    \"message\": {\n        \"english\": \"{{english}}\",\n        \"kannada\": \"{{kannada}}\",\n        \"hindi\": \"{{hindi}}\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/test/template-seed",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"test",
+						"template-seed"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
