@@ -22,18 +22,18 @@ public class CalculateFare implements JavaDelegate {
     @Override
     public void execute(DelegateExecution execution) throws Exception {
         try {
-            String destinationLatitude = execution.getVariable("destination_latitude").toString();
-            String destinationLongitude = execution.getVariable("destination_longitude").toString();
-            String sourceLatitude = execution.getVariable("source_latitude").toString();
-            String sourceLongitude = execution.getVariable("source_longitude").toString();
+            String destinationLatitude = (String) execution.getVariable("destination_latitude");
+            String destinationLongitude = (String) execution.getVariable("destination_longitude");
+            String sourceLatitude = (String) execution.getVariable("source_latitude");
+            String sourceLongitude = (String) execution.getVariable("source_longitude");
 
             JsonElement response = nammaYathriService.generateEstimate(sourceLatitude, sourceLongitude, destinationLatitude, destinationLongitude);
             JsonObject estimationData = response.getAsJsonObject().getAsJsonObject("data");
 
-            execution.setVariable("distance_estimation", estimationData.get("distance").toString());
-            execution.setVariable("time_estimation", estimationData.get("time").toString());
-            execution.setVariable("price_est_low", estimationData.get("price_est_low").toString());
-            execution.setVariable("price_est_high", estimationData.get("price_est_high").toString());
+            execution.setVariable("distance_estimation", estimationData.get("distance").getAsString());
+            execution.setVariable("time_estimation", estimationData.get("time").getAsString());
+            execution.setVariable("price_est_low", estimationData.get("price_est_low").getAsString());
+            execution.setVariable("price_est_high", estimationData.get("price_est_high").getAsString());
 
             log.info("CalculateFare: execute method is called......");
             //set relevant variables for future ref

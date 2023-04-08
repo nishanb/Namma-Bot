@@ -21,9 +21,10 @@ public class ReceiveBookingType implements UserTask {
 
     @Override
     public void complete(Task task, User user, String messageType, WebhookMessagePayload webhookMessagePayload) throws Exception {
-        if (Objects.equals(messageType, Constants.MESSAGE_TYPE_LOCATION_REPLY)) {
+        if (Objects.equals(messageType, Constants.MESSAGE_TYPE_BUTTON_REPLY)) {
+            String buttonPostbackText = webhookMessagePayload.getPostbackText();
             Map<String, Object> variables = new HashMap<>();
-            // TODO set variables
+            variables.put("booking_type_selection",buttonPostbackText);
             camundaCoreService.completeUserTaskByTaskId(task, variables);
         }
     }
