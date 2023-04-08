@@ -1,15 +1,9 @@
 package com.example.workflow.camunda.service.booking;
 
-import camundajar.impl.com.google.gson.JsonElement;
-import camundajar.impl.com.google.gson.JsonObject;
-import com.example.workflow.config.ConversationFlowType;
-import com.example.workflow.dto.ListMessageDto;
-import com.example.workflow.dto.SendListMessageRequestDto;
+import com.example.workflow.config.MessageTemplate;
+import com.example.workflow.config.PostBackText;
 import com.example.workflow.dto.SendQuickReplyMessageDto;
 import com.example.workflow.models.User;
-import com.example.workflow.models.gupshup.GlobalButtons;
-import com.example.workflow.models.gupshup.ListMessageItem;
-import com.example.workflow.models.gupshup.ListMessageItemOption;
 import com.example.workflow.models.gupshup.MessageContent;
 import com.example.workflow.services.MessageService;
 import com.example.workflow.services.TemplateService;
@@ -42,54 +36,52 @@ public class BookingType implements JavaDelegate {
     @Override
     public void execute(DelegateExecution execution) throws Exception {
         try {
+            User user = userService.findUserByPhoneNumber(execution.getBusinessKey()).orElse(null);
 
             SendQuickReplyMessageDto rideSelectionMessage = new SendQuickReplyMessageDto();
-
-            Optional<User> userSaved = userService.findUserByPhoneNumber(execution.getBusinessKey());
-            User user = userSaved.get();
             rideSelectionMessage.setReceiverContactNumber(user.getPhoneNumber());
             rideSelectionMessage.setType(MESSAGE_TYPE_QUICK_REPLY);
 
             List<Map<String, String>> options = new ArrayList<>(new ArrayList<>(Arrays.asList(
                     new HashMap<>() {{
                         put("type", "text");
-                        put("title", "Auto Assign");
-                        put("postbackText", "AUTO_ASSIGN");
+                        put("title", templateService.format(MessageTemplate.RIDE_BOOKING_TYPE_OPTION_AUTO, user.getPreferredLanguage()));
+                        put("postbackText", PostBackText.AUTO_ASSIGN.getPostBackText());
                     }},
                     new HashMap<>() {{
                         put("type", "text");
-                        put("title", "Choose Manually");
-                        put("postbackText", "CHOOSE_MANUAL");
+                        put("title", templateService.format(MessageTemplate.RIDE_BOOKING_TYPE_OPTION_MANUAL, user.getPreferredLanguage()));
+                        put("postbackText", PostBackText.CHOOSE_MANUAL.getPostBackText());
                     }},
                     new HashMap<>() {{
                         put("type", "text");
-                        put("title", "Change Location");
-                        put("postbackText", "CHANGE_LOCATION");
+                        put("title", templateService.format(MessageTemplate.RIDE_BOOKING_TYPE_OPTION_UPDATE_LOCATION, user.getPreferredLanguage()));
+                        put("postbackText", PostBackText.CHANGE_LOCATION.getPostBackText());
                     }}
-//                    new HashMap<>() {{
-//                        put("type", "text");
-//                        put("title", "Cancel Booking");
-//                        put("postbackText", "CANCEL_BOOKING");
-//                    }}  // Cancel booking to be handled globally, cannot add here as we have a quick button links limit of 10
             )));
 
-            String distanceEstimation = (String) execution.getVariable("distance_estimation");
-            String timeEstimation = (String) execution.getVariable("time_estimation");
-            String priceEstLow = (String) execution.getVariable("price_est_low");
-            String priceEstHigh = (String) execution.getVariable("price_est_high");
+            // TODO:  Cancel booking to be handled globally, cannot add here as we have a quick button links limit of 3
+
+            String distanceEstimation = execution.getVariable("distance_estimation").toString().replace("\"", "");
+            String timeEstimation = execution.getVariable("time_estimation").toString().replace("\"", "");
+            String priceEstLow = execution.getVariable("price_est_low").toString().replace("\"", "");
+            String priceEstHigh = execution.getVariable("price_est_high").toString().replace("\"", "");
 
             rideSelectionMessage.setQuickReplyMessage(messageService.generateQuickReplyMessage(
                     new MessageContent(
-                            "Choose ride", String.format("This ride will cost you ₹%s - ₹%s, with estimate travel of %s KM in %s minutes \n Kindly choose one of the options below that suits your needs.", priceEstLow, priceEstHigh, distanceEstimation, timeEstimation)
+                            templateService.format(MessageTemplate.RIDE_BOOKING_TYPE_HEADER, user.getPreferredLanguage()),
+                            templateService.format(MessageTemplate.RIDE_BOOKING_TYPE_BODY,
+                                    user.getPreferredLanguage(),
+                                    new ArrayList<>(Arrays.asList(priceEstLow, priceEstHigh, distanceEstimation, timeEstimation)))
                     ), options, UUID.randomUUID().toString()));
-
 
             messageService.sendQuickReplyMessage(rideSelectionMessage);
 
             log.info("BookingType: execute method is called......");
         } catch (Exception e) {
-            log.warning("BookingType: Exception occured......");
+            log.warning("BookingType: Exception occurred......" + e.getMessage());
             throw new BpmnError("booking_flow_error", "Error sending message.....");
         }
     }
 }
+

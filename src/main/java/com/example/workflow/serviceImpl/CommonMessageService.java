@@ -58,7 +58,7 @@ public class CommonMessageService {
         greetingMessage.setQuickReplyMessage(messageService.generateQuickReplyMessage(
                 new MessageContent(
                         templateService.format(MessageTemplate.GREET_MAIN_HEADER, user.getPreferredLanguage(), new ArrayList<>(Collections.singletonList(user.getName()))),
-                        templateService.format(MessageTemplate.GREET_MAIN_CONTENT, user.getPreferredLanguage(), new ArrayList<>())
+                        templateService.format(MessageTemplate.GREET_MAIN_CONTENT, user.getPreferredLanguage())
                 ), options, UUID.randomUUID().toString()));
         messageService.sendQuickReplyMessage(greetingMessage);
     }

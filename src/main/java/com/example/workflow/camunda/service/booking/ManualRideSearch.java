@@ -4,7 +4,6 @@ import camundajar.impl.com.google.gson.Gson;
 import camundajar.impl.com.google.gson.JsonArray;
 import camundajar.impl.com.google.gson.JsonElement;
 import camundajar.impl.com.google.gson.JsonObject;
-import com.example.workflow.config.ConversationFlowType;
 import com.example.workflow.dto.ListMessageDto;
 import com.example.workflow.dto.SendListMessageRequestDto;
 import com.example.workflow.dto.SendMessageRequestDto;
