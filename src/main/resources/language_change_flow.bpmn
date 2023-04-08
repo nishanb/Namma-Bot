@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_1cf5tmh" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.7.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.18.0">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_1cf5tmh" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.9.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.18.0">
   <bpmn:process id="Process_18f0e8v" name="language_change_flow" isExecutable="true">
     <bpmn:subProcess id="Activity_1tclai9">
       <bpmn:incoming>Flow_0r93njo</bpmn:incoming>
@@ -7,14 +7,14 @@
       <bpmn:startEvent id="Event_1a79578">
         <bpmn:outgoing>Flow_0c2gi0x</bpmn:outgoing>
       </bpmn:startEvent>
-      <bpmn:sequenceFlow id="Flow_0c2gi0x" sourceRef="Event_1a79578" targetRef="Activity_01yx7lh" />
-      <bpmn:sequenceFlow id="Flow_0nrkmwu" sourceRef="Activity_01yx7lh" targetRef="Language_Selection" />
-      <bpmn:serviceTask id="Activity_01yx7lh" name="Request preferred language" camunda:class="com.example.workflow.camunda.service.languageSelection.PreferredLanguage">
+      <bpmn:sequenceFlow id="Flow_0c2gi0x" sourceRef="Event_1a79578" targetRef="Request_prefred_language" />
+      <bpmn:sequenceFlow id="Flow_0nrkmwu" sourceRef="Request_prefred_language" targetRef="Language_Selection" />
+      <bpmn:serviceTask id="Request_prefred_language" name="Request preferred language" camunda:class="com.example.workflow.camunda.service.languageSelection.PreferredLanguage">
         <bpmn:incoming>Flow_0c2gi0x</bpmn:incoming>
         <bpmn:incoming>Flow_0nm9jm0</bpmn:incoming>
         <bpmn:outgoing>Flow_0nrkmwu</bpmn:outgoing>
       </bpmn:serviceTask>
-      <bpmn:userTask id="Language_Selection" name="Language selection">
+      <bpmn:userTask id="Language_Selection" name="Language selection" camunda:assignee="demo">
         <bpmn:incoming>Flow_0nrkmwu</bpmn:incoming>
         <bpmn:outgoing>Flow_1lk05sc</bpmn:outgoing>
       </bpmn:userTask>
@@ -24,7 +24,7 @@
         <bpmn:outgoing>Flow_0i0uuwi</bpmn:outgoing>
       </bpmn:serviceTask>
       <bpmn:sequenceFlow id="Flow_0i0uuwi" sourceRef="Activity_0bosvce" targetRef="Language_Change_Confirmation" />
-      <bpmn:userTask id="Language_Change_Confirmation" name="Language change confirmation">
+      <bpmn:userTask id="Language_Change_Confirmation" name="Language change confirmation" camunda:assignee="demo">
         <bpmn:incoming>Flow_0i0uuwi</bpmn:incoming>
         <bpmn:outgoing>Flow_17wzzdj</bpmn:outgoing>
       </bpmn:userTask>
@@ -35,16 +35,17 @@
         <bpmn:outgoing>Flow_0nffa8m</bpmn:outgoing>
       </bpmn:exclusiveGateway>
       <bpmn:sequenceFlow id="Flow_17wzzdj" sourceRef="Language_Change_Confirmation" targetRef="Activity_181udzi" />
-      <bpmn:sequenceFlow id="Flow_0nm9jm0" sourceRef="Gateway_1xo17tv" targetRef="Activity_01yx7lh">
-        <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${languageConfirmationDecision=='changeSelection'}</bpmn:conditionExpression>
+      <bpmn:sequenceFlow id="Flow_0nm9jm0" sourceRef="Gateway_1xo17tv" targetRef="Request_prefred_language">
+        <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${confirmation=='changeSelection'}</bpmn:conditionExpression>
       </bpmn:sequenceFlow>
       <bpmn:sequenceFlow id="Flow_1kv4ph8" sourceRef="Activity_181udzi" targetRef="Gateway_1xo17tv" />
-      <bpmn:businessRuleTask id="Activity_181udzi" name="Decide user flow" camunda:decisionRef="Decision_1rpfe4q">
+      <bpmn:businessRuleTask id="Activity_181udzi" name="Decide user flow" camunda:resultVariable="confirmation" camunda:decisionRef="Decision_0lz6ln0" camunda:mapDecisionResult="singleEntry">
+        <bpmn:extensionElements />
         <bpmn:incoming>Flow_17wzzdj</bpmn:incoming>
         <bpmn:outgoing>Flow_1kv4ph8</bpmn:outgoing>
       </bpmn:businessRuleTask>
       <bpmn:sequenceFlow id="Flow_01to24s" sourceRef="Gateway_1xo17tv" targetRef="Activity_0nrew9e">
-        <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${languageConfirmationDecision=='confirm'}</bpmn:conditionExpression>
+        <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${confirmation=='confirm'}</bpmn:conditionExpression>
       </bpmn:sequenceFlow>
       <bpmn:endEvent id="Event_0eplbou">
         <bpmn:incoming>Flow_1egj8up</bpmn:incoming>
@@ -80,7 +81,7 @@
         </bpmn:serviceTask>
       </bpmn:subProcess>
       <bpmn:sequenceFlow id="Flow_0nffa8m" sourceRef="Gateway_1xo17tv" targetRef="Event_1yxo6p0">
-        <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${languageConfirmationDecision=='cancel'}</bpmn:conditionExpression>
+        <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${confirmation=='cancel'}</bpmn:conditionExpression>
       </bpmn:sequenceFlow>
       <bpmn:intermediateThrowEvent id="Event_1yxo6p0">
         <bpmn:incoming>Flow_0nffa8m</bpmn:incoming>
@@ -150,7 +151,7 @@
       <bpmndi:BPMNShape id="Event_1a79578_di" bpmnElement="Event_1a79578">
         <dc:Bounds x="330" y="202" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0cl2uzo_di" bpmnElement="Activity_01yx7lh">
+      <bpmndi:BPMNShape id="Activity_0cl2uzo_di" bpmnElement="Request_prefred_language">
         <dc:Bounds x="420" y="180" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>

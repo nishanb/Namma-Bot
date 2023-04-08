@@ -63,6 +63,17 @@ public enum MessageTemplate {
     RIDE_SHARE_RIDE_RATING_OP_5_START_TITLE("Request_Choose_Ride_List_Header_5_star"),
     RIDE_SHARE_RIDE_RATING_OP_5_START_DESC("Request_Choose_Ride_List_Description_5_star"),
     RIDE_CANCELLED_BY_DRIVER("Ride_Request_Cancelled"),
+    LANGUAGE_UPDATE_PREFERENCE_HEADER("Language_update_pref_header"),
+    LANGUAGE_UPDATE_PREFERENCE_BODY("Language_update_pref_body"),
+
+    LANGUAGE_UPDATE_CONFIRMATION_HEADER("Language_update_confirmation_header"),
+    LANGUAGE_UPDATE_CONFIRMATION_BODY("Language_update_confirmation_body"),
+    LANGUAGE_UPDATE_CONFIRMATION_OPTION_YES("Language_update_confirmation_option_yes"),
+    LANGUAGE_UPDATE_CONFIRMATION_OPTION_NO("Language_update_confirmation_option_no"),
+    LANGUAGE_UPDATE_CONFIRMATION_OPTION_CANCEL("Language_update_confirmation_option_cancel"),
+    LANGUAGE_UPDATE_DONE("Language_update_Done"),
+    GREET_MAIN_MENU("Main_menu_button"),
+    LAST_OPERATION_CANCELED("last_operation_cancelled"),
     BOT_ERROR("Error");
 
     private final String templateId;

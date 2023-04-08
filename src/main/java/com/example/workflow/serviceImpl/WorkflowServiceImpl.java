@@ -90,9 +90,14 @@ public class WorkflowServiceImpl implements WorkflowService {
 
             if (messageType.equals(MESSAGE_TYPE_BUTTON_REPLY)) {
                 switch (ConversationWorkflow.fromPostBackText(webhookMessagePayload.getPostbackText())) {
+                    // Initiate booking task
                     case RIDE_BOOKING -> initiateWorkflow(user, ConversationWorkflow.RIDE_BOOKING);
 
+                    // Initiate previous ride task
                     case PREVIOUS_RIDE -> initiateWorkflow(user, ConversationWorkflow.PREVIOUS_RIDE);
+
+                    // Send main greeting option to choose from
+                    case MAIN_MENU -> commonMessageService.sendGreetingMessage(user);
 
                     // Send others option for customer to choose
                     case OTHER -> commonMessageService.sendOtherOptions(user);
