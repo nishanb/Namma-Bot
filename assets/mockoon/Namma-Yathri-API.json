@@ -46,7 +46,7 @@
         {
           "uuid": "a7504eb8-6a74-46f6-b010-1b7b8707739a",
           "body": "{\n  \"data\": {\n    \"distance\": \"{{int 3 15}}\",\n    \"time\": \"{{int 10 120}}\",\n    \"price_est_low\": \"{{int 20 60}}\",\n    \"price_est_high\": \"{{int 70 200}}\",\n    \"currency\": \"RS\"\n  },\n  \"success\": \"true\"\n}\n",
-          "latency": 0,
+          "latency": 1000,
           "statusCode": 200,
           "label": "",
           "headers": [],
@@ -98,8 +98,8 @@
       "responses": [
         {
           "uuid": "e07c6777-b872-4bae-816c-841ec785b004",
-          "body": "{\"data\": \n  {\n    \"ride_id\": \"{{faker 'datatype.uuid'}}\",\n    \"rides\" : [\n    {{#repeat 3 }}\n    {\n      \"driver_id\": \"{{faker 'datatype.uuid'}}\",\n      \"driver_name\": \"{{ oneOf (array 'Raju' 'Ram' 'Vinod' 'Mahi' 'Sumit') }}\",\n      \"vehicle_number\": \"KA-{{int 40 51}}-{{oneOf (array 'GJ' 'KC' 'JJ' 'HJ' 'HH')}}-{{int 10 50}}{{int 30 80}}\",\n      \"driver_rating\" : \"{{float 1 5}}\",\n      \"ride_fare\": \"{{int 25 250}}\",\n      \"distance_from_pickup_location\" : \"{{int 1 4}}\",\n      \"eta_to_pickup_location\" : \"{{int 8 15}}\"\n    }\n    {{/repeat}}\n  ]\n  },\n  \"success\": \"true\"\n}\n\n",
-          "latency": 5,
+          "body": "{\"data\": \n  {\n    \"ride_id\": \"{{faker 'datatype.uuid'}}\",\n    \"rides\" : [\n    {{#repeat 3 }}\n    {\n      \"driver_id\": \"{{faker 'datatype.uuid'}}\",\n      \"driver_name\": \"{{ oneOf (array 'Raju' 'Ram' 'Vinod' 'Mahi' 'Sumit' 'Nishan' 'Lokesh' 'Jeevan' 'Annu') }}\",\n      \"vehicle_number\": \"KA-{{int 40 51}}-{{oneOf (array 'GJ' 'KC' 'JJ' 'HJ' 'HH')}}-{{int 10 50}}{{int 30 80}}\",\n      \"driver_rating\" : \"{{int 1 5}}\",\n      \"ride_fare\": \"{{int 25 250}}\",\n      \"distance_from_pickup_location\" : \"{{int 1 4}}\",\n      \"eta_to_pickup_location\" : \"{{int 8 15}}\"\n    }\n    {{/repeat}}\n  ]\n  },\n  \"success\": \"true\"\n}\n\n",
+          "latency": 5000,
           "statusCode": 200,
           "label": "Bidders nearby",
           "headers": [],
@@ -124,7 +124,7 @@
         {
           "uuid": "77a3ee8f-dd06-46d2-a3d9-95657f752bf8",
           "body": "{\n    \"data\": {\n        \"ride_id\": \"{{faker 'datatype.uuid'}}\",\n        \"ride\": {\n            \"driver_id\": \"{{faker 'datatype.uuid'}}\",\n            \"driver_name\": \"{{ oneOf (array 'Raju' 'Ram' 'Vinod' 'Mahi' 'Sumit') }}\",\n            \"vehicle_number\": \"KA-{{int 10 50}}-{{oneOf (array 'GJ' 'KC' 'JJ' 'HJ' 'HH')}}-{{int 10 50}}{{int 10 50}}\",\n            \"driver_rating\": \"{{float 1 5}}\",\n            \"ride_fare\": \"{{int 25 250}}\",\n            \"distance_from_pickup_location\": \"{{int 1 4}}\",\n            \"eta_to_pickup_location\": \"{{int 8 15}}\"\n        }\n    },\n    \"success\": \"true\"\n}",
-          "latency": 0,
+          "latency": 5000,
           "statusCode": 200,
           "label": "Bid Auto",
           "headers": [],
@@ -160,7 +160,7 @@
         {
           "uuid": "3a3fcb70-3011-4440-a013-6bfd97d884b4",
           "body": "{\n    \"data\": {\n        \"otp\" : \"{{int 1000 9999}}\",\n        \"distance_from_pickup_location\": \"{{int 1 4}}\",\n        \"eta_to_pickup_location\": \"{{int 8 15}}\",\n        \"driver_phone\" : \"+91-{{int 80 90 }}{{int 10 99}}{{int 10 99}}{{int 10 99}}{{int 10 99}}\"\n    },\n    \"success\": \"true\",\n    \"message\" : \"Ride booked successfully\"\n}",
-          "latency": 0,
+          "latency": 5,
           "statusCode": 200,
           "label": "Successfull booking ",
           "headers": [],

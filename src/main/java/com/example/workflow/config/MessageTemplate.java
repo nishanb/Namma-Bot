@@ -27,13 +27,15 @@ public enum MessageTemplate {
     GREET_OTHER_OPTION_OPEN_DATA_DESC("Greet_Content_Options_Other_live_board_desc"),
     RIDE_REQUEST_DESTINATION_LOCATION("Request_Destination_Location"),
     RIDE_REQUEST_PICKUP_LOCATION("Request_Pickup_Location"),
-    RIDE_INVALID_MAP_LOCATION("Send_Invalid_Map_Location"),
+    RIDE_INVALID_MESSAGE("Not_able_to_process_message"),
     RIDE_CALCULATE_FARE("Calculate_Fare_Details"),
     RIDE_CLOSING_CONVERSATION_FOR_NO_RESPONSE("Closing_Conversation_For_No_Response"),
     RIDE_BOOKING_TYPE_HEADER("Request_Booking_Type_Header"),
     RIDE_BOOKING_TYPE_BODY("Request_Booking_Type_Body"),
     RIDE_BOOKING_TYPE_OPTION_AUTO("Request_Booking_Type_Options_Auto"),
-    RIDE_BOOKING_TYPE_OPTION_MANUAL("Request_Booking_Type_Options_Cancel_Ride"), // TODO update key
+    RIDE_BOOKING_TYPE_OPTION_MANUAL("Request_Booking_Type_Options_Manual_Ride"),
+    RIDE_BOOKING_TYPE_OPTION_UPDATE_LOCATION("Ride_update_location"),
+
     RIDE_BOOKING_TYPE_CLOSE_RIDE("Request_Booking_Type_Options_Cancel_Booking"),
     RIDE_FETCH_NEARBY_DRIVERS("Fetch_Nearby_Rides"),
     RIDE_RETRY_SELECTION_HEADER("Send_Retry_Selection_Header"),

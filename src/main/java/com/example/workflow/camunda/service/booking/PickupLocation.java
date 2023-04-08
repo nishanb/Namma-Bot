@@ -31,14 +31,10 @@ public class PickupLocation implements JavaDelegate {
     public void execute(DelegateExecution execution) throws Exception {
         try {
             User user = userService.findUserByPhoneNumber(execution.getBusinessKey()).orElse(null);
-
-            //call gupshup to send message
-            log.info("PickupLocation: execute method is called......");
-            //set relevant variables for future ref
             messageService.sendTextMessage(new SendMessageRequestDto(execution.getBusinessKey(), templateService.format(MessageTemplate.RIDE_REQUEST_PICKUP_LOCATION, user.getPreferredLanguage())));
-
+            log.info("PickupLocation: execute method is called......");
         } catch (Exception e) {
-            log.warning("PickupLocation: Exception occured......");
+            log.warning("PickupLocation: Exception occurred......" + e.getMessage());
             throw new BpmnError("booking_flow_error", "Error sending message.....");
         }
     }

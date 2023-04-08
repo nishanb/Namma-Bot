@@ -17,7 +17,7 @@ import java.util.logging.Logger;
 public class ErrorHandler implements JavaDelegate {
 
     @Autowired
-    CommonMessageService messageService;
+    CommonMessageService commonMessageService;
 
     @Autowired
     UserService userService;
@@ -27,12 +27,11 @@ public class ErrorHandler implements JavaDelegate {
     @Override
     public void execute(DelegateExecution execution) throws Exception {
         try {
-            //call gupshup to send message
             log.info("ErrorHandler: execute method is called......");
             User user = userService.findUserByPhoneNumber(execution.getBusinessKey()).orElse(null);
-            messageService.sendErrorMessage(user);
-            //set relevant variables for future ref
-            execution.setVariable("ErrorHandler", true);
+            if (user != null) {
+                commonMessageService.sendErrorMessage(user);
+            }
         } catch (Exception e) {
             log.warning("ErrorHandler: Exception occurred......");
             throw new BpmnError("booking_flow_error", "Error sending message.....");
