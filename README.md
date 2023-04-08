@@ -1,4 +1,4 @@
-# Namma Bot - Karna
+# Namma Bot - Karna [WIP]
 
 Namma Yatri Service is a chatbot that helps users to book a ride and make conversation in Kannada, Hindi, and English. The chatbot is designed to work with WhatsApp and is intended to provide a convenient and hassle-free booking experience for users. The following instructions will help you get started with using the chatbot.
 
