@@ -4,10 +4,10 @@ camunda.bpm.admin-user:
   password: demo
 server:
   port: 8080
-gupshup-host: "https://api.gupshup.io/"
-gupshup-api-key: "bvj7nkip5sanxzjtcy77qxjzrwzsbfdk"
-gupshup-app-name: "NammaYatriAssiant"
-gupshup-source-contact: "917834811114"
+gupshup-host: ${GUPSHUP_HOST}
+gupshup-api-key: ${GUPSHUP_API_KEY}
+gupshup-app-name: ${GUPSHUP_APP_NAME}
+gupshup-source-contact: ${GUPSHUP_SOURCE_CONTACT}
 ny-backend-host: "https://ny-mock-api.fly.dev/api/v1"
 spring:
   data:
@@ -18,3 +18,12 @@ camunda.process-definition-id:
   booking-flow: Process_1bgrwav:8:312c6b52-d312-11ed-8bc5-f6a8ace2dc6a #id of the deployed BPMN process, every change in BPMN will lead to a new ID.
   ride-flow: Process_1hhq3j4:3:312c4441-d312-11ed-8bc5-f6a8ace2dc6a
   language-change-flow: Process_18f0e8v:1:b59820a5-d355-11ed-b6a1-76b3e82a2871
+
+#Camunda external service task client configuration
+camunda.bpm.client:
+  base-url: http://localhost:8080/engine-rest
+  lock-duration: 10000
+  subscriptions:
+    fetchNearbyRides:
+      variable-names: destination_latitude, destination_longitude, source_latitude, source_longitude, ride_selection_mode
+      process-definition-key: Process_1bgrwav
