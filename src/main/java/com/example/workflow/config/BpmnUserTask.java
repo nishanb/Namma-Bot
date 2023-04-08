@@ -13,7 +13,9 @@ public enum BpmnUserTask {
     RIDE_DRIVER_ARRIVED("Driver_Arrived"),
     RIDE_STARTED("Ride_Started"),
     RIDE_CAPTURE_RIDE_RATING("Capture_Driver_Rating"),
-    RIDE_ENDED("Ride_Ended");
+    RIDE_ENDED("Ride_Ended"),
+    LANGUAGE_UPDATE_PREFERENCE_SELECTION("Language_Selection"),
+    LANGUAGE_UPDATE_PREFERENCE_CONFIRMATION("Language_Change_Confirmation");
 
     private final String taskDefinitionKey;
 

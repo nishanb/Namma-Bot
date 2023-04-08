@@ -7,8 +7,13 @@ public enum PostBackText {
 
     AUTO_ASSIGN("AUTO_ASSIGN"),
     CHOOSE_MANUAL("CHOOSE_MANUAL"),
-    CHANGE_LOCATION("CHANGE_LOCATION");
-
+    CHANGE_LOCATION("CHANGE_LOCATION"),
+    LANG_PREF_KANNADA("KANNADA"),
+    LANG_PREF_ENGLISH("ENGLISH"),
+    LANG_PREF_HINDI("HINDI"),
+    LANG_PREF_CANCEL("cancel"),
+    LANG_PREF_RE_UPDATE("changeSelection"),
+    LANG_PREF_APPROVE("confirm");
     private final String postBackText;
 
     PostBackText(String eventType) {

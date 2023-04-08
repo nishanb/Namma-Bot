@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_09fti48" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.7.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.18.0">
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:biodi="http://bpmn.io/schema/dmn/biodi/2.0" id="Definitions_09fti48" name="DRD" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.9.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.18.0">
   <decision id="Decision_0lz6ln0" name="Language Confirmation Descision">
     <decisionTable id="DecisionTable_0pkbljb">
-      <input id="Input_1" label="languageConfirmation">
-        <inputExpression id="InputExpression_1" typeRef="integer">
+      <input id="Input_1" label="languageConfirmation" biodi:width="192">
+        <inputExpression id="InputExpression_1" typeRef="string">
           <text>languageConfirmation</text>
         </inputExpression>
       </input>
-      <output id="Output_1" label="languageConfirmationDecision" name="languageConfirmationDecision" typeRef="string" />
+      <output id="Output_1" label="confirmation" name="confirmation" typeRef="string" />
       <rule id="DecisionRule_03gq7b8">
         <inputEntry id="UnaryTests_0vycon2">
-          <text>1</text>
+          <text>"confirm"</text>
         </inputEntry>
         <outputEntry id="LiteralExpression_0vps0g3">
           <text>"confirm"</text>
@@ -18,7 +18,7 @@
       </rule>
       <rule id="DecisionRule_1dhrup8">
         <inputEntry id="UnaryTests_0cuyljv">
-          <text>2</text>
+          <text>"changeSelection"</text>
         </inputEntry>
         <outputEntry id="LiteralExpression_1x5dmg3">
           <text>"changeSelection"</text>
@@ -26,7 +26,7 @@
       </rule>
       <rule id="DecisionRule_1s3nf6t">
         <inputEntry id="UnaryTests_03p7quk">
-          <text>3</text>
+          <text>"cancel"</text>
         </inputEntry>
         <outputEntry id="LiteralExpression_0jwxjm3">
           <text>"cancel"</text>

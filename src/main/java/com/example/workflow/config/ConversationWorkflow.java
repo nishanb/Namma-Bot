@@ -13,7 +13,8 @@ public enum ConversationWorkflow {
     OTHER("", "OTHER"),
     KNOW_MORE("", "KNOW_MORE"),
     OPEN_DATA("", "OPEN_DATA"),
-    FEEDBACK("", "FEEDBACK");
+    FEEDBACK("", "FEEDBACK"),
+    MAIN_MENU("", "MAIN_MENU");
 
     private final String processDefinitionName;
 

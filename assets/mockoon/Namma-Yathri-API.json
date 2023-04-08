@@ -99,7 +99,7 @@
         {
           "uuid": "e07c6777-b872-4bae-816c-841ec785b004",
           "body": "{\"data\": \n  {\n    \"ride_id\": \"{{faker 'datatype.uuid'}}\",\n    \"rides\" : [\n    {{#repeat 3 }}\n    {\n      \"driver_id\": \"{{faker 'datatype.uuid'}}\",\n      \"driver_name\": \"{{ oneOf (array 'Raju' 'Ram' 'Vinod' 'Mahi' 'Sumit' 'Nishan' 'Lokesh' 'Jeevan' 'Annu') }}\",\n      \"vehicle_number\": \"KA-{{int 40 51}}-{{oneOf (array 'GJ' 'KC' 'JJ' 'HJ' 'HH')}}-{{int 10 50}}{{int 30 80}}\",\n      \"driver_rating\" : \"{{int 1 5}}\",\n      \"ride_fare\": \"{{int 25 250}}\",\n      \"distance_from_pickup_location\" : \"{{int 1 4}}\",\n      \"eta_to_pickup_location\" : \"{{int 8 15}}\"\n    }\n    {{/repeat}}\n  ]\n  },\n  \"success\": \"true\"\n}\n\n",
-          "latency": 5000,
+          "latency": 0,
           "statusCode": 200,
           "label": "Bidders nearby",
           "headers": [],
@@ -124,7 +124,7 @@
         {
           "uuid": "77a3ee8f-dd06-46d2-a3d9-95657f752bf8",
           "body": "{\n    \"data\": {\n        \"ride_id\": \"{{faker 'datatype.uuid'}}\",\n        \"ride\": {\n            \"driver_id\": \"{{faker 'datatype.uuid'}}\",\n            \"driver_name\": \"{{ oneOf (array 'Raju' 'Ram' 'Vinod' 'Mahi' 'Sumit') }}\",\n            \"vehicle_number\": \"KA-{{int 10 50}}-{{oneOf (array 'GJ' 'KC' 'JJ' 'HJ' 'HH')}}-{{int 10 50}}{{int 10 50}}\",\n            \"driver_rating\": \"{{float 1 5}}\",\n            \"ride_fare\": \"{{int 25 250}}\",\n            \"distance_from_pickup_location\": \"{{int 1 4}}\",\n            \"eta_to_pickup_location\": \"{{int 8 15}}\"\n        }\n    },\n    \"success\": \"true\"\n}",
-          "latency": 5000,
+          "latency": 0,
           "statusCode": 200,
           "label": "Bid Auto",
           "headers": [],
