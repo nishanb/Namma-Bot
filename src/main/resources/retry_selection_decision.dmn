@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_057s24t" name="Retry_Selection_Decision" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.7.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.18.0">
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:biodi="http://bpmn.io/schema/dmn/biodi/2.0" id="Definitions_057s24t" name="Retry_Selection_Decision" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.7.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.18.0">
   <decision id="Decision_1klob0q" name="Retry_Selection_Decision">
     <decisionTable id="DecisionTable_00ksufe">
-      <input id="Input_1" label="retrySelection">
-        <inputExpression id="InputExpression_1" typeRef="integer">
-          <text>retrySelection</text>
+      <input id="Input_1" label="retry_selection" biodi:width="192">
+        <inputExpression id="InputExpression_1" typeRef="string">
+          <text>retry_selection</text>
         </inputExpression>
       </input>
-      <output id="Output_1" label="decision" typeRef="string" />
+      <output id="Output_1" label="decision" name="decision" typeRef="string" />
       <rule id="DecisionRule_1ubo4l1">
         <inputEntry id="UnaryTests_0ef7ll0">
-          <text>1</text>
+          <text>"RETRY_SEARCH"</text>
         </inputEntry>
         <outputEntry id="LiteralExpression_07i1ixt">
           <text>"retry"</text>
@@ -18,7 +18,7 @@
       </rule>
       <rule id="DecisionRule_075p8n4">
         <inputEntry id="UnaryTests_0dmupuz">
-          <text>2</text>
+          <text>"CANCEL_BOOKING"</text>
         </inputEntry>
         <outputEntry id="LiteralExpression_05dsqys">
           <text>"cancel"</text>
