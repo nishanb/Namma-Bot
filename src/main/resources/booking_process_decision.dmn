@@ -2,15 +2,15 @@
 <definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/" xmlns:dc="http://www.omg.org/spec/DMN/20180521/DC/" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_0m5t8m3" name="Booking_Type_Decision_Process" namespace="http://camunda.org/schema/1.0/dmn" exporter="Camunda Modeler" exporterVersion="5.7.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.18.0">
   <decision id="Decision_1rpfe4q" name="Booking_Type_Decision_Process">
     <decisionTable id="DecisionTable_16hngvv">
-      <input id="Input_1" label="booking_type">
-        <inputExpression id="InputExpression_1" typeRef="integer">
-          <text>booking_type</text>
+      <input id="Input_1" label="booking_type_selection">
+        <inputExpression id="InputExpression_1" typeRef="string">
+          <text>booking_type_selection</text>
         </inputExpression>
       </input>
       <output id="Output_1" label="process" name="process" typeRef="string" />
       <rule id="DecisionRule_0as14u5">
         <inputEntry id="UnaryTests_1ley9np">
-          <text>1</text>
+          <text>"AUTO_ASSIGN"</text>
         </inputEntry>
         <outputEntry id="LiteralExpression_1f25g47">
           <text>"autoProcess"</text>
@@ -18,7 +18,7 @@
       </rule>
       <rule id="DecisionRule_0rjqccx">
         <inputEntry id="UnaryTests_0259oj4">
-          <text>2</text>
+          <text>"CHOOSE_MANUAL"</text>
         </inputEntry>
         <outputEntry id="LiteralExpression_0dwl271">
           <text>"manualProcess"</text>
@@ -26,15 +26,15 @@
       </rule>
       <rule id="DecisionRule_1qdzjgf">
         <inputEntry id="UnaryTests_04mcuh7">
-          <text>3</text>
+          <text>"CHANGE_LOCATION"</text>
         </inputEntry>
         <outputEntry id="LiteralExpression_1juxnyk">
-          <text>"changeLocation"</text>
+          <text>"retryBooking"</text>
         </outputEntry>
       </rule>
       <rule id="DecisionRule_0g2cw0b">
         <inputEntry id="UnaryTests_04fqczy">
-          <text>4</text>
+          <text>"CANCEL_BOOKING"</text>
         </inputEntry>
         <outputEntry id="LiteralExpression_189pz4v">
           <text>"cancelBooking"</text>

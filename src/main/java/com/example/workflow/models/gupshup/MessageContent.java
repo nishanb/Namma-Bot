@@ -7,11 +7,17 @@ public class MessageContent {
     private String caption = null;
 
     public MessageContent(String header, String text) {
+        if (header.length() > 20) {
+            header = header.substring(0, 20);
+        }
         this.header = header;
         this.text = text;
     }
 
     public MessageContent(String header, String text, String caption) {
+        if (header.length() > 20) {
+            header = header.substring(0, 20);
+        }
         this.header = header;
         this.text = text;
         this.caption = caption;

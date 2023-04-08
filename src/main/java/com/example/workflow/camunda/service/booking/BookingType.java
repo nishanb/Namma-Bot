@@ -1,8 +1,15 @@
 package com.example.workflow.camunda.service.booking;
 
+import camundajar.impl.com.google.gson.JsonElement;
+import camundajar.impl.com.google.gson.JsonObject;
 import com.example.workflow.config.ConversationFlowType;
+import com.example.workflow.dto.ListMessageDto;
+import com.example.workflow.dto.SendListMessageRequestDto;
 import com.example.workflow.dto.SendQuickReplyMessageDto;
 import com.example.workflow.models.User;
+import com.example.workflow.models.gupshup.GlobalButtons;
+import com.example.workflow.models.gupshup.ListMessageItem;
+import com.example.workflow.models.gupshup.ListMessageItemOption;
 import com.example.workflow.models.gupshup.MessageContent;
 import com.example.workflow.services.MessageService;
 import com.example.workflow.services.TemplateService;
@@ -38,46 +45,42 @@ public class BookingType implements JavaDelegate {
 
             SendQuickReplyMessageDto rideSelectionMessage = new SendQuickReplyMessageDto();
 
-            rideSelectionMessage.setReceiverContactNumber(execution.getBusinessKey().toString());
+            Optional<User> userSaved = userService.findUserByPhoneNumber(execution.getBusinessKey());
+            User user = userSaved.get();
+            rideSelectionMessage.setReceiverContactNumber(user.getPhoneNumber());
             rideSelectionMessage.setType(MESSAGE_TYPE_QUICK_REPLY);
 
             List<Map<String, String>> options = new ArrayList<>(new ArrayList<>(Arrays.asList(
                     new HashMap<>() {{
                         put("type", "text");
-                        put("title", "Assign Auto");
-                        put("postbackText", ConversationFlowType.BOOK_RIDE);
+                        put("title", "Auto Assign");
+                        put("postbackText", "AUTO_ASSIGN");
                     }},
                     new HashMap<>() {{
                         put("type", "text");
                         put("title", "Choose Manually");
-                        put("postbackText", ConversationFlowType.PREVIOUS_RIDE);
+                        put("postbackText", "CHOOSE_MANUAL");
                     }},
                     new HashMap<>() {{
                         put("type", "text");
-                        put("title", "Cancel Booking");
-                        put("postbackText", ConversationFlowType.OTHER);
+                        put("title", "Change Location");
+                        put("postbackText", "CHANGE_LOCATION");
                     }}
+//                    new HashMap<>() {{
+//                        put("type", "text");
+//                        put("title", "Cancel Booking");
+//                        put("postbackText", "CANCEL_BOOKING");
+//                    }}  // Cancel booking to be handled globally, cannot add here as we have a quick button links limit of 10
             )));
 
-            Optional<User> userSaved = userService.findUserByPhoneNumber(execution.getBusinessKey());
-            User user = userSaved.get();
-
-            String distanceEstimation = execution.getVariable("distance_estimation").toString();
-            String timeEstimation = execution.getVariable("time_estimation").toString();
-            String priceEstLow = execution.getVariable("price_est_low").toString();
-            String priceEstHigh = execution.getVariable("price_est_high").toString();
-
-
-//            rideSelectionMessage.setQuickReplyMessage(messageService.generateQuickReplyMessage(
-//                    new MessageContent(
-//                            templateService.format(TemplateType.USER_GREET, user.getPreferredLanguage(), new ArrayList<>(Collections.singletonList(user.getName()))),
-//                            templateService.format(TemplateType.USER_GREET_DESCRIPTION, user.getPreferredLanguage(), new ArrayList<>())
-//                    ), options, UUID.randomUUID().toString()));
-
+            String distanceEstimation = (String) execution.getVariable("distance_estimation");
+            String timeEstimation = (String) execution.getVariable("time_estimation");
+            String priceEstLow = (String) execution.getVariable("price_est_low");
+            String priceEstHigh = (String) execution.getVariable("price_est_high");
 
             rideSelectionMessage.setQuickReplyMessage(messageService.generateQuickReplyMessage(
                     new MessageContent(
-                            "Choose your ride fare", String.format("This ride will cost you %s RS - %s RS , with estimate travel of %s KM in %s minutes ", priceEstLow, priceEstHigh, distanceEstimation, timeEstimation)
+                            "Choose ride", String.format("This ride will cost you ₹%s - ₹%s, with estimate travel of %s KM in %s minutes \n Kindly choose one of the options below that suits your needs.", priceEstLow, priceEstHigh, distanceEstimation, timeEstimation)
                     ), options, UUID.randomUUID().toString()));
 
 

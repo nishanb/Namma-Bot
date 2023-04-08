@@ -52,7 +52,6 @@
         <bpmn:outgoing>Flow_1a0jnhw</bpmn:outgoing>
         <bpmn:outgoing>Flow_18vvjnm</bpmn:outgoing>
         <bpmn:outgoing>Flow_03cgzig</bpmn:outgoing>
-        <bpmn:outgoing>Flow_1lmowla</bpmn:outgoing>
       </bpmn:exclusiveGateway>
       <bpmn:serviceTask id="Activity_0gbj2bq" name="Fetch nearby rides without bid" camunda:class="com.example.workflow.camunda.service.booking.AutoRideSearch">
         <bpmn:incoming>Flow_18vvjnm</bpmn:incoming>
@@ -133,10 +132,6 @@
         <bpmn:incoming>Flow_0hs6tph</bpmn:incoming>
         <bpmn:outgoing>Flow_1lw9x5y</bpmn:outgoing>
       </bpmn:serviceTask>
-      <bpmn:intermediateThrowEvent id="Event_01c9qi4">
-        <bpmn:incoming>Flow_1lmowla</bpmn:incoming>
-        <bpmn:signalEventDefinition id="SignalEventDefinition_161clll" signalRef="Signal_3pb3n4j" />
-      </bpmn:intermediateThrowEvent>
       <bpmn:boundaryEvent id="Event_0m1wa3h" attachedToRef="Receive_Destination_Location">
         <bpmn:outgoing>Flow_1v0obqi</bpmn:outgoing>
         <bpmn:conditionalEventDefinition id="ConditionalEventDefinition_174siqg">
@@ -176,7 +171,7 @@
       <bpmn:boundaryEvent id="Event_0k4ncvn" attachedToRef="Ride_Confirmation">
         <bpmn:outgoing>Flow_0rynzpk</bpmn:outgoing>
         <bpmn:timerEventDefinition id="TimerEventDefinition_1w0xxkl">
-          <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT10S</bpmn:timeDuration>
+          <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT30S</bpmn:timeDuration>
         </bpmn:timerEventDefinition>
       </bpmn:boundaryEvent>
       <bpmn:boundaryEvent id="Event_1h3gbaq" attachedToRef="Activity_1iea0rs">
@@ -200,7 +195,7 @@
       <bpmn:sequenceFlow id="Flow_006ybxh" sourceRef="Event_16p6ukk" targetRef="Activity_0w196g8" />
       <bpmn:sequenceFlow id="Flow_0mjohxt" sourceRef="Activity_1ub1ha4" targetRef="Activity_0w196g8" />
       <bpmn:sequenceFlow id="Flow_1a0jnhw" sourceRef="Gateway_03y2snc" targetRef="Activity_0w196g8">
-        <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${"process"=='retryBooking'}</bpmn:conditionExpression>
+        <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${process=='retryBooking'}</bpmn:conditionExpression>
       </bpmn:sequenceFlow>
       <bpmn:sequenceFlow id="Flow_00d45ai" sourceRef="Activity_0w196g8" targetRef="Receive_Destination_Location" />
       <bpmn:sequenceFlow id="Flow_010u7i8" sourceRef="Receive_Destination_Location" targetRef="Activity_0nyght1" />
@@ -218,9 +213,6 @@
       </bpmn:sequenceFlow>
       <bpmn:sequenceFlow id="Flow_03cgzig" sourceRef="Gateway_03y2snc" targetRef="Activity_1kup6x6">
         <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${process=='manualProcess'}</bpmn:conditionExpression>
-      </bpmn:sequenceFlow>
-      <bpmn:sequenceFlow id="Flow_1lmowla" sourceRef="Gateway_03y2snc" targetRef="Event_01c9qi4">
-        <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${process=='cancelBooking'}</bpmn:conditionExpression>
       </bpmn:sequenceFlow>
       <bpmn:sequenceFlow id="Flow_1oakly3" sourceRef="Activity_1e10fmr" targetRef="Activity_0gbj2bq" />
       <bpmn:sequenceFlow id="Flow_15sfk17" sourceRef="Activity_0gbj2bq" targetRef="Activity_02vd4lf" />
@@ -529,9 +521,6 @@
       <bpmn:textAnnotation id="TextAnnotation_0x0pakm">
         <bpmn:text>Cancel booking signal</bpmn:text>
       </bpmn:textAnnotation>
-      <bpmn:textAnnotation id="TextAnnotation_09ldlhi">
-        <bpmn:text>Cancel booking signal</bpmn:text>
-      </bpmn:textAnnotation>
       <bpmn:textAnnotation id="TextAnnotation_1ai2gct">
         <bpmn:text>Change map location</bpmn:text>
       </bpmn:textAnnotation>
@@ -546,7 +535,6 @@
       <bpmn:association id="Association_04ubaec" sourceRef="TextAnnotation_1wlfnp0" targetRef="Event_0f4xbn9" />
       <bpmn:association id="Association_1c8plzv" sourceRef="TextAnnotation_0x0pakm" targetRef="Event_1b7lkzd" />
       <bpmn:association id="Association_05l2xrr" sourceRef="Flow_1a0jnhw" targetRef="TextAnnotation_1ai2gct" />
-      <bpmn:association id="Association_0nyupe2" sourceRef="TextAnnotation_09ldlhi" targetRef="Event_01c9qi4" />
       <bpmn:textAnnotation id="TextAnnotation_18lp981">
         <bpmn:text>Sub process for booking cancellation.</bpmn:text>
       </bpmn:textAnnotation>
@@ -646,10 +634,6 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_07wodre" bpmnElement="TextAnnotation_0x0pakm">
         <dc:Bounds x="1560" y="732" width="100" height="41" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="BPMNShape_1vrkfmq" bpmnElement="TextAnnotation_09ldlhi">
-        <dc:Bounds x="1870" y="930" width="100" height="41" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_0bovsje" bpmnElement="TextAnnotation_1ai2gct">
@@ -775,9 +759,6 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_03p5f4k" bpmnElement="Activity_0b08dpz">
         <dc:Bounds x="1490" y="831" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="BPMNShape_0kmps2l" bpmnElement="Event_01c9qi4">
-        <dc:Bounds x="1942" y="983" width="36" height="36" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_11t3grv_di" bpmnElement="Event_0v8d160">
         <dc:Bounds x="562" y="1093" width="36" height="36" />
@@ -965,10 +946,6 @@
         <di:waypoint x="1571" y="773" />
         <di:waypoint x="1556" y="781" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="BPMNEdge_1mywu54" bpmnElement="Association_0nyupe2">
-        <di:waypoint x="1874" y="971" />
-        <di:waypoint x="1948" y="988" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="BPMNEdge_1k2nymx" bpmnElement="Association_1sodshb">
         <di:waypoint x="1192" y="1360" />
         <di:waypoint x="1250" y="1325" />
@@ -1145,10 +1122,6 @@
         <di:waypoint x="1770" y="1026" />
         <di:waypoint x="1770" y="1111" />
         <di:waypoint x="1860" y="1111" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="BPMNEdge_0pmfden" bpmnElement="Flow_1lmowla">
-        <di:waypoint x="1795" y="1001" />
-        <di:waypoint x="1942" y="1001" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="BPMNEdge_1xgacs0" bpmnElement="Flow_1oakly3">
         <di:waypoint x="1960" y="751" />

@@ -198,6 +198,7 @@ public class MessageServiceImpl implements MessageService {
         generatedMessage.setType(MESSAGE_TYPE_QUICK_REPLY);
         generatedMessage.setMsgid(messageId);
         generatedMessage.setContent(content);
+        //TODO: Add validation to set limit for length of the options as only 3 options are allowed.
         generatedMessage.setOptions(options);
 
         return generatedMessage;
