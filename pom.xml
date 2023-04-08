@@ -104,7 +104,12 @@
             <artifactId>json</artifactId>
             <version>LATEST</version>
         </dependency>
-
+<!--        Below dependency should be used by the external service acting as client for Camunda tasks-->
+        <dependency>
+            <groupId>org.camunda.bpm.springboot</groupId>
+            <artifactId>camunda-bpm-spring-boot-starter-external-task-client</artifactId>
+            <version>7.15.0-alpha5</version>
+        </dependency>
     </dependencies>
 
     <build>

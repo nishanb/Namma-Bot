@@ -1,23 +1,39 @@
 package com.example.workflow.camunda.service.booking;
 
+import com.example.workflow.services.MessageService;
+import com.example.workflow.services.UserService;
 import org.camunda.bpm.engine.delegate.BpmnError;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.logging.Logger;
 
+@Service
 public class RetryRideSearch implements JavaDelegate {
+
+    @Autowired
+    UserService userService;
+
+    @Autowired
+    MessageService messageService;
 
     private final Logger log = Logger.getLogger(RetryRideSearch.class.getName());
 
     @Override
     public void execute(DelegateExecution execution) throws Exception {
         try{
-            //call gupshup to send message
-            log.info("RetryRideSearch: execute method is called......");
-            //set relevant variables for future ref
+            Boolean hasRetryAttempts = execution.hasVariable("retry_attempts");
+            Integer retryAttempts = 1;
+            if(hasRetryAttempts) {
+                retryAttempts = (Integer) execution.getVariable("retry_attempts");
+                retryAttempts += 1;
+            }
+            execution.setVariable("retry_attempts", retryAttempts);
             execution.setVariable("RetryRideSearch", true);
         } catch (Exception e){
+            System.out.println(e.getMessage());
             log.warning("RetryRideSearch: Exception occured......");
             throw new BpmnError("booking_flow_error","Error sending message.....");
         }

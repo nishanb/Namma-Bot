@@ -85,7 +85,7 @@ public class WorkflowServiceImpl implements WorkflowService {
     @Override
     public void process(User user, String messageType, WebhookMessagePayload webhookMessagePayload) throws Exception {
 
-        if (user.getProcessInstanceId() == null) {
+        if (user.getProcessInstanceId() == null || user.getProcessInstanceId().isEmpty()) {
             // // Message callback coming from main greet section
 
             if (messageType.equals(MESSAGE_TYPE_BUTTON_REPLY)) {

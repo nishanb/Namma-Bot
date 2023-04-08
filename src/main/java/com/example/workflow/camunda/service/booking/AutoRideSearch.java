@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 @Service
 public class AutoRideSearch implements JavaDelegate {
@@ -44,6 +45,7 @@ public class AutoRideSearch implements JavaDelegate {
             User user = userSaved.get();
 
             messageService.sendTextMessage(new SendMessageRequestDto(user.getPhoneNumber(), "Please wait while we are searching for rides near you. Your ride will be assigned automatically."));
+            execution.setVariable("ride_selection_mode","auto");
 
             //Fetching all the variables from the process instance required for execution.
             String destinationLatitude = (String) execution.getVariable("destination_latitude");
@@ -61,6 +63,7 @@ public class AutoRideSearch implements JavaDelegate {
             ridesToPersistObj.add(chosenDriverId,availableRides);
 
             JsonValue ridesToPersist =  SpinValues.jsonValue(new Gson().toJson(ridesToPersistObj)).create();
+
 
             execution.setVariable("ride_id", rideId);
             execution.setVariable("chosen_driver_id", chosenDriverId);

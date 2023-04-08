@@ -51,7 +51,6 @@ public class RideAssignment implements JavaDelegate {
             SpinJsonNode selectedDriverDetails = persistedRidesJson.prop(chosenDriverId);
             String driverName = (String) selectedDriverDetails.prop("driver_name").value();
             String rideFare = (String) selectedDriverDetails.prop("ride_fare").value();
-            String distanceFromPickupLocation = (String) selectedDriverDetails.prop("distance_from_pickup_location").value();
             String pickupETA = (String) selectedDriverDetails.prop("eta_to_pickup_location").value();
             String vehicleNumber = (String) selectedDriverDetails.prop("vehicle_number").value();
 
