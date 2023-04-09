@@ -21,7 +21,7 @@ public class ReceiveRideRating implements UserTask {
 
     @Override
     public void complete(Task task, User user, String messageType, WebhookMessagePayload webhookMessagePayload) throws Exception {
-        if (Objects.equals(messageType, Constants.MESSAGE_TYPE_LOCATION_REPLY)) {
+        if (Objects.equals(messageType, Constants.MESSAGE_TYPE_LIST_REPLY)) {
             Map<String, Object> variables = new HashMap<>();
             // TODO set variables
             camundaCoreService.completeUserTaskByTaskId(task, variables);

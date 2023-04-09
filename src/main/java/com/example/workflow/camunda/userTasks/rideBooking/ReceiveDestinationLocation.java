@@ -2,9 +2,12 @@ package com.example.workflow.camunda.userTasks.rideBooking;
 
 import com.example.workflow.camunda.core.CamundaCoreService;
 import com.example.workflow.camunda.userTasks.UserTask;
+import com.example.workflow.config.MessageTemplate;
+import com.example.workflow.dto.SendMessageRequestDto;
 import com.example.workflow.models.User;
 import com.example.workflow.models.gupshup.WebhookMessagePayload;
 import com.example.workflow.services.MessageService;
+import com.example.workflow.services.TemplateService;
 import com.example.workflow.utils.Constants;
 import org.camunda.bpm.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,12 +19,14 @@ import java.util.Objects;
 
 @Service
 public class ReceiveDestinationLocation implements UserTask {
-
     @Autowired
     MessageService messageService;
 
     @Autowired
     CamundaCoreService camundaCoreService;
+
+    @Autowired
+    TemplateService templateService;
 
     @Override
     public void complete(Task task, User user, String messageType, WebhookMessagePayload webhookMessagePayload) throws Exception {
@@ -30,6 +35,8 @@ public class ReceiveDestinationLocation implements UserTask {
             variables.put("destination_latitude", webhookMessagePayload.getPayload().get("latitude"));
             variables.put("destination_longitude", webhookMessagePayload.getPayload().get("longitude"));
             camundaCoreService.completeUserTaskByTaskId(task, variables);
+        } else {
+            messageService.sendTextMessage(new SendMessageRequestDto(user.getPhoneNumber(), templateService.format(MessageTemplate.RIDE_INVALID_MESSAGE, user.getPreferredLanguage())));
         }
     }
 }

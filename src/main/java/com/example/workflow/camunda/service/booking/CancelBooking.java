@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 import java.util.logging.Logger;
+
 @Service
 public class CancelBooking implements JavaDelegate {
 
@@ -20,20 +21,20 @@ public class CancelBooking implements JavaDelegate {
 
     @Override
     public void execute(DelegateExecution execution) throws Exception {
-        try{
+        try {
             Optional<User> userSaved = userService.findUserByPhoneNumber(execution.getBusinessKey());
             User user = userSaved.get();
 
             //Updating user process instance by empty string
-            userService.updateProcessInstanceIdByUserId(user.getId(),"");
+            userService.updateProcessInstanceIdByUserId(user.getId(), null);
 
             //call gupshup to send message
             log.info("CancelBooking: execute method is called......");
             //set relevant variables for future ref
             execution.setVariable("CancelBooking", true);
-        } catch (Exception e){
+        } catch (Exception e) {
             log.warning("CancelBooking: Exception occured......");
-            throw new BpmnError("booking_flow_error","Error sending message.....");
+            throw new BpmnError("booking_flow_error", "Error sending message.....");
         }
     }
 }

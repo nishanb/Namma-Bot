@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
-import java.util.Map;
 import java.util.logging.Logger;
+
 @Service
 public class RideEnded implements JavaDelegate {
 
@@ -19,18 +19,16 @@ public class RideEnded implements JavaDelegate {
 
     @Override
     public void execute(DelegateExecution execution) throws Exception {
-        try{
-            //call gupshup to send message
-            log.info("ride.RideEnded: execute method is called......");
-            //set relevant variables for future ref
-            execution.setVariable("ride.RideEnded", true);
-            Map<String, Object> variables = new HashMap<>();
-            variables.put("ride_ended_message",true);
-            String businessKey = execution.getProcessBusinessKey();
-            camundaCoreService.createMessageCorrelation(businessKey,"ride_ended_update",variables);
-        } catch (Exception e){
-            log.warning("RideEnded: Exception occured......");
-            throw new BpmnError("booking_flow_error","Error sending message.....");
+        try {
+            log.info("<-- Ride Ended  Message-Service method executed -->");
+
+            // driver has ended the ride
+            execution.setVariable("ride_status", "driver_arrived");
+
+            camundaCoreService.createMessageCorrelation(execution.getProcessBusinessKey(), "ride_ended_update", new HashMap<>());
+        } catch (Exception e) {
+            log.warning("RideEnded: Exception occurred......" + e.getMessage());
+            throw new BpmnError("booking_flow_error", "Error sending message.....");
         }
     }
 }

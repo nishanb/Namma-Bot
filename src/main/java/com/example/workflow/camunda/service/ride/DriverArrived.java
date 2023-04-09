@@ -1,15 +1,15 @@
 package com.example.workflow.camunda.service.ride;
+
 import com.example.workflow.camunda.core.CamundaCoreService;
 import org.camunda.bpm.engine.delegate.BpmnError;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
-import org.camunda.bpm.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
-import java.util.Map;
 import java.util.logging.Logger;
+
 @Service
 public class DriverArrived implements JavaDelegate {
 
@@ -20,20 +20,17 @@ public class DriverArrived implements JavaDelegate {
 
     @Override
     public void execute(DelegateExecution execution) throws Exception {
-        try{
-            //call gupshup to send message
-            log.info("ride.DriverArrived: execute method is called......");
-            //set relevant variables for future ref
-            execution.setVariable("DriverArrived", true);
+        try {
+            log.info("<-- Ride Arrived Message-Service executed -->");
 
-            Map<String, Object> variables = new HashMap<>();
-            variables.put("driver_arrived_message",true);
-            String businessKey = execution.getProcessBusinessKey();
-            camundaCoreService.createMessageCorrelation(businessKey,"driver_arrived_update",variables);
-        } catch (Exception e){
-            System.out.println("Exception >>>>>>"+e.getMessage());
-            log.warning("ride.DriverArrived: Exception occured......");
-            throw new BpmnError("booking_flow_error","Error sending message.....");
+            // driver has arrived to pickup customer
+            execution.setVariable("ride_status", "driver_arrived");
+
+            camundaCoreService.createMessageCorrelation(execution.getProcessBusinessKey(), "driver_arrived_update", new HashMap<>());
+        } catch (Exception e) {
+            System.out.println("Exception >>>>>>" + e.getMessage());
+            log.warning("ride.DriverArrived: Exception occurred......" + e.getMessage());
+            throw new BpmnError("booking_flow_error", "Error sending message.....");
         }
     }
 }
