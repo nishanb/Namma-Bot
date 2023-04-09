@@ -1,8 +1,13 @@
 package com.example.workflow.camunda.service.common;
 
+import com.example.workflow.config.ConversationWorkflow;
+import com.example.workflow.config.MessageTemplate;
 import com.example.workflow.dto.SendMessageRequestDto;
+import com.example.workflow.dto.SendQuickReplyMessageDto;
 import com.example.workflow.models.User;
+import com.example.workflow.models.gupshup.MessageContent;
 import com.example.workflow.services.MessageService;
+import com.example.workflow.services.TemplateService;
 import com.example.workflow.services.UserService;
 import org.camunda.bpm.engine.delegate.BpmnError;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
@@ -10,8 +15,11 @@ import org.camunda.bpm.engine.delegate.JavaDelegate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import java.util.*;
 import java.util.logging.Logger;
+
+import static com.example.workflow.utils.Constants.MESSAGE_TYPE_QUICK_REPLY;
+
 @Service
 public class NoResponseClose implements JavaDelegate {
 
@@ -20,24 +28,46 @@ public class NoResponseClose implements JavaDelegate {
 
     @Autowired
     MessageService messageService;
+
+    @Autowired
+    TemplateService templateService;
+
     private final Logger log = Logger.getLogger(NoResponseClose.class.getName());
 
     @Override
     public void execute(DelegateExecution execution) throws Exception {
-        try{
-            //call gupshup to send message
+        try {
             log.info("NoResponseClose: execute method is called......");
-            Optional<User> userSaved = userService.findUserByPhoneNumber(execution.getBusinessKey());
-            User user = userSaved.get();
+            User user = userService.findUserByPhoneNumber(execution.getBusinessKey()).orElse(null);
 
-            messageService.sendTextMessage(new SendMessageRequestDto(user.getPhoneNumber(), "I'm sorry, it seems that I haven't received a response from you. Closing the conversation. \n" +
-                    "If you have any further questions or concerns, please feel free to reach out to me again in the future. \n" +
-                    "\n" +
-                    "Thank you for your time and have a great day! \uD83D\uDC4B\uD83D\uDC4B"));
+            SendQuickReplyMessageDto rideSelectionMessage = new SendQuickReplyMessageDto();
+            rideSelectionMessage.setReceiverContactNumber(user.getPhoneNumber());
+            rideSelectionMessage.setType(MESSAGE_TYPE_QUICK_REPLY);
+
+            List<Map<String, String>> options = new ArrayList<>(new ArrayList<>(List.of(
+                    new HashMap<>() {{
+                        put("type", "text");
+                        put("title", templateService.format(MessageTemplate.GREET_MAIN_MENU, user.getPreferredLanguage()));
+                        put("postbackText", ConversationWorkflow.MAIN_MENU.getPostbackText());
+                    }}
+            )));
+
+            rideSelectionMessage.setQuickReplyMessage(messageService.generateQuickReplyMessage(
+                    new MessageContent(
+                            templateService.format(MessageTemplate.RIDE_CLOSING_CONVERSATION_FOR_NO_RESPONSE_HEADER, user.getPreferredLanguage()),
+                            templateService.format(MessageTemplate.RIDE_CLOSING_CONVERSATION_FOR_NO_RESPONSE, user.getPreferredLanguage())
+                    ),
+                    options,
+                    UUID.randomUUID().toString())
+            );
+
+            messageService.sendQuickReplyMessage(rideSelectionMessage);
+
+            // To disable cancel message to user
             execution.setVariable("NoResponseClose", true);
-        } catch (Exception e){
-            log.warning("NoResponseClose: Exception occured......");
-            throw new BpmnError("booking_flow_error","Error sending message.....");
+        } catch (Exception e) {
+            log.warning("NoResponseClose: Exception occurred......" + e.getMessage());
+            throw new BpmnError("booking_flow_error", "Error sending message.....");
         }
     }
 }

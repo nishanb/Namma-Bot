@@ -33,6 +33,11 @@ public class CancelNotification implements JavaDelegate {
     @Override
     public void execute(DelegateExecution execution) throws Exception {
         try {
+            // do not show cancel message if it's triggered from delay-signal
+            if(execution.hasVariable("NoResponseClose")){
+                return;
+            }
+
             User user = userService.findUserByPhoneNumber(execution.getBusinessKey()).orElse(null);
 
             SendQuickReplyMessageDto rideSelectionMessage = new SendQuickReplyMessageDto();

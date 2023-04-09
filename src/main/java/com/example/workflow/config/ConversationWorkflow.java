@@ -6,6 +6,7 @@ import java.util.Map;
 public enum ConversationWorkflow {
 
     RIDE_BOOKING("Boooking_Flow", "BOOK_RIDE"),
+    RIDE_UPDATE("Ride_Update_Flow", ""),
     UPDATE_LANGUAGE("language_change_flow", "UPDATE_LANGUAGE"),
     PREVIOUS_RIDE("", "PREVIOUS_RIDE"),
     SUPPORT("", "SUPPORT"),

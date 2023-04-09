@@ -30,6 +30,7 @@ public enum MessageTemplate {
     RIDE_INVALID_MESSAGE("Not_able_to_process_message"),
     RIDE_CALCULATE_FARE("Calculate_Fare_Details"),
     RIDE_CLOSING_CONVERSATION_FOR_NO_RESPONSE("Closing_Conversation_For_No_Response"),
+    RIDE_CLOSING_CONVERSATION_FOR_NO_RESPONSE_HEADER("Closing_Conversation_For_No_Response_Header"),
     RIDE_BOOKING_TYPE_HEADER("Request_Booking_Type_Header"),
     RIDE_BOOKING_TYPE_BODY("Request_Booking_Type_Body"),
     RIDE_BOOKING_TYPE_OPTION_AUTO("Request_Booking_Type_Options_Auto"),
