@@ -159,7 +159,7 @@
       "responses": [
         {
           "uuid": "3a3fcb70-3011-4440-a013-6bfd97d884b4",
-          "body": "{\n    \"data\": {\n        \"otp\" : \"{{int 1000 9999}}\",\n        \"distance_from_pickup_location\": \"{{int 1 4}}\",\n        \"eta_to_pickup_location\": \"{{int 8 15}}\",\n        \"driver_phone\" : \"+91-{{int 80 90 }}{{int 10 99}}{{int 10 99}}{{int 10 99}}{{int 10 99}}\"\n    },\n    \"success\": \"true\",\n    \"message\" : \"Ride booked successfully\"\n}",
+          "body": "{\n    \"data\": {\n        \"otp\" : \"{{int 1000 9999}}\",\n        \"distance_from_pickup_location\": \"{{int 1 4}}\",\n        \"eta_to_pickup_location\": \"{{int 8 15}}\",\n        \"driver_phone\" : \"+91-{{int 80 90 }}{{int 10 99}}{{int 10 99}}{{int 10 99}}{{int 10 99}}\",\n        \"eta_to_drop_location\": \"{{int 15 45}}\"\n    },\n    \"success\": \"true\",\n    \"message\" : \"Ride booked successfully\"\n}",
           "latency": 5,
           "statusCode": 200,
           "label": "Successfull booking ",

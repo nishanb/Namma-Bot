@@ -11,11 +11,11 @@ import java.util.HashMap;
 import java.util.logging.Logger;
 
 @Service
-public class RideEnded implements JavaDelegate {
+public class RideEndedMessage implements JavaDelegate {
 
     @Autowired
     CamundaCoreService camundaCoreService;
-    private final Logger log = Logger.getLogger(com.example.workflow.camunda.service.booking.RideEnded.class.getName());
+    private final Logger log = Logger.getLogger(RideEndedMessage.class.getName());
 
     @Override
     public void execute(DelegateExecution execution) throws Exception {
@@ -23,7 +23,7 @@ public class RideEnded implements JavaDelegate {
             log.info("<-- Ride Ended  Message-Service method executed -->");
 
             // driver has ended the ride
-            execution.setVariable("ride_status", "driver_arrived");
+            execution.setVariable("ride_status", "ride_ended");
 
             camundaCoreService.createMessageCorrelation(execution.getProcessBusinessKey(), "ride_ended_update", new HashMap<>());
         } catch (Exception e) {

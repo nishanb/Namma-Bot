@@ -11,16 +11,16 @@ import java.util.HashMap;
 import java.util.logging.Logger;
 
 @Service
-public class RideStarted implements JavaDelegate {
+public class RideStartedMessage implements JavaDelegate {
 
     @Autowired
     CamundaCoreService camundaCoreService;
-    private final Logger log = Logger.getLogger(com.example.workflow.camunda.service.booking.RideStarted.class.getName());
+    private final Logger log = Logger.getLogger(RideStartedMessage.class.getName());
 
     @Override
     public void execute(DelegateExecution execution) throws Exception {
         try {
-            log.info("<-- Ride Arrived  Message-Service method executed -->");
+            log.info("<-- Ride Started Message-Service method executed -->");
 
             // driver has started the ride
             execution.setVariable("ride_status", "ongoing");
