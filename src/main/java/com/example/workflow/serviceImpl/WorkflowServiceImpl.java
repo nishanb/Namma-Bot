@@ -50,16 +50,13 @@ public class WorkflowServiceImpl implements WorkflowService {
 
     @Override
     public void handleWorkflow(String processInstanceId, User user, String messageType, WebhookMessagePayload webhookMessagePayload) throws Exception {
-        ActivityInstance activityInstance = camundaCoreService.runtimeService.getActivityInstance(processInstanceId);
-        List<ActivityInstance> activeInstances = List.of(activityInstance.getChildActivityInstances());
 
-        if (activeInstances.size() > 0) {
-            ActivityInstance currentActivityInstance = activeInstances.get(0);
-            Task task = camundaCoreService.getTasksByBusinessKey(user.getPhoneNumber(), activityInstance.getProcessDefinitionId());
+        Task task = camundaCoreService.getTaskByProcessDefinitionAndBusinessKey(processInstanceId, user.getPhoneNumber());
 
-            logger.info(String.format("Currently %s is in activity %s on process instance %s", user.getPhoneNumber(), currentActivityInstance.getId(), processInstanceId));
+        if (task != null) {
+            logger.info(String.format("<<<< Currently %s is in activity %s on process instance %s >>>", user.getPhoneNumber(), task.getName(), processInstanceId));
 
-            switch (ConversationWorkflow.fromProcessDefinitionName(camundaCoreService.getProcessDefinitionNameByProcessInstanceId(activityInstance.getProcessDefinitionId()))) {
+            switch (ConversationWorkflow.fromProcessDefinitionName(camundaCoreService.getProcessDefinitionNameByProcessInstanceId(task.getProcessDefinitionId()))) {
                 case RIDE_BOOKING -> {
                     rideBookingActivityHandler.handle(task, user, messageType, webhookMessagePayload);
                 }
@@ -76,7 +73,7 @@ public class WorkflowServiceImpl implements WorkflowService {
                     logger.info(">>>>>>>> Invoked feedback flow");
                 }
                 case default -> {
-                    logger.info(String.format(">>>>>>>> No user task class found for %s  %s<<<<<<<<<", currentActivityInstance.getActivityName(), task.getName()));
+                    logger.info(String.format(">>>>>>>> No user task class found for %s  %s<<<<<<<<<", task.getName(), task.getName()));
                 }
             }
         }

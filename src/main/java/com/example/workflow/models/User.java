@@ -14,6 +14,8 @@ public class User {
 
     private String processInstanceId;
 
+    private String subProcessInstanceId;
+
     private String phoneNumber;
 
     private String name;
@@ -70,6 +72,14 @@ public class User {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public String getSubProcessInstanceId() {
+        return subProcessInstanceId;
+    }
+
+    public void setSubProcessInstanceId(String subProcessInstanceId) {
+        this.subProcessInstanceId = subProcessInstanceId;
     }
 
     public Date getCreatedAt() {

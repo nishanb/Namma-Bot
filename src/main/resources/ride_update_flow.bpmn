@@ -4,27 +4,27 @@
     <bpmn:subProcess id="Activity_1ahlj7h">
       <bpmn:incoming>Flow_0f4u6v8</bpmn:incoming>
       <bpmn:outgoing>Flow_01u6jfq</bpmn:outgoing>
-      <bpmn:userTask id="Driver_Arrived" name="Driver arrived">
+      <bpmn:userTask id="Driver_Arrived" name="Driver arrived" camunda:assignee="demo">
         <bpmn:incoming>Flow_08ex9i0</bpmn:incoming>
         <bpmn:outgoing>Flow_1c6zi02</bpmn:outgoing>
       </bpmn:userTask>
-      <bpmn:sendTask id="Activity_0m1wvwi" name="Driver arrived update" camunda:class="com.example.workflow.camunda.service.ride.DriverArrived">
+      <bpmn:sendTask id="Activity_0m1wvwi" name="Driver arrived update" camunda:class="com.example.workflow.camunda.service.ride.DriverArrivedNotifier">
         <bpmn:incoming>Flow_1c6zi02</bpmn:incoming>
         <bpmn:outgoing>Flow_1dnkdug</bpmn:outgoing>
       </bpmn:sendTask>
-      <bpmn:userTask id="Ride_Started" name="Ride started">
+      <bpmn:userTask id="Ride_Started" name="Ride started" camunda:assignee="demo">
         <bpmn:incoming>Flow_1dnkdug</bpmn:incoming>
         <bpmn:outgoing>Flow_07s3kqn</bpmn:outgoing>
       </bpmn:userTask>
-      <bpmn:sendTask id="Activity_1cir3ij" name="Ride started update" camunda:class="com.example.workflow.camunda.service.ride.RideStarted">
+      <bpmn:sendTask id="Activity_1cir3ij" name="Ride started update" camunda:class="com.example.workflow.camunda.service.ride.RideStartedNotifier">
         <bpmn:incoming>Flow_07s3kqn</bpmn:incoming>
         <bpmn:outgoing>Flow_1oys3ro</bpmn:outgoing>
       </bpmn:sendTask>
-      <bpmn:userTask id="Ride_Ended" name="Ride ended">
+      <bpmn:userTask id="Ride_Ended" name="Ride ended" camunda:assignee="demo">
         <bpmn:incoming>Flow_1oys3ro</bpmn:incoming>
         <bpmn:outgoing>Flow_0b32icv</bpmn:outgoing>
       </bpmn:userTask>
-      <bpmn:sendTask id="Activity_088icqz" name="Ride ended update" camunda:class="com.example.workflow.camunda.service.ride.RideEnded">
+      <bpmn:sendTask id="Activity_088icqz" name="Ride ended update" camunda:class="com.example.workflow.camunda.service.ride.RideEndedNotifier">
         <bpmn:incoming>Flow_0b32icv</bpmn:incoming>
         <bpmn:outgoing>Flow_0iyxrpm</bpmn:outgoing>
       </bpmn:sendTask>

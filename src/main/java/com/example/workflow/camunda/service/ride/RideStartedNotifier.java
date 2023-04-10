@@ -11,25 +11,23 @@ import java.util.HashMap;
 import java.util.logging.Logger;
 
 @Service
-public class DriverArrived implements JavaDelegate {
+public class RideStartedNotifier implements JavaDelegate {
 
     @Autowired
     CamundaCoreService camundaCoreService;
-
-    private final Logger log = Logger.getLogger(com.example.workflow.camunda.service.booking.DriverArrived.class.getName());
+    private final Logger log = Logger.getLogger(RideStartedNotifier.class.getName());
 
     @Override
     public void execute(DelegateExecution execution) throws Exception {
         try {
-            log.info("<-- Ride Arrived Message-Service executed -->");
+            log.info("<-- Ride Started Message-Service method executed -->");
 
-            // driver has arrived to pickup customer
-            execution.setVariable("ride_status", "driver_arrived");
+            // driver has started the ride
+            execution.setVariable("ride_status", "ongoing");
 
-            camundaCoreService.createMessageCorrelation(execution.getProcessBusinessKey(), "driver_arrived_update", new HashMap<>());
+            camundaCoreService.createMessageCorrelation(execution.getProcessBusinessKey(), "ride_started_update", new HashMap<>());
         } catch (Exception e) {
-            System.out.println("Exception >>>>>>" + e.getMessage());
-            log.warning("ride.DriverArrived: Exception occurred......" + e.getMessage());
+            log.warning("ride.RideStarted: Exception occurred......");
             throw new BpmnError("booking_flow_error", "Error sending message.....");
         }
     }

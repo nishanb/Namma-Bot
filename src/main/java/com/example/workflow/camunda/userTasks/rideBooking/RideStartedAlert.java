@@ -28,7 +28,7 @@ public class RideStartedAlert implements BackendEventTask {
     @Override
     public void complete(Task task, User user, BackendEventRequestDto backendEventRequestDto) throws Exception {
         log.info("--> Executing Ride started backend event user task <--");
-        if (backendEventRequestDto.getEvent().equals(BackendEvent.RIDE_ENDED.getEventType())) {
+        if (backendEventRequestDto.getEvent().equals(BackendEvent.RIDE_STARTED.getEventType())) {
             Map<String, Object> variables = new HashMap<>();
             variables.put("namma_yatri_rider_started_notify", true);
             variables.put("namma_yatri_rider_started_timestamp", LocalTime.now().toString());

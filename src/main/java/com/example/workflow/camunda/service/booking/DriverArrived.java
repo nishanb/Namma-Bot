@@ -1,5 +1,8 @@
 package com.example.workflow.camunda.service.booking;
 
+import com.example.workflow.config.MessageTemplate;
+import com.example.workflow.dto.SendMessageRequestDto;
+import com.example.workflow.models.User;
 import com.example.workflow.services.MessageService;
 import com.example.workflow.services.TemplateService;
 import com.example.workflow.services.UserService;
@@ -7,9 +10,13 @@ import org.camunda.bpm.engine.delegate.BpmnError;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.logging.Logger;
 
+@Service
 public class DriverArrived implements JavaDelegate {
 
     @Autowired
@@ -25,12 +32,13 @@ public class DriverArrived implements JavaDelegate {
     public void execute(DelegateExecution execution) throws Exception {
         log.info("--> Executing driver arrived service task <<--");
         try {
-            //call gupshup to send message
-            log.info("DriverArrived: execute method is called......");
-            //set relevant variables for future ref
-            execution.setVariable("DriverArrived", true);
+            User user = userService.findUserByPhoneNumber(execution.getBusinessKey()).orElseGet(null);
+
+            String rideOtp = execution.getVariable("otp").toString();
+            messageService.sendTextMessage(new SendMessageRequestDto(user.getPhoneNumber(),
+                    templateService.format(MessageTemplate.RIDE_DRIVER_ARRIVED_EVENT, user.getPreferredLanguage(), new ArrayList<>(Collections.singletonList(rideOtp)))));
         } catch (Exception e) {
-            log.warning("DriverArrived: Exception occured......");
+            log.warning("DriverArrived: Exception occurred......" + e.getMessage());
             throw new BpmnError("booking_flow_error", "Error sending message.....");
         }
     }
