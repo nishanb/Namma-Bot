@@ -11,11 +11,11 @@ import java.util.HashMap;
 import java.util.logging.Logger;
 
 @Service
-public class RideStartedMessage implements JavaDelegate {
+public class RideStartedNotifier implements JavaDelegate {
 
     @Autowired
     CamundaCoreService camundaCoreService;
-    private final Logger log = Logger.getLogger(RideStartedMessage.class.getName());
+    private final Logger log = Logger.getLogger(RideStartedNotifier.class.getName());
 
     @Override
     public void execute(DelegateExecution execution) throws Exception {

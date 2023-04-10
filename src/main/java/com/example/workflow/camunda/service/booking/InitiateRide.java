@@ -2,6 +2,8 @@ package com.example.workflow.camunda.service.booking;
 
 import com.example.workflow.camunda.core.CamundaCoreService;
 import com.example.workflow.config.ConversationWorkflow;
+import com.example.workflow.models.User;
+import com.example.workflow.services.UserService;
 import org.camunda.bpm.engine.delegate.BpmnError;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
@@ -19,22 +21,25 @@ public class InitiateRide implements JavaDelegate {
     @Autowired
     CamundaCoreService camundaCoreService;
 
-    @Value("${camunda.process-definition-id.ride-flow}")
-    String rideFlowProcessId;
+    @Autowired
+    UserService userService;
+
     private final Logger log = Logger.getLogger(com.example.workflow.camunda.service.booking.RideStarted.class.getName());
 
     @Override
     public void execute(DelegateExecution execution) throws Exception {
         try {
-            //call gupshup to send message
-            log.info("book.InitiateRide: execute method is called......");
-            //set relevant variables for future ref
-            execution.setVariable("InitiateRide", true);
+            User user = userService.findUserByPhoneNumber(execution.getBusinessKey()).orElse(null);
+
+            // Initiate Ride flow for user (TODO : business key to drivers-number)
             String businessKey = execution.getProcessBusinessKey();
-            camundaCoreService.startProcessInstanceByName(ConversationWorkflow.RIDE_UPDATE.getProcessDefinitionName(), businessKey);
+            String subprocessRideFlowId = camundaCoreService.startProcessInstanceByName(ConversationWorkflow.RIDE_UPDATE.getProcessDefinitionName(), businessKey).getProcessInstanceId();
+
+            // Attach sub process instance id to DB ( TODO : Create new backend user table & correlate when actual namma yatri api is provided )
+            user.setSubProcessInstanceId(subprocessRideFlowId);
+            userService.updateUser(execution.getBusinessKey(), user);
         } catch (Exception e) {
-            System.out.println("error message>>>>" + e.getMessage());
-            log.warning("book.InitiateRide: Exception occured......");
+            log.warning("book.InitiateRide: Exception occurred......" + e.getMessage());
             throw new BpmnError("booking_flow_error", "Error sending message.....");
         }
     }

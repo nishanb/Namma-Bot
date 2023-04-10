@@ -43,6 +43,7 @@ public class RideAssignment implements JavaDelegate {
             JsonObject responseData = response.getAsJsonObject().getAsJsonObject("data");
 
             String OTP = responseData.get("otp").getAsString();
+            String etaToDropLocation = responseData.get("eta_to_drop_location").getAsString();
 //            String pickupETA = responseData.get("eta_to_pickup_location").getAsString(); TODO: These details will be used once the ride details API is ready.
             String driverContact = responseData.get("driver_phone").getAsString();
 
@@ -62,6 +63,7 @@ public class RideAssignment implements JavaDelegate {
 
             //set relevant variables for future ref
                 execution.setVariable("otp", OTP);
+                execution.setVariable("eta_to_drop_location", etaToDropLocation);
         } catch (Exception e){
             System.out.println(e.getMessage());
             log.warning("RideAssignment: Exception occured......");

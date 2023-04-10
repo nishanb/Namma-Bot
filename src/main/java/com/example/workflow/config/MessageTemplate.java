@@ -66,7 +66,6 @@ public enum MessageTemplate {
     RIDE_CANCELLED_BY_DRIVER("Ride_Request_Cancelled"),
     LANGUAGE_UPDATE_PREFERENCE_HEADER("Language_update_pref_header"),
     LANGUAGE_UPDATE_PREFERENCE_BODY("Language_update_pref_body"),
-
     LANGUAGE_UPDATE_CONFIRMATION_HEADER("Language_update_confirmation_header"),
     LANGUAGE_UPDATE_CONFIRMATION_BODY("Language_update_confirmation_body"),
     LANGUAGE_UPDATE_CONFIRMATION_OPTION_YES("Language_update_confirmation_option_yes"),
@@ -75,6 +74,8 @@ public enum MessageTemplate {
     LANGUAGE_UPDATE_DONE("Language_update_Done"),
     GREET_MAIN_MENU("Main_menu_button"),
     LAST_OPERATION_CANCELED("last_operation_cancelled"),
+    RIDE_RECEIVED_RIDE_RATING("Feedback_thank_you_note_after_ride"),
+    RIDE_CLEANUP_THANK_YOU("thank_you_note_ride_end"),
     BOT_ERROR("Error");
 
     private final String templateId;

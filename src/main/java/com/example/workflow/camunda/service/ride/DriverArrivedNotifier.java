@@ -11,12 +11,12 @@ import java.util.HashMap;
 import java.util.logging.Logger;
 
 @Service
-public class DriverArrivedMessage implements JavaDelegate {
+public class DriverArrivedNotifier implements JavaDelegate {
 
     @Autowired
     CamundaCoreService camundaCoreService;
 
-    private final Logger log = Logger.getLogger(DriverArrivedMessage.class.getName());
+    private final Logger log = Logger.getLogger(DriverArrivedNotifier.class.getName());
 
     @Override
     public void execute(DelegateExecution execution) throws Exception {

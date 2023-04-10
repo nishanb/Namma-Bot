@@ -34,19 +34,14 @@ public class BackendEventHandlerServiceImpl implements BackendEventHandlerServic
     @Autowired
     RideStartedAlert rideStartedAlert;
 
-    // TODO :  get user phone and manage bpm logic here
     @Override
     public boolean handelEvent(BackendEventRequestDto event) throws Exception {
-
         if (event.getRiderPhoneNumber() == null) return false;
 
-        User user = null;
-        Optional<User> UserSaved = userService.findUserByPhoneNumber(event.getRiderPhoneNumber());
-        user = UserSaved.orElse(null);
-        if (user == null) return false;
+        User user = userService.findUserByPhoneNumber(event.getRiderPhoneNumber()).orElse(null);
+        if (user == null || user.getProcessInstanceId() == null) return false;
 
-        Task currentTask = camundaCoreService.getTaskByProcessDefinitionAndBusinessKey(user.getProcessInstanceId(), user.getPhoneNumber());
-
+        Task currentTask = camundaCoreService.getTaskByProcessDefinitionAndBusinessKey(user.getSubProcessInstanceId(), user.getPhoneNumber());
         switch (BackendEvent.fromEventType(event.getEvent())) {
             case DRIVER_ARRIVED:
                 // Before completing backend task Check event received is matching with the backend event
