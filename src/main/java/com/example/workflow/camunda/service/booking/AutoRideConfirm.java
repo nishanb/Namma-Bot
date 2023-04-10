@@ -21,19 +21,13 @@ import java.util.logging.Logger;
 @Service
 public class AutoRideConfirm implements JavaDelegate {
 
-    @Autowired
-    MessageService messageService;
-
-    @Autowired
-    UserService userService;
-
     private final Logger log = Logger.getLogger(AutoRideConfirm.class.getName());
 
     @Override
     public void execute(DelegateExecution execution) throws Exception {
         try{
             //call gupshup to send message
-            log.info("ManualRideSearch: execute method is called......");
+            log.info("AutoRideConfirm: execute method is called......");
 
             JsonValue persistedNearbyRides = execution.getVariableTyped("rides_to_persist");
             SpinJsonNode availableRidesData = persistedNearbyRides.getValue();

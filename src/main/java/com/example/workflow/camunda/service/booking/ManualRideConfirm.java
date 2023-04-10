@@ -1,16 +1,15 @@
 package com.example.workflow.camunda.service.booking;
 
 import camundajar.impl.com.google.gson.Gson;
-import camundajar.impl.com.google.gson.JsonArray;
-import camundajar.impl.com.google.gson.JsonElement;
 import camundajar.impl.com.google.gson.JsonObject;
+import com.example.workflow.config.MessageTemplate;
 import com.example.workflow.dto.ListMessageDto;
 import com.example.workflow.dto.SendListMessageRequestDto;
-import com.example.workflow.dto.SendMessageRequestDto;
 import com.example.workflow.models.User;
 import com.example.workflow.models.gupshup.GlobalButtons;
 import com.example.workflow.models.gupshup.ListMessageItem;
 import com.example.workflow.models.gupshup.ListMessageItemOption;
+import com.example.workflow.serviceImpl.TemplateServiceImpl;
 import com.example.workflow.services.MessageService;
 import com.example.workflow.services.UserService;
 import org.camunda.bpm.engine.delegate.BpmnError;
@@ -23,14 +22,14 @@ import org.camunda.spin.plugin.variable.value.JsonValue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.logging.Logger;
 
 @Service
 public class ManualRideConfirm implements JavaDelegate {
+
+    @Autowired
+    TemplateServiceImpl templateService;
     @Autowired
     MessageService messageService;
 
@@ -61,11 +60,11 @@ public class ManualRideConfirm implements JavaDelegate {
 
             ListMessageDto listMessageDto = new ListMessageDto();
             // Set List message title and body
-            listMessageDto.setTitle("Woo-hoo, we found rides..");
-            listMessageDto.setBody("Please select one of the option below. *Within 10 seconds.*");
+            listMessageDto.setTitle(templateService.format(MessageTemplate.RIDE_MANUAL_CHOOSE_RIDER_HEADER, user.getPreferredLanguage()));
+            listMessageDto.setBody(templateService.format(MessageTemplate.RIDE_MANUAL_CHOOSE_RIDER_BODY, user.getPreferredLanguage()));
 
             // Set Global button
-            List<GlobalButtons> globalButtonsList = new ArrayList<>(List.of(new GlobalButtons("text", "Ride Options")));
+            List<GlobalButtons> globalButtonsList = new ArrayList<>(List.of(new GlobalButtons("text", templateService.format(MessageTemplate.RIDE_MANUAL_CHOOSE_RIDER_BUTTON, user.getPreferredLanguage()))));
             listMessageDto.setGlobalButtons(globalButtonsList);
 
             // List Group
@@ -92,7 +91,10 @@ public class ManualRideConfirm implements JavaDelegate {
                 String vehicleNumber = (String) ride.prop("vehicle_number").value();
                 rideObj.addProperty("vehicle_number",vehicleNumber);
                 chosenDriverId = driverId;
-                rideListOptions.add(new ListMessageItemOption(driverName+" - "+driverRating+"⭐", "Fare ₹"+rideFare+" <> "+rideETA+"  mins away", driverId));
+                rideListOptions.add(new ListMessageItemOption(templateService.format(MessageTemplate.RIDE_MANUAL_CHOOSE_RIDER_LIST_HEADER, user.getPreferredLanguage(),
+                        new ArrayList<>(Arrays.asList(driverName, driverRating))), templateService.format(MessageTemplate.RIDE_MANUAL_CHOOSE_RIDER_LIST_DESC, user.getPreferredLanguage(),
+                        new ArrayList<>(Arrays.asList(rideFare, rideETA))),
+                        driverId));
                 ridesToPersistObj.add(driverId,rideObj);
 
             }

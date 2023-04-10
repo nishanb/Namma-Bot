@@ -1,7 +1,9 @@
 package com.example.workflow.camunda.service.booking;
 
+import com.example.workflow.config.MessageTemplate;
 import com.example.workflow.dto.SendMessageRequestDto;
 import com.example.workflow.models.User;
+import com.example.workflow.serviceImpl.TemplateServiceImpl;
 import com.example.workflow.services.MessageService;
 import com.example.workflow.services.UserService;
 import org.camunda.bpm.engine.delegate.BpmnError;
@@ -14,6 +16,9 @@ import java.util.Optional;
 import java.util.logging.Logger;
 @Service
 public class RideCancelled implements JavaDelegate {
+
+    @Autowired
+    TemplateServiceImpl templateService;
 
     @Autowired
     UserService userService;
@@ -33,7 +38,7 @@ public class RideCancelled implements JavaDelegate {
                 Optional<User> userSaved = userService.findUserByPhoneNumber(execution.getBusinessKey());
                 User user = userSaved.get();
 
-                messageService.sendTextMessage(new SendMessageRequestDto(user.getPhoneNumber(), "Sorry to see you go \uD83D\uDE22. Your ride has been cancelled."));
+                messageService.sendTextMessage(new SendMessageRequestDto(user.getPhoneNumber(), templateService.format(MessageTemplate.RIDE_CANCELLED, user.getPreferredLanguage())));
             }
             //call gupshup to send message
             log.info("RideCancelled: execute method is called......");

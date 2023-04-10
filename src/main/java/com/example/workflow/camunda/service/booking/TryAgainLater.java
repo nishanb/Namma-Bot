@@ -1,7 +1,9 @@
 package com.example.workflow.camunda.service.booking;
 
+import com.example.workflow.config.MessageTemplate;
 import com.example.workflow.dto.SendMessageRequestDto;
 import com.example.workflow.models.User;
+import com.example.workflow.serviceImpl.TemplateServiceImpl;
 import com.example.workflow.services.MessageService;
 import com.example.workflow.services.UserService;
 import org.camunda.bpm.engine.delegate.BpmnError;
@@ -15,6 +17,9 @@ import java.util.logging.Logger;
 
 @Service
 public class TryAgainLater implements JavaDelegate {
+
+    @Autowired
+    TemplateServiceImpl templateService;
 
     @Autowired
     UserService userService;
@@ -32,7 +37,7 @@ public class TryAgainLater implements JavaDelegate {
             Optional<User> userSaved = userService.findUserByPhoneNumber(execution.getBusinessKey());
             User user = userSaved.get();
 
-            messageService.sendTextMessage(new SendMessageRequestDto(user.getPhoneNumber(), "Sorry! We are unable to find any rides near you at this moment. \n Please try again later after sometime"));
+            messageService.sendTextMessage(new SendMessageRequestDto(user.getPhoneNumber(), templateService.format(MessageTemplate.RIDE_RETRY_THRESHOLD_NOTIFICATION_BOOKING, user.getPreferredLanguage())));
             //call gupshup to send message
             log.info("TryAgainLater: execute method is called......");
             //set relevant variables for future ref
