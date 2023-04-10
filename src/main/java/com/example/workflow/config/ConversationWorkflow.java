@@ -15,7 +15,9 @@ public enum ConversationWorkflow {
     KNOW_MORE("", "KNOW_MORE"),
     OPEN_DATA("", "OPEN_DATA"),
     FEEDBACK("", "FEEDBACK"),
-    MAIN_MENU("", "MAIN_MENU");
+    MAIN_MENU("", "MAIN_MENU"),
+    CANCEL_BOOKING("", "CANCEL_BOOKING"),
+    RETRY_SEARCH("", "RETRY_SEARCH");
 
     private final String processDefinitionName;
 

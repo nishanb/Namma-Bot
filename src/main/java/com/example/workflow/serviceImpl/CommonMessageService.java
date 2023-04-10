@@ -29,9 +29,6 @@ public class CommonMessageService {
     @Autowired
     MessageService messageService;
 
-    @Autowired
-    UserService userService;
-
     public void sendGreetingMessage(User user) throws Exception {
         SendQuickReplyMessageDto greetingMessage = new SendQuickReplyMessageDto();
         greetingMessage.setReceiverContactNumber(user.getPhoneNumber());
