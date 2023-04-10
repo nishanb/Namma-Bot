@@ -1,4 +1,5 @@
 spring.datasource.url: jdbc:h2:file:./camunda-h2-database
+spring.redis.url: ${REDIS_URL}
 camunda.bpm.admin-user:
   id: demo
   password: demo
