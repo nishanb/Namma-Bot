@@ -6,4 +6,5 @@ import org.camunda.bpm.engine.task.Task;
 
 public interface ActivityHandlerService {
     public void handle(Task task, User user, String messageType, WebhookMessagePayload webhookMessagePayload) throws Exception;
+    public void handleCancelRequest(User user, String businessKey, String processDefinitionName) throws Exception;
 }
