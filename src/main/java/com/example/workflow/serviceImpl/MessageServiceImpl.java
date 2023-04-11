@@ -95,7 +95,6 @@ public class MessageServiceImpl implements MessageService {
     public Boolean sendAttachment(SendAttachmentMessageDto sendAttachmentMessageDto) throws Exception {
         try {
             String message = "";
-            Gson gson = new Gson();
             if (sendAttachmentMessageDto.getAttachmentType().equals(ATTACHMENT_TYPES_IMAGE)) {
 
 

@@ -3,12 +3,14 @@ package com.example.workflow.camunda.service.booking;
 import camundajar.impl.com.google.gson.JsonElement;
 import camundajar.impl.com.google.gson.JsonObject;
 import com.example.workflow.config.MessageTemplate;
+import com.example.workflow.dto.SendAttachmentMessageDto;
 import com.example.workflow.dto.SendMessageRequestDto;
 import com.example.workflow.models.User;
 import com.example.workflow.services.MessageService;
 import com.example.workflow.services.NammaYathriService;
 import com.example.workflow.services.TemplateService;
 import com.example.workflow.services.UserService;
+import com.example.workflow.utils.Constants;
 import org.camunda.bpm.engine.delegate.BpmnError;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
@@ -16,6 +18,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.logging.Logger;
+
+import static com.example.workflow.utils.Constants.ATTACHMENT_TYPES_IMAGE;
 
 @Service
 public class CalculateFare implements JavaDelegate {
@@ -38,8 +42,24 @@ public class CalculateFare implements JavaDelegate {
         try {
             // Get estimates from namma yatri side & notify user
             User user = userService.findUserByPhoneNumber(execution.getBusinessKey()).orElseGet(null);
-            messageService.sendTextMessage(new SendMessageRequestDto(user.getPhoneNumber(),
-                    templateService.format(MessageTemplate.RIDE_CALCULATE_FARE, user.getPreferredLanguage())));
+
+            SendAttachmentMessageDto attachmentMessage = new SendAttachmentMessageDto();
+            attachmentMessage.setReceiverContactNumber(user.getPhoneNumber());
+            attachmentMessage.setAttachmentType(ATTACHMENT_TYPES_IMAGE);
+            attachmentMessage.setCaption(templateService.format(MessageTemplate.RIDE_CALCULATE_FARE, user.getPreferredLanguage()));
+
+            // set images based on user language config
+            String rateCardImageUrl = switch (user.getPreferredLanguage()) {
+                case "kannada" -> Constants.RATE_CARD_KANNADA;
+                case "hindi" -> Constants.RATE_CARD_HINDI;
+                default -> Constants.RATE_CARD_ENGLISH;
+            };
+
+            attachmentMessage.setOriginalUrl(rateCardImageUrl);
+            attachmentMessage.setPreviewUrl(rateCardImageUrl);
+
+            // share rate card with calculating estimation message
+            messageService.sendAttachment(attachmentMessage);
 
             // collect pickup & drop lats for backend price estimation api calls
             String destinationLatitude = (String) execution.getVariable("destination_latitude");
