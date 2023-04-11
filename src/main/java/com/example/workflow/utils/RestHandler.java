@@ -12,7 +12,6 @@ import okhttp3.Response;
 import java.io.IOException;
 
 public class RestHandler {
-
     private static OkHttpClient client;
     private static Gson gson;
 
@@ -29,11 +28,10 @@ public class RestHandler {
     }
 
     public static JsonElement execute(Request request) throws IOException {
-        System.out.println(request.method().toString().toUpperCase() + " Request to " + request.url().toString() + " started");
+        System.out.println(request.method().toString().toUpperCase() + " Request to " + request.url() + " started");
 
         Response response = client.newCall(request).execute();
         JsonElement jsonElement = gson.fromJson(response.body().charStream(), JsonElement.class);
-
 
         if (jsonElement.isJsonArray()) {
             JsonArray jsonArray = jsonElement.getAsJsonArray();
@@ -48,7 +46,7 @@ public class RestHandler {
             System.out.println("Failed to parse response");
         }
 
-        System.out.println(request.method().toString().toUpperCase() + " Request to " + request.url().toString() + " is complete");
+        System.out.println(request.method().toString().toUpperCase() + " Request to " + request.url().toString() + " is complete wit status code " + response.code());
 
         return jsonElement;
     }
