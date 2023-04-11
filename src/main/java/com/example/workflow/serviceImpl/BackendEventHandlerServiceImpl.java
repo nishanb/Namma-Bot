@@ -1,9 +1,9 @@
 package com.example.workflow.serviceImpl;
 
 import com.example.workflow.camunda.core.CamundaCoreService;
-import com.example.workflow.camunda.userTasks.rideBooking.DriverArrivedAlert;
-import com.example.workflow.camunda.userTasks.rideBooking.RideEndedAlert;
-import com.example.workflow.camunda.userTasks.rideBooking.RideStartedAlert;
+import com.example.workflow.camunda.userTasks.rideUpdate.DriverArrivedAlert;
+import com.example.workflow.camunda.userTasks.rideUpdate.RideEndedAlert;
+import com.example.workflow.camunda.userTasks.rideUpdate.RideStartedAlert;
 import com.example.workflow.config.BackendEvent;
 import com.example.workflow.config.BpmnUserTask;
 import com.example.workflow.dto.BackendEventRequestDto;
@@ -13,8 +13,6 @@ import com.example.workflow.services.UserService;
 import org.camunda.bpm.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 public class BackendEventHandlerServiceImpl implements BackendEventHandlerService {
