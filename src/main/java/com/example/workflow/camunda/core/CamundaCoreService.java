@@ -65,7 +65,7 @@ public class CamundaCoreService {
         runtimeService.correlateMessage(messageName, businessKey, variables);
     }
 
-    public String getProcessDefinitionNameByProcessInstanceId(String processDefinitionId) {
+    public String getProcessDefinitionNameByProcessDefinitionId(String processDefinitionId) {
         ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery()
                 .processDefinitionId(processDefinitionId)
                 .singleResult();
@@ -75,7 +75,6 @@ public class CamundaCoreService {
         }
         return processDefinition.getName();
     }
-
     public Task getTaskByProcessDefinitionAndBusinessKey(String processInstanceId, String businessKey) {
         ActivityInstance activityInstance = runtimeService.getActivityInstance(processInstanceId);
         List<ActivityInstance> activeInstances = List.of(activityInstance.getChildActivityInstances());
@@ -85,5 +84,8 @@ public class CamundaCoreService {
             return getTasksByBusinessKey(businessKey, activityInstance.getProcessDefinitionId());
         }
         return null;
+    }
+    public ActivityInstance getActivityInstance(String processInstanceId){
+        return runtimeService.getActivityInstance(processInstanceId);
     }
 }
