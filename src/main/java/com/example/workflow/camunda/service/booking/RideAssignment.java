@@ -9,6 +9,7 @@ import com.example.workflow.serviceImpl.TemplateServiceImpl;
 import com.example.workflow.services.MessageService;
 import com.example.workflow.services.NammaYathriService;
 import com.example.workflow.services.UserService;
+import com.example.workflow.utils.BackendEventSimulatorHelper;
 import org.camunda.bpm.engine.delegate.BpmnError;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
@@ -35,6 +36,10 @@ public class RideAssignment implements JavaDelegate {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    BackendEventSimulatorHelper backendEventSimulatorHelper;
+
     private final Logger log = Logger.getLogger(RideAssignment.class.getName());
 
     @Override
@@ -70,8 +75,11 @@ public class RideAssignment implements JavaDelegate {
                     templateService.format(MessageTemplate.RIDE_ASSIGNED_INFO, user.getPreferredLanguage(),new ArrayList<>(Arrays.asList(driverName, pickupETA,rideFare,vehicleNumber)))));
 
             //set relevant variables for future ref
-                execution.setVariable("otp", OTP);
-                execution.setVariable("eta_to_drop_location", etaToDropLocation);
+            execution.setVariable("otp", OTP);
+            execution.setVariable("eta_to_drop_location", etaToDropLocation);
+
+            //Simulate backend events - 40 seconds , 30 seconds , 2 minutes
+            backendEventSimulatorHelper.simulateRideEvents(execution.getBusinessKey(),40000, 30000, 120000);
         } catch (Exception e){
             System.out.println(e.getMessage());
             log.warning("RideAssignment: Exception occured......");

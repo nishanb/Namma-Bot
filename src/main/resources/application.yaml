@@ -10,6 +10,8 @@ gupshup-api-key: ${GUPSHUP_API_KEY}
 gupshup-app-name: ${GUPSHUP_APP_NAME}
 gupshup-source-contact: ${GUPSHUP_SOURCE_CONTACT}
 ny-backend-host: "https://ny-mock-api.fly.dev/api/v1"
+callback-host: ${CALLBACK_HOST}
+event-simulator-host: ${EVENT_SIMULATOR_HOST}
 spring:
   data:
     mongodb:

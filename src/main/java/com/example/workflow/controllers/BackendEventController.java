@@ -18,6 +18,7 @@ public class BackendEventController {
 
     @PostMapping("/backend-events")
     public void createEvent(@RequestBody BackendEventRequestDto event) throws Exception {
+        System.out.println("Accepted backend event " + event.getEvent() + " from " + event.getRiderPhoneNumber());
         eventWebhookHandlerService.handelEvent(event);
     }
 }
