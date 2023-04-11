@@ -2,6 +2,7 @@ package com.example.workflow.utils;
 
 import okhttp3.MediaType;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class Constants {
@@ -29,4 +30,10 @@ public class Constants {
 
     public static final String SUBMITTED = "submitted";
 
+    public static final HashMap<String, String> GLOBAL_CANCELLATION_MESSAGE_EVENT_NAME= new HashMap<>();
+
+    static {
+        GLOBAL_CANCELLATION_MESSAGE_EVENT_NAME.put("Boooking_Flow","Global_Booking_Cancellation");
+        GLOBAL_CANCELLATION_MESSAGE_EVENT_NAME.put("language_change_flow","Global_Language_Change_Cancellation");
+    };
 }
