@@ -98,6 +98,30 @@ public class CommonMessageService {
     }
 
     public void sendErrorMessage(User user) throws Exception {
-        messageService.sendTextMessage(new SendMessageRequestDto(user.getPhoneNumber(), templateService.format(MessageTemplate.BOT_ERROR, user.getPreferredLanguage())));
+        SendQuickReplyMessageDto rideSelectionMessage = new SendQuickReplyMessageDto();
+        rideSelectionMessage.setReceiverContactNumber(user.getPhoneNumber());
+        rideSelectionMessage.setType(MESSAGE_TYPE_QUICK_REPLY);
+
+        List<Map<String, String>> options = new ArrayList<>(new ArrayList<>(List.of(
+                new HashMap<>() {{
+                    put("type", "text");
+                    put("title", templateService.format(MessageTemplate.GREET_MAIN_MENU, user.getPreferredLanguage()));
+                    put("postbackText", ConversationWorkflow.MAIN_MENU.getPostbackText());
+                }}
+        )));
+
+        rideSelectionMessage.setQuickReplyMessage(messageService.generateQuickReplyMessage(
+                new MessageContent(
+                        templateService.format(MessageTemplate.LANGUAGE_UPDATE_CONFIRMATION_HEADER, user.getPreferredLanguage()),
+                        templateService.format(MessageTemplate.BOT_ERROR, user.getPreferredLanguage())
+                ),
+                options, UUID.randomUUID().toString())
+        );
+        messageService.sendQuickReplyMessage(rideSelectionMessage);
+    }
+
+    public void sendInProcessMessage(User user) throws Exception {
+        // TODO : if user is in ride we can send help message
+        messageService.sendTextMessage(new SendMessageRequestDto(user.getPhoneNumber(), templateService.format(MessageTemplate.REQUEST_UNDER_PROCESS, user.getPreferredLanguage())));
     }
 }

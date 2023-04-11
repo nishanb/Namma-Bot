@@ -1,4 +1,4 @@
-package com.example.workflow.camunda.userTasks.rideBooking;
+package com.example.workflow.camunda.userTasks.rideUpdate;
 
 import com.example.workflow.camunda.core.CamundaCoreService;
 import com.example.workflow.camunda.userTasks.BackendEventTask;

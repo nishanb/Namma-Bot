@@ -73,15 +73,22 @@ public class WorkflowServiceImpl implements WorkflowService {
                     logger.info(">>>>>>>> Invoked Manage places flow");
                 }
                 case SUPPORT -> {
+                    commonMessageService.sendGreetingMessage(user);
                     logger.info(">>>>>>>> Invoked Support flow");
                 }
                 case FEEDBACK -> {
+                    commonMessageService.sendGreetingMessage(user);
                     logger.info(">>>>>>>> Invoked feedback flow");
                 }
                 case default -> {
                     logger.info(String.format(">>>>>>>> No user task class found for %s  %s<<<<<<<<<", task.getName(), task.getName()));
                 }
             }
+        }
+        // user has process and no task found indicates user bpmn context is with serice task
+        else if (task == null && !cancelRequest ) {
+            logger.info("Invoking process under message for " + user.getPhoneNumber());
+            commonMessageService.sendInProcessMessage(user);
         }
     }
 
@@ -137,9 +144,10 @@ public class WorkflowServiceImpl implements WorkflowService {
         }
     }
 
-    private void initiateWorkflow(User user, ConversationWorkflow conversationWorkflow) {
+    private void initiateWorkflow(User user, ConversationWorkflow conversationWorkflow) throws Exception {
         if (conversationWorkflow.getProcessDefinitionName().isEmpty()) {
             // TODO : handel default texts / single message tasks here
+            commonMessageService.sendErrorMessage(user);
             logger.info("No process found to invoke for the task " + conversationWorkflow.getPostbackText());
             return;
         }
@@ -149,13 +157,13 @@ public class WorkflowServiceImpl implements WorkflowService {
     }
 
     private Boolean checkAndProcessGlobalCancelRequest(String processInstanceId, User user, String messageType, WebhookMessagePayload webhookMessagePayload, String processDefinitionName) throws Exception {
-        Boolean isCancelRequest = false;
-        if(messageType.equals(MESSAGE_TYPE_TEXT)){
-            isCancelRequest = true;
-             Map<String, String> messageText = webhookMessagePayload.getPayload();
-             if(messageText.get("text").equalsIgnoreCase("cancel")){
+        boolean isCancelRequest = false;
+        if (messageType.equals(MESSAGE_TYPE_TEXT)) {
+            Map<String, String> messageText = webhookMessagePayload.getPayload();
+            if (messageText.get("text").equalsIgnoreCase("cancel")) {
+                isCancelRequest = true;
                 this.handleGlobalCancelRequest(user, processDefinitionName);
-             }
+            }
         }
         return isCancelRequest;
     }

@@ -83,6 +83,7 @@ public enum MessageTemplate {
     LAST_OPERATION_CANCELED("last_operation_cancelled"),
     RIDE_RECEIVED_RIDE_RATING("Feedback_thank_you_note_after_ride"),
     RIDE_CLEANUP_THANK_YOU("thank_you_note_ride_end"),
+    REQUEST_UNDER_PROCESS("task_under_process"),
     BOT_ERROR("Error");
 
     private final String templateId;
