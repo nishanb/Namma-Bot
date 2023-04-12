@@ -1,12 +1,14 @@
 package com.example.workflow.serviceImpl;
 
 import com.example.workflow.camunda.core.CamundaCoreService;
+import com.example.workflow.camunda.singleMessageTasks.KnowMore;
+import com.example.workflow.camunda.singleMessageTasks.OpenData;
+import com.example.workflow.camunda.singleMessageTasks.ViewPastRide;
 import com.example.workflow.config.ConversationWorkflow;
 import com.example.workflow.models.User;
 import com.example.workflow.models.gupshup.WebhookMessagePayload;
 import com.example.workflow.serviceImpl.activityHandlers.RideBookingActivityHandler;
 import com.example.workflow.serviceImpl.activityHandlers.LanguageChangeActivityHandler;
-import com.example.workflow.services.MessageService;
 import com.example.workflow.services.UserService;
 import com.example.workflow.services.WorkflowService;
 import org.camunda.bpm.engine.runtime.ActivityInstance;
@@ -40,11 +42,16 @@ public class WorkflowServiceImpl implements WorkflowService {
     RideBookingActivityHandler rideBookingActivityHandler;
 
     @Autowired
-    MessageService messageService;
-
-    @Autowired
     CommonMessageService commonMessageService;
 
+    @Autowired
+    OpenData openDataSingleMessageTask;
+
+    @Autowired
+    KnowMore knowMoreSingleMessageTask;
+
+    @Autowired
+    ViewPastRide viewPastRideSingleMessageTask;
 
     private static final Logger logger = LoggerFactory.getLogger(WorkflowServiceImpl.class);
 
@@ -86,7 +93,7 @@ public class WorkflowServiceImpl implements WorkflowService {
             }
         }
         // user has process and no task found indicates user bpmn context is with serice task
-        else if (task == null && !cancelRequest ) {
+        else if (task == null && !cancelRequest) {
             logger.info("Invoking process under message for " + user.getPhoneNumber());
             commonMessageService.sendInProcessMessage(user);
         }
@@ -146,9 +153,16 @@ public class WorkflowServiceImpl implements WorkflowService {
 
     private void initiateWorkflow(User user, ConversationWorkflow conversationWorkflow) throws Exception {
         if (conversationWorkflow.getProcessDefinitionName().isEmpty()) {
-            // TODO : handel default texts / single message tasks here
-            commonMessageService.sendErrorMessage(user);
-            logger.info("No process found to invoke for the task " + conversationWorkflow.getPostbackText());
+            // Handling events which doesn't have workflow
+            switch (conversationWorkflow) {
+                case OPEN_DATA -> openDataSingleMessageTask.process(user);
+                case KNOW_MORE -> knowMoreSingleMessageTask.process(user);
+                case PREVIOUS_RIDE -> viewPastRideSingleMessageTask.process(user);
+                default -> {
+                    logger.info("No process found to invoke for the task " + conversationWorkflow.getPostbackText());
+                    commonMessageService.sendErrorMessage(user);
+                }
+            }
             return;
         }
         ProcessInstance processInstance = camundaCoreService.startProcessInstanceByName(conversationWorkflow.getProcessDefinitionName(), user.getPhoneNumber());
