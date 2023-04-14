@@ -4,10 +4,13 @@ import camundajar.impl.com.google.gson.Gson;
 import camundajar.impl.com.google.gson.JsonArray;
 import camundajar.impl.com.google.gson.JsonElement;
 import camundajar.impl.com.google.gson.JsonObject;
+import com.example.workflow.serviceImpl.activityHandlers.StarredPlaceManageActivityHandler;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
@@ -27,8 +30,10 @@ public class RestHandler {
         return client;
     }
 
+    private static final Logger logger = LoggerFactory.getLogger(RestHandler.class);
+
     public static JsonElement execute(Request request) throws IOException {
-        System.out.println(request.method().toString().toUpperCase() + " Request to " + request.url() + " started");
+        logger.info(request.method().toUpperCase() + " Request to " + request.url() + " started");
 
         Response response = client.newCall(request).execute();
         JsonElement jsonElement = gson.fromJson(response.body().charStream(), JsonElement.class);
@@ -37,16 +42,14 @@ public class RestHandler {
             JsonArray jsonArray = jsonElement.getAsJsonArray();
             for (JsonElement element : jsonArray) {
                 JsonObject jsonObject = element.getAsJsonObject();
-                System.out.println(jsonObject.toString());
+                logger.info(jsonObject.toString());
             }
         } else if (jsonElement.isJsonObject()) {
             JsonObject jsonObject = jsonElement.getAsJsonObject();
-            System.out.println(jsonObject.toString());
-        } else {
-            System.out.println("Failed to parse response");
+            logger.info("Response " + jsonObject.toString());
         }
 
-        System.out.println(request.method().toString().toUpperCase() + " Request to " + request.url().toString() + " is complete wit status code " + response.code());
+        logger.info(request.method().toUpperCase() + " Request to " + request.url() + " is complete wit status code " + response.code());
 
         return jsonElement;
     }

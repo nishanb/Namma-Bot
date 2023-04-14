@@ -5,6 +5,7 @@ import com.example.workflow.models.Template;
 import com.example.workflow.repository.TemplateRepository;
 import com.example.workflow.services.TemplateService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -30,6 +31,7 @@ public class TemplateServiceImpl implements TemplateService {
         return formattedMessage;
     }
 
+    @Cacheable(value = "generatedTemplate")
     @Override
     public String format(MessageTemplate messageTemplate, String language) {
         Template template = getTemplateById(messageTemplate.getTemplateId());
@@ -38,7 +40,6 @@ public class TemplateServiceImpl implements TemplateService {
         if (template != null) {
             formattedMessage = template.getMessage().get(language);
         }
-        //System.out.printf(">>> Formatted message for ID: %s with language %s , message %s%n", template.getTemplateId(), language, formattedMessage);
         return formattedMessage;
     }
 
