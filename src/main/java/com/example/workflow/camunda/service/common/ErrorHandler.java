@@ -31,7 +31,10 @@ public class ErrorHandler implements JavaDelegate {
             User user = userService.findUserByPhoneNumber(execution.getBusinessKey()).orElse(null);
             if (user != null) {
                 commonMessageService.sendErrorMessage(user);
-            }else{
+                user.setProcessInstanceId(null);
+                user.setSubProcessInstanceId(null);
+                userService.updateUser(user.getId(), user);
+            } else {
                 System.out.println("User is null couldn't send message");
             }
         } catch (Exception e) {

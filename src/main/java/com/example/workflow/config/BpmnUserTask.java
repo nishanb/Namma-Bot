@@ -15,8 +15,11 @@ public enum BpmnUserTask {
     RIDE_CAPTURE_RIDE_RATING("Capture_Driver_Rating"),
     RIDE_ENDED("Ride_Ended"),
     LANGUAGE_UPDATE_PREFERENCE_SELECTION("Language_Selection"),
-    LANGUAGE_UPDATE_PREFERENCE_CONFIRMATION("Language_Change_Confirmation");
-
+    LANGUAGE_UPDATE_PREFERENCE_CONFIRMATION("Language_Change_Confirmation"),
+    STARRED_PLACE_DESIRED_ACTION("Receive_Desired_Action"),
+    STARRED_PLACE_RECEIVE_LOCATION_TO_ADD("Receive_Location_To_Add"),
+    STARRED_PLACE_RECEIVE_LOCATION_TAG_TO_ADD("Receive_Location_Tag"),
+    STARRED_PLACE_RECEIVE_LOCATION_TO_DELETE("Receive_Location_To_Delete");
     private final String taskDefinitionKey;
 
     BpmnUserTask(String taskDefinitionKey) {

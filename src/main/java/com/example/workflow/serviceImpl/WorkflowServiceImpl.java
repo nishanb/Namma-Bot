@@ -9,6 +9,7 @@ import com.example.workflow.models.User;
 import com.example.workflow.models.gupshup.WebhookMessagePayload;
 import com.example.workflow.serviceImpl.activityHandlers.RideBookingActivityHandler;
 import com.example.workflow.serviceImpl.activityHandlers.LanguageChangeActivityHandler;
+import com.example.workflow.serviceImpl.activityHandlers.StarredPlaceManageActivityHandler;
 import com.example.workflow.services.UserService;
 import com.example.workflow.services.WorkflowService;
 import org.camunda.bpm.engine.runtime.ActivityInstance;
@@ -40,6 +41,9 @@ public class WorkflowServiceImpl implements WorkflowService {
 
     @Autowired
     RideBookingActivityHandler rideBookingActivityHandler;
+
+    @Autowired
+    StarredPlaceManageActivityHandler starredPlaceManageActivityHandler;
 
     @Autowired
     CommonMessageService commonMessageService;
@@ -77,7 +81,7 @@ public class WorkflowServiceImpl implements WorkflowService {
                     languageChangeActivityHandler.handle(task, user, messageType, webhookMessagePayload);
                 }
                 case MANAGE_PLACES -> {
-                    logger.info(">>>>>>>> Invoked Manage places flow");
+                    starredPlaceManageActivityHandler.handle(task, user, messageType, webhookMessagePayload);
                 }
                 case SUPPORT -> {
                     commonMessageService.sendGreetingMessage(user);
@@ -192,6 +196,7 @@ public class WorkflowServiceImpl implements WorkflowService {
                 languageChangeActivityHandler.handleCancelRequest(user, user.getPhoneNumber(), processDefinitionName);
             }
             case MANAGE_PLACES -> {
+                starredPlaceManageActivityHandler.handleCancelRequest(user, user.getPhoneNumber(), processDefinitionName);
                 logger.info(">>>>>>>> Invoked Manage places cancel flow");
             }
             case SUPPORT -> {

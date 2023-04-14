@@ -13,7 +13,10 @@ public enum PostBackText {
     LANG_PREF_HINDI("HINDI"),
     LANG_PREF_CANCEL("cancel"),
     LANG_PREF_RE_UPDATE("changeSelection"),
-    LANG_PREF_APPROVE("confirm");
+    LANG_PREF_APPROVE("confirm"),
+    STARRED_PLACE_ADD("addPlace"),
+    STARRED_PLACE_REMOVE("deletePlace"),
+    STARRED_PLACE_CANCEL("cancelOperation");
     private final String postBackText;
 
     PostBackText(String eventType) {

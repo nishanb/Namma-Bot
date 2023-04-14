@@ -1,4 +1,4 @@
-package com.example.workflow.camunda.service.languageSelection;
+package com.example.workflow.camunda.service.starredPlace;
 
 import com.example.workflow.models.User;
 import com.example.workflow.services.UserService;
@@ -11,27 +11,26 @@ import org.springframework.stereotype.Service;
 import java.util.logging.Logger;
 
 @Service
-public class CancelFlow implements JavaDelegate {
+public class ActivityScrubber implements JavaDelegate {
 
     @Autowired
     UserService userService;
 
-    private final Logger log = Logger.getLogger(CancelFlow.class.getName());
+    private final Logger log = Logger.getLogger(ActivityScrubber.class.getName());
 
     @Override
     public void execute(DelegateExecution execution) throws Exception {
+        log.info("Executing Service Task " + this.getClass().getName());
+
         try {
             User user = userService.findUserByPhoneNumber(execution.getBusinessKey()).orElse(null);
             assert user != null;
 
-            // as part of cancellation detach process instance id from user
             user.setProcessInstanceId(null);
-            user.setSubProcessInstanceId(null);
             userService.updateUser(execution.getBusinessKey(), user);
-            log.info("Cancel flow called");
         } catch (Exception e) {
-            log.warning("CancelFlow: Exception occurred......" + e.getMessage());
-            throw new BpmnError("booking_flow_error", "Error sending message.....");
+            log.warning("Exception occurred in Service Activity : " + this.getClass().getName() + " " + e.getMessage());
+            throw new BpmnError("starred_place_flow_error", "Error sending message.....");
         }
     }
 }

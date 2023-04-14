@@ -24,14 +24,12 @@ public class LanguageChangeActivityHandler implements ActivityHandlerService {
     ReceiveLanguageConfirmation receiveLanguageConfirmation;
     @Autowired
     ReceiveLanguagePreference receiveLanguagePreference;
-
     @Autowired
     CamundaCoreService camundaCoreService;
     private static final Logger logger = LoggerFactory.getLogger(RideBookingActivityHandler.class);
 
     @Override
     public void handle(Task task, User user, String messageType, WebhookMessagePayload webhookMessagePayload) throws Exception {
-        System.out.println("in lang update task");
         switch (BpmnUserTask.fromTaskDefinitionKey(task.getTaskDefinitionKey())) {
             case LANGUAGE_UPDATE_PREFERENCE_SELECTION -> {
                 receiveLanguagePreference.complete(task, user, messageType, webhookMessagePayload);

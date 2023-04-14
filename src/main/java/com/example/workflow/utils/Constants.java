@@ -35,6 +35,7 @@ public class Constants {
     static {
         GLOBAL_CANCELLATION_MESSAGE_EVENT_NAME.put("Boooking_Flow", "Global_Booking_Cancellation");
         GLOBAL_CANCELLATION_MESSAGE_EVENT_NAME.put("language_change_flow", "Global_Language_Change_Cancellation");
+        GLOBAL_CANCELLATION_MESSAGE_EVENT_NAME.put("Starred_Places_Flow", "Global_Starred_Place_Cancellation");
     }
 
 
