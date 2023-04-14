@@ -19,7 +19,9 @@ public enum BpmnUserTask {
     STARRED_PLACE_DESIRED_ACTION("Receive_Desired_Action"),
     STARRED_PLACE_RECEIVE_LOCATION_TO_ADD("Receive_Location_To_Add"),
     STARRED_PLACE_RECEIVE_LOCATION_TAG_TO_ADD("Receive_Location_Tag"),
-    STARRED_PLACE_RECEIVE_LOCATION_TO_DELETE("Receive_Location_To_Delete");
+    STARRED_PLACE_RECEIVE_LOCATION_TO_DELETE("Receive_Location_To_Delete"),
+    CANCEL_RIDE_REQUEST_BY_CX("Cancel_Ride_CX"),
+    Need_Help_Request("Need_Help_Request");
     private final String taskDefinitionKey;
 
     BpmnUserTask(String taskDefinitionKey) {

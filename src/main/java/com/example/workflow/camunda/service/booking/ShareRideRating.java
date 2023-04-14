@@ -81,6 +81,8 @@ public class ShareRideRating implements JavaDelegate {
 
             messageService.sendListMessage(new SendListMessageRequestDto(user.getPhoneNumber(), messageService.generateListMessage(listMessageDto)));
 
+            execution.setVariable("share_ride_updates",true);
+
         } catch (Exception e) {
             log.warning("ShareRideRating: Exception occured......");
             throw new BpmnError("booking_flow_error", "Error sending message.....");

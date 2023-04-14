@@ -39,6 +39,12 @@ public class RideBookingActivityHandler implements ActivityHandlerService {
     ReceiveRetrySelection receiveRetrySelectionTask;
 
     @Autowired
+    CancelBookingByCx cancelBookingByCx;
+
+    @Autowired
+    NeedHelpRequest needHelpRequest;
+
+    @Autowired
     CamundaCoreService camundaCoreService;
 
     private static final Logger logger = LoggerFactory.getLogger(RideBookingActivityHandler.class);
@@ -63,6 +69,12 @@ public class RideBookingActivityHandler implements ActivityHandlerService {
             }
             case RIDE_CAPTURE_RIDE_RATING -> {
                 receiveRideRatingTask.complete(task, user, messageType, webhookMessagePayload);
+            }
+            case CANCEL_RIDE_REQUEST_BY_CX -> {
+                cancelBookingByCx.complete(task, user, messageType, webhookMessagePayload);
+            }
+            case Need_Help_Request -> {
+                needHelpRequest.complete(task, user, messageType, webhookMessagePayload);
             }
             case default -> {
                 logger.info(String.format(">>>>>>>> No user task class found for %s <<<<<<<<<", task.getName()));
