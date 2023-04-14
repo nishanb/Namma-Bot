@@ -2,9 +2,13 @@ package com.example.workflow.camunda.service.booking;
 
 import camundajar.impl.com.google.gson.JsonElement;
 import camundajar.impl.com.google.gson.JsonObject;
+import com.example.workflow.config.ConversationWorkflow;
 import com.example.workflow.config.MessageTemplate;
+import com.example.workflow.config.PostBackText;
 import com.example.workflow.dto.SendMessageRequestDto;
+import com.example.workflow.dto.SendQuickReplyMessageDto;
 import com.example.workflow.models.User;
+import com.example.workflow.models.gupshup.MessageContent;
 import com.example.workflow.serviceImpl.TemplateServiceImpl;
 import com.example.workflow.services.MessageService;
 import com.example.workflow.services.NammaYathriService;
@@ -18,10 +22,11 @@ import org.camunda.spin.plugin.variable.value.JsonValue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Optional;
+import java.util.*;
 import java.util.logging.Logger;
+
+import static com.example.workflow.utils.Constants.MESSAGE_TYPE_QUICK_REPLY;
+
 @Service
 public class RideAssignment implements JavaDelegate {
 
@@ -71,15 +76,35 @@ public class RideAssignment implements JavaDelegate {
             String rideFare = (String) selectedDriverDetails.prop("ride_fare").value();
             String pickupETA = (String) selectedDriverDetails.prop("eta_to_pickup_location").value();
             String vehicleNumber = (String) selectedDriverDetails.prop("vehicle_number").value();
-            messageService.sendTextMessage(new SendMessageRequestDto(user.getPhoneNumber(),
-                    templateService.format(MessageTemplate.RIDE_ASSIGNED_INFO, user.getPreferredLanguage(),new ArrayList<>(Arrays.asList(driverName, pickupETA,rideFare,vehicleNumber)))));
+
+            SendQuickReplyMessageDto rideAssignmentMessage = new SendQuickReplyMessageDto();
+            rideAssignmentMessage.setReceiverContactNumber(user.getPhoneNumber());
+            rideAssignmentMessage.setType(MESSAGE_TYPE_QUICK_REPLY);
+
+            List<Map<String, String>> options = new ArrayList<>(new ArrayList<>(Arrays.asList(
+                    new HashMap<>() {{
+                        put("type", "text");
+                        put("title", templateService.format(MessageTemplate.RIDE_RETRY_REQUEST_CANCEL_BOOKING, user.getPreferredLanguage()));
+                        put("postbackText", ConversationWorkflow.CANCEL_BOOKING.getPostbackText());
+                    }}
+            )));
+
+            rideAssignmentMessage.setQuickReplyMessage(messageService.generateQuickReplyMessage(
+                    new MessageContent(
+                            templateService.format(MessageTemplate.RIDE_BOOKING_TYPE_HEADER, user.getPreferredLanguage()),
+                            templateService.format(MessageTemplate.RIDE_ASSIGNED_INFO,
+                                    user.getPreferredLanguage(),
+                                    new ArrayList<>(Arrays.asList(driverName, pickupETA,rideFare,vehicleNumber)))
+                    ), options, UUID.randomUUID().toString()));
+
+            messageService.sendQuickReplyMessage(rideAssignmentMessage);
 
             //set relevant variables for future ref
             execution.setVariable("otp", OTP);
             execution.setVariable("eta_to_drop_location", etaToDropLocation);
 
             //Simulate backend events - 40 seconds , 30 seconds , 2 minutes
-            backendEventSimulatorHelper.simulateRideEvents(execution.getBusinessKey(),40000, 30000, 120000);
+            backendEventSimulatorHelper.simulateRideEvents(execution.getBusinessKey(),10000, 10000, 50000);
         } catch (Exception e){
             System.out.println(e.getMessage());
             log.warning("RideAssignment: Exception occured......");
