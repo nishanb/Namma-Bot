@@ -23,19 +23,15 @@ import static com.example.workflow.utils.Constants.MESSAGE_TYPE_QUICK_REPLY;
 @Service
 public class DeleteStarredPlace implements JavaDelegate {
 
+    private final Logger log = Logger.getLogger(DeleteStarredPlace.class.getName());
     @Autowired
     NammaYathriService nammaYathriService;
-
     @Autowired
     MessageService messageService;
-
     @Autowired
     TemplateService templateService;
-
     @Autowired
     UserService userService;
-
-    private final Logger log = Logger.getLogger(DeleteStarredPlace.class.getName());
 
     @Override
     public void execute(DelegateExecution execution) throws Exception {
@@ -62,24 +58,15 @@ public class DeleteStarredPlace implements JavaDelegate {
                     }}
             )));
 
-//            newStarredPlaceAddedMessage.setQuickReplyMessage(messageService.generateQuickReplyMessage(
-//                    new MessageContent(
-//                            templateService.format(MessageTemplate.LANGUAGE_UPDATE_CONFIRMATION_HEADER, user.getPreferredLanguage()),
-//                            templateService.format(MessageTemplate.LAST_OPERATION_CANCELED, user.getPreferredLanguage())
-//                    ),
-//                    options, UUID.randomUUID().toString())
-//            );
-
             newStarredPlaceAddedMessage.setQuickReplyMessage(messageService.generateQuickReplyMessage(
                     new MessageContent(
-                            "Cool !!",
-                            "We've deleted your starred place"
+                            templateService.format(MessageTemplate.STARRED_PLACE_ADD_LOC_CONFIRM_HEADER, user.getPreferredLanguage()),
+                            templateService.format(MessageTemplate.STARRED_PLACE_ADD_LOC_CONFIRM_BODY, user.getPreferredLanguage())
                     ),
                     options, UUID.randomUUID().toString())
             );
 
             messageService.sendQuickReplyMessage(newStarredPlaceAddedMessage);
-
         } catch (Exception e) {
             log.warning("Exception occurred in Service Activity : " + this.getClass().getName() + " " + e.getMessage());
             throw new BpmnError("starred_place_flow_error", "Error sending message.....");

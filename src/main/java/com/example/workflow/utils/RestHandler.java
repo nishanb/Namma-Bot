@@ -38,19 +38,22 @@ public class RestHandler {
         Response response = client.newCall(request).execute();
         JsonElement jsonElement = gson.fromJson(response.body().charStream(), JsonElement.class);
 
-        if (jsonElement.isJsonArray()) {
-            JsonArray jsonArray = jsonElement.getAsJsonArray();
-            for (JsonElement element : jsonArray) {
-                JsonObject jsonObject = element.getAsJsonObject();
-                logger.info(jsonObject.toString());
-            }
-        } else if (jsonElement.isJsonObject()) {
-            JsonObject jsonObject = jsonElement.getAsJsonObject();
-            logger.info("Response " + jsonObject.toString());
-        }
+        /**
+         * Disabled dumping response to system.out will result in higher latency
+         if (jsonElement.isJsonArray()) {
+         JsonArray jsonArray = jsonElement.getAsJsonArray();
+         for (JsonElement element : jsonArray) {
+         JsonObject jsonObject = element.getAsJsonObject();
+         logger.info(jsonObject.toString());
+         }
+         } else if (jsonElement.isJsonObject()) {
+         JsonObject jsonObject = jsonElement.getAsJsonObject();
+         logger.info("Response " + jsonObject.toString());
+         }
+         **/
 
         logger.info(request.method().toUpperCase() + " Request to " + request.url() + " is complete wit status code " + response.code());
-
         return jsonElement;
     }
 }
+

@@ -8,6 +8,7 @@ public enum MessageTemplate {
     GREET_MAIN_CONTENT("Greet_Content_Main"),
     GREET_MAIN_OPTION_BOOK_RIDE("Greet_Content_Options_Main_Book_Ride"),
     GREET_MAIN_OPTION_VIEW_PAST_RIDE("Greet_Content_Options_Main_ViewPastRide"),
+    GREET_MAIN_OPTION_MANAGE_STARRED_PLACE("Greet_Content_Options_Main_Starred_Places"),
     GREET_MAIN_OPTION_MORE_OPTION("Greet_Content_Options_Main_More"),
     GREET_OTHER_HEADER("Greet_Header_Other"),
     GREET_OTHER_BODY("Greet_Content_Other"),
@@ -15,6 +16,8 @@ public enum MessageTemplate {
     GREET_OTHER_SUB_HEADER("Greet_Other_sub_header"),
     GREET_OTHER_OPTION_MANAGE_FAV_TITLE("Greet_Content_Options_Other_fav_place_header"),
     GREET_OTHER_OPTION_MANAGE_FAV_DESC("Greet_Content_Options_Other_fav_place_description"),
+    GREET_OTHER_OPTION_PAST_RIDES_TITLE("Greet_Content_Options_Other_past_ride_header"),
+    GREET_OTHER_OPTION_PAST_RIDES_DESC("Greet_Content_Options_Other_past_ride_desc"),
     GREET_OTHER_OPTION_LANGUAGE_UPDATE_TITLE("Greet_Content_Options_Other_change_lang_header"),
     GREET_OTHER_OPTION_LANGUAGE_UPDATE_DESC("Greet_Content_Options_Other_change_lang_desc"),
     GREET_OTHER_OPTION_SUPPORT_TITLE("Greet_Content_Options_Other_support_header"),
@@ -86,8 +89,23 @@ public enum MessageTemplate {
     REQUEST_UNDER_PROCESS("task_under_process"),
     BOT_ERROR("Error"),
     NEED_HELP("Need_Help_Info"),
-    NEED_HELP_BUTTON_INFO("Need_Help_Button");
-
+    NEED_HELP_BUTTON_INFO("Need_Help_Button"),
+    STARRED_PLACE_MAIN_HEADER("Lang_Main_Header"),
+    STARRED_PLACE_MAIN_BODY("Lang_Main_Body"),
+    STARRED_PLACE_OPTION_ADD("Lang_Main_Add_Place"),
+    STARRED_PLACE_OPTION_DELETE("Lang_Main_Delete_Place"),
+    STARRED_PLACE_OPTION_CANCEL("Lang_Main_Add_Cancel"),
+    STARRED_PLACE_ADD_LOC_BODY("Lang_Main_Add_Place_Loc_Body"),
+    STARRED_PLACE_ADD_LOC_TAG_BODY("Lang_Main_Add_Place_Loc_Tag"),
+    STARRED_PLACE_ADD_LOC_ADDED_HEADER("Lang_Added_Header"),
+    STARRED_PLACE_ADD_LOC_ADDED_BODY("Lang_Added_Body"),
+    STARRED_PLACE_ADD_LOC_DELETED_HEADER("Lang_Delete_Header"),
+    STARRED_PLACE_ADD_LOC_DELETED_BODY("Lang_Delete_Body"),
+    STARRED_PLACE_ADD_LOC_DELETED_BUTTON("Lang_Delete_Button"),
+    STARRED_PLACE_ADD_LOC_SUB_HEADER("Lang_Delete_Sub_Header"),
+    STARRED_PLACE_ADD_LOC_CONFIRM_HEADER("Lnag_delete_Confirmation_Header"),
+    STARRED_PLACE_ADD_LOC_CONFIRM_BODY("Lnag_delete_Confirmation_Body"),
+    STARRED_PLACE_NO_PLACE_TO_DELETE("No_Starred_place_to_delete");
     private final String templateId;
 
     MessageTemplate(String eventType) {

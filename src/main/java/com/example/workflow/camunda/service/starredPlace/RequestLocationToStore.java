@@ -17,23 +17,20 @@ import java.util.logging.Logger;
 @Service
 public class RequestLocationToStore implements JavaDelegate {
 
+    private final Logger log = Logger.getLogger(RequestLocationToStore.class.getName());
     @Autowired
     UserService userService;
-
     @Autowired
     MessageService messageService;
-
     @Autowired
     TemplateService templateService;
-
-    private final Logger log = Logger.getLogger(RequestLocationToStore.class.getName());
 
     @Override
     public void execute(DelegateExecution execution) throws Exception {
         log.info("Executing Service Task " + this.getClass().getName());
         try {
             User user = userService.findUserByPhoneNumber(execution.getBusinessKey()).orElse(null);
-            messageService.sendTextMessage(new SendMessageRequestDto(execution.getBusinessKey(), templateService.format(MessageTemplate.RIDE_REQUEST_PICKUP_LOCATION, user.getPreferredLanguage())));
+            messageService.sendTextMessage(new SendMessageRequestDto(execution.getBusinessKey(), templateService.format(MessageTemplate.STARRED_PLACE_ADD_LOC_BODY, user.getPreferredLanguage())));
         } catch (Exception e) {
             log.warning("Exception occurred in Service Activity : " + this.getClass().getName() + " " + e.getMessage());
             throw new BpmnError("starred_place_flow_error", "Error sending message.....");

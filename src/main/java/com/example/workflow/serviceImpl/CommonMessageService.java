@@ -12,7 +12,6 @@ import com.example.workflow.models.gupshup.ListMessageItem;
 import com.example.workflow.models.gupshup.ListMessageItemOption;
 import com.example.workflow.models.gupshup.MessageContent;
 import com.example.workflow.services.MessageService;
-import com.example.workflow.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -42,8 +41,8 @@ public class CommonMessageService {
                 }},
                 new HashMap<>() {{
                     put("type", "text");
-                    put("title", templateService.format(MessageTemplate.GREET_MAIN_OPTION_VIEW_PAST_RIDE, user.getPreferredLanguage()));
-                    put("postbackText", ConversationWorkflow.PREVIOUS_RIDE.getPostbackText());
+                    put("title", templateService.format(MessageTemplate.GREET_MAIN_OPTION_MANAGE_STARRED_PLACE, user.getPreferredLanguage()));
+                    put("postbackText", ConversationWorkflow.MANAGE_PLACES.getPostbackText());
                 }},
                 new HashMap<>() {{
                     put("type", "text");
@@ -76,12 +75,12 @@ public class CommonMessageService {
         //Other section listGREET_OTHER_SUB_HEADER
         ListMessageItem otherOptions = new ListMessageItem(templateService.format(MessageTemplate.GREET_OTHER_SUB_HEADER, user.getPreferredLanguage()));
         otherOptions.setOptions(Arrays.asList(
-                new ListMessageItemOption(templateService.format(MessageTemplate.GREET_OTHER_OPTION_MANAGE_FAV_TITLE, user.getPreferredLanguage()), templateService.format(MessageTemplate.GREET_OTHER_OPTION_MANAGE_FAV_DESC, user.getPreferredLanguage()), ConversationWorkflow.MANAGE_PLACES.getPostbackText()),
                 new ListMessageItemOption(templateService.format(MessageTemplate.GREET_OTHER_OPTION_LANGUAGE_UPDATE_TITLE, user.getPreferredLanguage()), templateService.format(MessageTemplate.GREET_OTHER_OPTION_LANGUAGE_UPDATE_DESC, user.getPreferredLanguage()), ConversationWorkflow.UPDATE_LANGUAGE.getPostbackText()),
-                new ListMessageItemOption(templateService.format(MessageTemplate.GREET_OTHER_OPTION_SUPPORT_TITLE, user.getPreferredLanguage()), templateService.format(MessageTemplate.GREET_OTHER_OPTION_SUPPORT_DESC, user.getPreferredLanguage()), ConversationWorkflow.SUPPORT.getPostbackText()),
+                new ListMessageItemOption(templateService.format(MessageTemplate.GREET_OTHER_OPTION_PAST_RIDES_TITLE, user.getPreferredLanguage()), templateService.format(MessageTemplate.GREET_OTHER_OPTION_PAST_RIDES_DESC, user.getPreferredLanguage()), ConversationWorkflow.MANAGE_PLACES.getPostbackText()),
                 new ListMessageItemOption(templateService.format(MessageTemplate.GREET_OTHER_OPTION_FEEDBACK_TITLE, user.getPreferredLanguage()), templateService.format(MessageTemplate.GREET_OTHER_OPTION_FEEDBACK_DESC, user.getPreferredLanguage()), ConversationWorkflow.FEEDBACK.getPostbackText()),
                 new ListMessageItemOption(templateService.format(MessageTemplate.GREET_OTHER_OPTION_OPEN_DATA_TITLE, user.getPreferredLanguage()), templateService.format(MessageTemplate.GREET_OTHER_OPTION_OPEN_DATA_DESC, user.getPreferredLanguage()), ConversationWorkflow.OPEN_DATA.getPostbackText()),
-                new ListMessageItemOption(templateService.format(MessageTemplate.GREET_OTHER_OPTION_KNOW_MORE_TITLE, user.getPreferredLanguage()), templateService.format(MessageTemplate.GREET_OTHER_OPTION_KNOW_MORE_DESC, user.getPreferredLanguage()), ConversationWorkflow.KNOW_MORE.getPostbackText())
+                new ListMessageItemOption(templateService.format(MessageTemplate.GREET_OTHER_OPTION_KNOW_MORE_TITLE, user.getPreferredLanguage()), templateService.format(MessageTemplate.GREET_OTHER_OPTION_KNOW_MORE_DESC, user.getPreferredLanguage()), ConversationWorkflow.KNOW_MORE.getPostbackText()),
+                new ListMessageItemOption(templateService.format(MessageTemplate.GREET_OTHER_OPTION_SUPPORT_TITLE, user.getPreferredLanguage()), templateService.format(MessageTemplate.GREET_OTHER_OPTION_SUPPORT_DESC, user.getPreferredLanguage()), ConversationWorkflow.SUPPORT.getPostbackText())
         ));
 
         // Add others section to group

@@ -23,19 +23,15 @@ import static com.example.workflow.utils.Constants.MESSAGE_TYPE_QUICK_REPLY;
 @Service
 public class NoPlacesStored implements JavaDelegate {
 
+    private final Logger log = Logger.getLogger(NoPlacesStored.class.getName());
     @Autowired
     NammaYathriService nammaYathriService;
-
     @Autowired
     MessageService messageService;
-
     @Autowired
     TemplateService templateService;
-
     @Autowired
     UserService userService;
-
-    private final Logger log = Logger.getLogger(NoPlacesStored.class.getName());
 
     @Override
     public void execute(DelegateExecution execution) throws Exception {
@@ -57,18 +53,10 @@ public class NoPlacesStored implements JavaDelegate {
                     }}
             )));
 
-//            newStarredPlaceAddedMessage.setQuickReplyMessage(messageService.generateQuickReplyMessage(
-//                    new MessageContent(
-//                            templateService.format(MessageTemplate.LANGUAGE_UPDATE_CONFIRMATION_HEADER, user.getPreferredLanguage()),
-//                            templateService.format(MessageTemplate.LAST_OPERATION_CANCELED, user.getPreferredLanguage())
-//                    ),
-//                    options, UUID.randomUUID().toString())
-//            );
-
             newStarredPlaceAddedMessage.setQuickReplyMessage(messageService.generateQuickReplyMessage(
                     new MessageContent(
-                            "Damn",
-                            "Looks like you don't have any places stored"
+                            templateService.format(MessageTemplate.STARRED_PLACE_ADD_LOC_DELETED_HEADER, user.getPreferredLanguage()),
+                            templateService.format(MessageTemplate.STARRED_PLACE_NO_PLACE_TO_DELETE, user.getPreferredLanguage())
                     ),
                     options, UUID.randomUUID().toString())
             );

@@ -1,5 +1,6 @@
 package com.example.workflow.camunda.service.starredPlace;
 
+import com.example.workflow.config.MessageTemplate;
 import com.example.workflow.config.PostBackText;
 import com.example.workflow.dto.SendQuickReplyMessageDto;
 import com.example.workflow.models.User;
@@ -21,16 +22,13 @@ import static com.example.workflow.utils.Constants.MESSAGE_TYPE_QUICK_REPLY;
 @Service
 public class ActionSelection implements JavaDelegate {
 
+    private final Logger log = Logger.getLogger(ActionSelection.class.getName());
     @Autowired
     UserService userService;
-
     @Autowired
     MessageService messageService;
-
     @Autowired
     TemplateService templateService;
-
-    private final Logger log = Logger.getLogger(ActionSelection.class.getName());
 
     @Override
     public void execute(DelegateExecution execution) throws Exception {
@@ -45,37 +43,29 @@ public class ActionSelection implements JavaDelegate {
             List<Map<String, String>> options = new ArrayList<>(new ArrayList<>(Arrays.asList(
                     new HashMap<>() {{
                         put("type", "text");
-                        put("title", "Add Place ");
+                        put("title", templateService.format(MessageTemplate.STARRED_PLACE_OPTION_ADD, user.getPreferredLanguage()));
                         put("postbackText", PostBackText.STARRED_PLACE_ADD.getPostBackText());
                     }},
                     new HashMap<>() {{
                         put("type", "text");
-                        put("title", "Delete Place");
+                        put("title", templateService.format(MessageTemplate.STARRED_PLACE_OPTION_DELETE, user.getPreferredLanguage()));
                         put("postbackText", PostBackText.STARRED_PLACE_REMOVE.getPostBackText());
                     }},
                     new HashMap<>() {{
                         put("type", "text");
-                        put("title", "Cancel");
+                        put("title", templateService.format(MessageTemplate.STARRED_PLACE_OPTION_CANCEL, user.getPreferredLanguage()));
                         put("postbackText", PostBackText.STARRED_PLACE_CANCEL.getPostBackText());
                     }}
             )));
 
-//            placesOperations.setQuickReplyMessage(messageService.generateQuickReplyMessage(
-//                    new MessageContent(
-//                            templateService.format(MessageTemplate.LANGUAGE_UPDATE_PREFERENCE_HEADER, user.getPreferredLanguage()),
-//                            templateService.format(MessageTemplate.LANGUAGE_UPDATE_PREFERENCE_BODY,
-//                                    user.getPreferredLanguage())
-//                    ), options, UUID.randomUUID().toString()));
-
             placesOperations.setQuickReplyMessage(messageService.generateQuickReplyMessage(
                     new MessageContent(
-                            "Ahh ha !!!",
-                            "Please choose operation you like to continue with")
-                    , options, UUID.randomUUID().toString()));
+                            templateService.format(MessageTemplate.STARRED_PLACE_MAIN_HEADER, user.getPreferredLanguage()),
+                            templateService.format(MessageTemplate.STARRED_PLACE_MAIN_BODY,
+                                    user.getPreferredLanguage())
+                    ), options, UUID.randomUUID().toString()));
 
             messageService.sendQuickReplyMessage(placesOperations);
-
-            log.info("PreferredLanguage: execute method is called......");
         } catch (Exception e) {
             log.warning("Exception occurred in Service Activity : " + this.getClass().getName() + " " + e.getMessage());
             throw new BpmnError("starred_place_flow_error", "Error sending message.....");
