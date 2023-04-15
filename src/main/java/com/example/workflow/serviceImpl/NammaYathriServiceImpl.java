@@ -29,9 +29,10 @@ public class NammaYathriServiceImpl implements NammaYathriService {
                 .add("latitude", latitude)
                 .add("longitude", longitude)
                 .add("name", name)
+                .add("phone", userPhone)
                 .build();
 
-        return nammaYathriApiHelper.post(String.format("/starred-places?user=%s", userPhone), body);
+        return nammaYathriApiHelper.post(String.format("/starred-places", userPhone), body);
     }
 
     @Override

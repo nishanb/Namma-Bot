@@ -4,7 +4,7 @@
   "name": "Namma Yathri",
   "endpointPrefix": "api/v1",
   "latency": 0,
-  "port": 3001,
+  "port": 8090,
   "hostname": "",
   "folders": [],
   "routes": [
@@ -31,6 +31,31 @@
           "disableTemplating": false,
           "fallbackTo404": false,
           "default": true
+        },
+        {
+          "uuid": "16fc95f2-c09e-4fe8-a5d9-7fa999b34d61",
+          "body": "",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "DATABUCKET",
+          "filePath": "",
+          "databucketID": "5gxr",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "query",
+              "modifier": "phone",
+              "value": "{{data 'phone' 'phone'}}",
+              "invert": false,
+              "operator": "equals"
+            }
+          ],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false
         }
       ],
       "enabled": true,
@@ -298,7 +323,7 @@
       "id": "5gxr",
       "name": "Places",
       "documentation": "",
-      "value": "  [\n    {\n          \"id\": \"{{faker 'datatype.uuid'}}\",\n          \"latitude\": \"2.9137065\",\n          \"longitude\": \"77.6692418\",\n          \"name\": \"Home\"\n    },\n    {\n          \"id\": \"{{faker 'datatype.uuid'}}\",\n          \"latitude\": \"12.9185295\",\n          \"longitude\": \"77.6512542\",\n          \"name\": \"Work\"\n    }\n  ]\n"
+      "value": "  [\n    {\n          \"id\": \"{{faker 'datatype.uuid'}}\",\n          \"latitude\": \"2.9137065\",\n          \"longitude\": \"77.6692418\",\n          \"name\": \"Home\",\n          \"phone\": \"917892693018\"\n    },\n    {\n          \"id\": \"{{faker 'datatype.uuid'}}\",\n          \"latitude\": \"12.9185295\",\n          \"longitude\": \"77.6512542\",\n          \"name\": \"Work\",\n          \"phone\": \"917892693018\"\n    }\n  ]\n"
     }
   ]
 }
