@@ -22,16 +22,13 @@ import static com.example.workflow.utils.Constants.MESSAGE_TYPE_QUICK_REPLY;
 @Service
 public class Cancel implements JavaDelegate {
 
+    private final Logger log = Logger.getLogger(Cancel.class.getName());
     @Autowired
     UserService userService;
-
     @Autowired
     MessageService messageService;
-
     @Autowired
     TemplateService templateService;
-
-    private final Logger log = Logger.getLogger(Cancel.class.getName());
 
     @Override
     public void execute(DelegateExecution execution) throws Exception {
@@ -68,7 +65,6 @@ public class Cancel implements JavaDelegate {
                     ),
                     options, UUID.randomUUID().toString())
             );
-
             messageService.sendQuickReplyMessage(lastOperationCancelledDueToNoResponseMessage);
         } catch (Exception e) {
             log.warning("Exception occurred in Service Activity : " + this.getClass().getName() + " " + e.getMessage());

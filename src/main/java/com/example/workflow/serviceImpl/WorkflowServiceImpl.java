@@ -7,8 +7,8 @@ import com.example.workflow.camunda.singleMessageTasks.ViewPastRide;
 import com.example.workflow.config.ConversationWorkflow;
 import com.example.workflow.models.User;
 import com.example.workflow.models.gupshup.WebhookMessagePayload;
-import com.example.workflow.serviceImpl.activityHandlers.RideBookingActivityHandler;
 import com.example.workflow.serviceImpl.activityHandlers.LanguageChangeActivityHandler;
+import com.example.workflow.serviceImpl.activityHandlers.RideBookingActivityHandler;
 import com.example.workflow.serviceImpl.activityHandlers.StarredPlaceManageActivityHandler;
 import com.example.workflow.services.UserService;
 import com.example.workflow.services.WorkflowService;
@@ -115,7 +115,7 @@ public class WorkflowServiceImpl implements WorkflowService {
                     case RIDE_BOOKING -> initiateWorkflow(user, ConversationWorkflow.RIDE_BOOKING);
 
                     // Initiate previous ride task
-                    case PREVIOUS_RIDE -> initiateWorkflow(user, ConversationWorkflow.PREVIOUS_RIDE);
+                    case MANAGE_PLACES -> initiateWorkflow(user, ConversationWorkflow.MANAGE_PLACES);
 
                     // Send main greeting option to choose from
                     case MAIN_MENU -> commonMessageService.sendGreetingMessage(user);
@@ -126,14 +126,14 @@ public class WorkflowServiceImpl implements WorkflowService {
                     // Did not understand button reply
                     case default -> commonMessageService.sendErrorMessage(user);
                 }
-
             }
             // --> Message callback coming from others section
             else if (messageType.equals(MESSAGE_TYPE_LIST_REPLY)) {
                 // --> Valid Workflows present in others sections
                 List<ConversationWorkflow> allowedWorkFlows = new ArrayList<>(List.of(
-                        ConversationWorkflow.MANAGE_PLACES, ConversationWorkflow.SUPPORT, ConversationWorkflow.UPDATE_LANGUAGE,
-                        ConversationWorkflow.FEEDBACK, ConversationWorkflow.KNOW_MORE, ConversationWorkflow.OPEN_DATA
+                        ConversationWorkflow.SUPPORT, ConversationWorkflow.UPDATE_LANGUAGE,
+                        ConversationWorkflow.FEEDBACK, ConversationWorkflow.KNOW_MORE, ConversationWorkflow.OPEN_DATA,
+                        ConversationWorkflow.PREVIOUS_RIDE
                 ));
 
                 // --> If postback message is valid invoke the flow
