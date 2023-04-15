@@ -1,5 +1,6 @@
 package com.example.workflow.camunda.service.starredPlace;
 
+import camundajar.impl.com.google.gson.JsonArray;
 import camundajar.impl.com.google.gson.JsonElement;
 import camundajar.impl.com.google.gson.JsonObject;
 import com.example.workflow.services.NammaYathriService;
@@ -7,9 +8,6 @@ import com.google.gson.Gson;
 import org.camunda.bpm.engine.delegate.BpmnError;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
-import org.camunda.spin.json.SpinJsonNode;
-import org.camunda.spin.plugin.variable.SpinValues;
-import org.camunda.spin.plugin.variable.value.JsonValue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,8 +30,19 @@ public class FetchStarredPlace implements JavaDelegate {
         log.info("Executing Service Task " + this.getClass().getName());
         try {
             JsonElement starredPlaces = nammaYathriService.getStarredPlaces(execution.getBusinessKey());
-            execution.setVariable("places_stored", starredPlaces.getAsJsonArray().size());
-            execution.setVariable("places", starredPlaces.getAsJsonArray().toString());
+
+            // Filter users starred places
+            JsonArray usersStarredPlaces = new JsonArray();
+            for (JsonElement place : starredPlaces.getAsJsonArray()) {
+                JsonObject object = place.getAsJsonObject();
+                if (object.get("phone").getAsString().equals(execution.getBusinessKey())) {
+                    usersStarredPlaces.add(object);
+                }
+            }
+
+            // store response to cpo
+            execution.setVariable("places_stored", usersStarredPlaces.getAsJsonArray().size());
+            execution.setVariable("places", usersStarredPlaces.getAsJsonArray().toString());
         } catch (Exception e) {
             log.warning("Exception occurred in Service Activity : " + this.getClass().getName() + " " + e.getMessage());
             throw new BpmnError("starred_place_flow_error", "Error sending message.....");
