@@ -1,0 +1,14 @@
+# flyctl launch added from .gitignore
+**/.idea
+**/.DS_Store
+**/assets/.DS_Store
+**/camunda-h2-database.trace.db
+**/camunda-h2-database.mv.db
+assets/driver-ride-event-simulator/node_modules
+assets/driver-ride-event-simulator/package-lock.json
+
+# flyctl launch added from .idea/.gitignore
+# Default ignored files
+.idea/shelf
+.idea/workspace.xml
+fly.toml
