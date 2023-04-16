@@ -50,7 +50,6 @@ public class MessageHandlerServiceImpl implements MessageWebhookHandlerService {
 
     public void handleIncomingMessage(InBoundUserDetails inboundUserDetails, String messageType, WebhookMessagePayload webhookMessagePayload) {
         try {
-            // Collect user info from DB if exists or create new user
             // TODO : Sync users with namma yatri backend
             Optional<User> userDetails = userService.findUserByPhoneNumber(inboundUserDetails.getPhone());
             User user = userDetails.orElseGet(() -> userService.createUser(new User(null, inboundUserDetails.getPhone())));
