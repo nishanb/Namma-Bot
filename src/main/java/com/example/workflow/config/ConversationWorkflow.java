@@ -18,7 +18,8 @@ public enum ConversationWorkflow {
     MAIN_MENU("", "MAIN_MENU"),
     CANCEL_BOOKING("", "CANCEL_BOOKING"),
     RETRY_SEARCH("", "RETRY_SEARCH"),
-    NEED_HELP("", "NEED_HELP");
+    NEED_HELP("", "NEED_HELP"),
+    FAVOURITE_PLACES("", "FAVOURITE_PLACES");
 
     private final String processDefinitionName;
 
