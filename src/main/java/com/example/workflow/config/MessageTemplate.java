@@ -107,8 +107,8 @@ public enum MessageTemplate {
     STARRED_PLACE_ADD_LOC_CONFIRM_BODY("Lnag_delete_Confirmation_Body"),
     STARRED_PLACE_NO_PLACE_TO_DELETE("No_Starred_place_to_delete"),
     FAVOURITE_PLACES_NOT_FOUND("Favourite_Places_Not_Found"),
-    FAVOURITE_PLACES_BUTTON_INFO("Favourite_Places_Button");
-
+    FAVOURITE_PLACES_BUTTON_INFO("Favourite_Places_Button"),
+    FAVOURITE_PLACES_OPTIONS_INFO("Favourite_Places_Options");
     private final String templateId;
 
     MessageTemplate(String eventType) {

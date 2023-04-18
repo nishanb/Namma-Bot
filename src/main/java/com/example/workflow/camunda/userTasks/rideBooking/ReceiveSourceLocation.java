@@ -44,11 +44,8 @@ public class ReceiveSourceLocation implements UserTask {
             variables.put("source_longitude", postBackResult[1]);
             variables.put("select_favourite_place_pickup",false);
             camundaCoreService.completeUserTaskByTaskId(task, variables);
-        }else if (Objects.equals(messageType, Constants.MESSAGE_TYPE_BUTTON_REPLY)){
-            Map<String, Object> variables = new HashMap<>();
-            variables.put("select_favourite_place_pickup",true);
-            camundaCoreService.completeUserTaskByTaskId(task, variables);
-        } else {
+        }
+        else {
             messageService.sendTextMessage(new SendMessageRequestDto(user.getPhoneNumber(), templateService.format(MessageTemplate.RIDE_INVALID_MESSAGE, user.getPreferredLanguage())));
         }
     }
