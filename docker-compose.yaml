@@ -5,6 +5,7 @@ services:
   cpo-core:
     build:
       dockerfile: 'Dockerfile'
+      context: .
     environment:
       - BACKEND_HOST=${BACKEND_HOST}
       - DB_URI=${DB_URI}
