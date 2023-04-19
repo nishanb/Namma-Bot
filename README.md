@@ -20,6 +20,9 @@ The following are the main features of the Namma Yatri Service chatbot:
 - Natural language conversation with the chatbot to get answers to queries.
 - Ability to track the status of the ride.
 
+## How to set up server
+`docker-compose --env-file ~/.env.prod build`
+
 ## Future Scope
 TODO section 
 

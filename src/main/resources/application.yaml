@@ -2,14 +2,14 @@ spring.datasource.url: jdbc:h2:file:./camunda-h2-database
 spring.redis.url: ${REDIS_URL}
 camunda.bpm.admin-user:
   id: demo
-  password: demo
+  password: ${CAMUNDA_PASSWORD}
 server:
   port: 8080
 gupshup-host: ${GUPSHUP_HOST}
 gupshup-api-key: ${GUPSHUP_API_KEY}
 gupshup-app-name: ${GUPSHUP_APP_NAME}
 gupshup-source-contact: ${GUPSHUP_SOURCE_CONTACT}
-ny-backend-host: "https://ny-mock-api.fly.dev/api/v1"
+ny-backend-host: ${BACKEND_HOST}
 callback-host: ${CALLBACK_HOST}
 event-simulator-host: ${EVENT_SIMULATOR_HOST}
 spring:
