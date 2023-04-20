@@ -1,0 +1,23 @@
+name: Deploy to EC2
+
+on:
+  push:
+    branches:
+      - master
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Deploy
+      env:
+        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        SSH_USERNAME: ${{ secrets.SSH_USERNAME }}
+        SSH_HOST: ${{ secrets.SSH_HOST }}
+      run: |
+        echo "${SSH_PRIVATE_KEY}" > ssh_key
+        chmod 600 ssh_key
+        ssh -o StrictHostKeyChecking=no -i ssh_key ${SSH_USERNAME}@${SSH_HOST} 'cd /home/ubuntu/g/projects/Namma-Bot && git pull && sudo docker-compose --env-file ~/.env.prod up -d --force-recreate --build'
