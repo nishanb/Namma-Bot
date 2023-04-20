@@ -15,8 +15,7 @@ import java.util.*;
 import static com.example.workflow.utils.Constants.MESSAGE_TYPE_QUICK_REPLY;
 
 @Service
-public class KnowMore implements SingleMessageTask {
-
+public class ProvideFeedBack implements SingleMessageTask {
     @Autowired
     TemplateService templateService;
 
@@ -25,9 +24,9 @@ public class KnowMore implements SingleMessageTask {
 
     @Override
     public void process(User user) throws Exception {
-        SendQuickReplyMessageDto knowMoreMessage = new SendQuickReplyMessageDto();
-        knowMoreMessage.setReceiverContactNumber(user.getPhoneNumber());
-        knowMoreMessage.setType(MESSAGE_TYPE_QUICK_REPLY);
+        SendQuickReplyMessageDto feedbackMessage = new SendQuickReplyMessageDto();
+        feedbackMessage.setReceiverContactNumber(user.getPhoneNumber());
+        feedbackMessage.setType(MESSAGE_TYPE_QUICK_REPLY);
 
         List<Map<String, String>> options = new ArrayList<>(new ArrayList<>(List.of(
                 new HashMap<>() {{
@@ -37,15 +36,15 @@ public class KnowMore implements SingleMessageTask {
                 }}
         )));
 
-        knowMoreMessage.setQuickReplyMessage(messageService.generateQuickReplyMessage(
+        feedbackMessage.setQuickReplyMessage(messageService.generateQuickReplyMessage(
                 new MessageContent(
                         templateService.format(MessageTemplate.RIDE_BOOKING_TYPE_HEADER, user.getPreferredLanguage()),
-                        templateService.format(MessageTemplate.KNOW_MORE_BODY, user.getPreferredLanguage())
+                        templateService.format(MessageTemplate.FEED_BACK_BODY, user.getPreferredLanguage())
                 ),
                 options,
                 UUID.randomUUID().toString())
         );
 
-        messageService.sendQuickReplyMessage(knowMoreMessage);
+        messageService.sendQuickReplyMessage(feedbackMessage);
     }
 }

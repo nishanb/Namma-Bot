@@ -79,9 +79,9 @@ public class CommonMessageService {
                 new ListMessageItemOption(templateService.format(MessageTemplate.GREET_OTHER_OPTION_PAST_RIDES_TITLE, user.getPreferredLanguage()), templateService.format(MessageTemplate.GREET_OTHER_OPTION_PAST_RIDES_DESC, user.getPreferredLanguage()), ConversationWorkflow.PREVIOUS_RIDE.getPostbackText()),
                 new ListMessageItemOption(templateService.format(MessageTemplate.GREET_OTHER_OPTION_FEEDBACK_TITLE, user.getPreferredLanguage()), templateService.format(MessageTemplate.GREET_OTHER_OPTION_FEEDBACK_DESC, user.getPreferredLanguage()), ConversationWorkflow.FEEDBACK.getPostbackText()),
                 new ListMessageItemOption(templateService.format(MessageTemplate.GREET_OTHER_OPTION_OPEN_DATA_TITLE, user.getPreferredLanguage()), templateService.format(MessageTemplate.GREET_OTHER_OPTION_OPEN_DATA_DESC, user.getPreferredLanguage()), ConversationWorkflow.OPEN_DATA.getPostbackText()),
-                new ListMessageItemOption(templateService.format(MessageTemplate.GREET_OTHER_OPTION_KNOW_MORE_TITLE, user.getPreferredLanguage()), templateService.format(MessageTemplate.GREET_OTHER_OPTION_KNOW_MORE_DESC, user.getPreferredLanguage()), ConversationWorkflow.KNOW_MORE.getPostbackText()),
-                new ListMessageItemOption(templateService.format(MessageTemplate.GREET_OTHER_OPTION_SUPPORT_TITLE, user.getPreferredLanguage()), templateService.format(MessageTemplate.GREET_OTHER_OPTION_SUPPORT_DESC, user.getPreferredLanguage()), ConversationWorkflow.SUPPORT.getPostbackText())
-        ));
+                new ListMessageItemOption(templateService.format(MessageTemplate.GREET_OTHER_OPTION_SUPPORT_TITLE, user.getPreferredLanguage()), templateService.format(MessageTemplate.GREET_OTHER_OPTION_SUPPORT_DESC, user.getPreferredLanguage()), ConversationWorkflow.SUPPORT.getPostbackText()),
+                new ListMessageItemOption(templateService.format(MessageTemplate.GREET_OTHER_OPTION_KNOW_MORE_TITLE, user.getPreferredLanguage()), templateService.format(MessageTemplate.GREET_OTHER_OPTION_KNOW_MORE_DESC, user.getPreferredLanguage()), ConversationWorkflow.KNOW_MORE.getPostbackText())
+                ));
 
         // Add others section to group
         listMessageGroup.add(otherOptions);
