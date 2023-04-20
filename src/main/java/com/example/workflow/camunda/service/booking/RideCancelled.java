@@ -1,8 +1,10 @@
 package com.example.workflow.camunda.service.booking;
 
+import com.example.workflow.config.ConversationWorkflow;
 import com.example.workflow.config.MessageTemplate;
-import com.example.workflow.dto.SendMessageRequestDto;
+import com.example.workflow.dto.SendQuickReplyMessageDto;
 import com.example.workflow.models.User;
+import com.example.workflow.models.gupshup.MessageContent;
 import com.example.workflow.serviceImpl.TemplateServiceImpl;
 import com.example.workflow.services.MessageService;
 import com.example.workflow.services.UserService;
@@ -12,8 +14,10 @@ import org.camunda.bpm.engine.delegate.JavaDelegate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import java.util.*;
 import java.util.logging.Logger;
+
+import static com.example.workflow.utils.Constants.MESSAGE_TYPE_QUICK_REPLY;
 
 @Service
 public class RideCancelled implements JavaDelegate {
@@ -29,18 +33,36 @@ public class RideCancelled implements JavaDelegate {
     @Override
     public void execute(DelegateExecution execution) throws Exception {
         try {
-
             //Sending ride cancelled message only if the user requested for cancellation
             Boolean isNoResponseClose = execution.hasVariable("NoResponseClose");
             if (!isNoResponseClose) {
                 Optional<User> userSaved = userService.findUserByPhoneNumber(execution.getBusinessKey());
                 User user = userSaved.get();
 
-                messageService.sendTextMessage(new SendMessageRequestDto(user.getPhoneNumber(), templateService.format(MessageTemplate.RIDE_CANCELLED, user.getPreferredLanguage())));
+                SendQuickReplyMessageDto rideCancelledMessage = new SendQuickReplyMessageDto();
+                rideCancelledMessage.setReceiverContactNumber(user.getPhoneNumber());
+                rideCancelledMessage.setType(MESSAGE_TYPE_QUICK_REPLY);
+
+                List<Map<String, String>> options = new ArrayList<>(new ArrayList<>(List.of(
+                        new HashMap<>() {{
+                            put("type", "text");
+                            put("title", templateService.format(MessageTemplate.GREET_MAIN_MENU, user.getPreferredLanguage()));
+                            put("postbackText", ConversationWorkflow.MAIN_MENU.getPostbackText());
+                        }}
+                )));
+
+                rideCancelledMessage.setQuickReplyMessage(messageService.generateQuickReplyMessage(
+                        new MessageContent(
+                                templateService.format(MessageTemplate.RIDE_BOOKING_TYPE_HEADER, user.getPreferredLanguage()),
+                                templateService.format(MessageTemplate.RIDE_CANCELLED, user.getPreferredLanguage())
+                        ),
+                        options,
+                        UUID.randomUUID().toString())
+                );
+
+                messageService.sendQuickReplyMessage(rideCancelledMessage);
             }
-            //call gupshup to send message
             log.info("RideCancelled: execute method is called......");
-            //set relevant variables for future ref
             execution.setVariable("RideCancelled", true);
         } catch (Exception e) {
             log.warning("RideCancelled: Exception occured......");

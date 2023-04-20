@@ -65,7 +65,7 @@ public class SharePlaceToDelete implements JavaDelegate {
                 String latitude = place.getAsJsonObject().get("latitude").getAsString();
                 String longitude = place.getAsJsonObject().get("longitude").getAsString();
                 String name = place.getAsJsonObject().get("name").getAsString();
-                placesToDelete.add(new ListMessageItemOption(name, latitude + " , " + longitude, uuid + ":" + name));
+                placesToDelete.add(new ListMessageItemOption(name, "", uuid + ":" + name));
             }
 
             placesToDeleteOption.setOptions(placesToDelete);

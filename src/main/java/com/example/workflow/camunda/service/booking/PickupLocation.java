@@ -90,7 +90,7 @@ public class PickupLocation implements JavaDelegate {
                     String latitude = place.getAsJsonObject().get("latitude").getAsString();
                     String longitude = place.getAsJsonObject().get("longitude").getAsString();
                     String name = place.getAsJsonObject().get("name").getAsString();
-                    favouritePlaces.add(new ListMessageItemOption(name, latitude + " , " + longitude, latitude + ":" + longitude));
+                    favouritePlaces.add(new ListMessageItemOption(name, "", latitude + ":" + longitude));
                 }
 
                 favouritePlacesOption.setOptions(favouritePlaces);
