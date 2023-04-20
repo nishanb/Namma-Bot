@@ -1,13 +1,9 @@
 package com.example.workflow.utils;
 
 import camundajar.impl.com.google.gson.Gson;
-import camundajar.impl.com.google.gson.JsonArray;
 import camundajar.impl.com.google.gson.JsonElement;
-import camundajar.impl.com.google.gson.JsonObject;
-import com.example.workflow.serviceImpl.activityHandlers.StarredPlaceManageActivityHandler;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import okhttp3.RequestBody;
 import okhttp3.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,8 +11,9 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 
 public class RestHandler {
-    private static OkHttpClient client;
-    private static Gson gson;
+    private static final Logger logger = LoggerFactory.getLogger(RestHandler.class);
+    private static final OkHttpClient client;
+    private static final Gson gson;
 
     static {
         client = new OkHttpClient().newBuilder().build();
@@ -29,8 +26,6 @@ public class RestHandler {
     public static OkHttpClient getClient() {
         return client;
     }
-
-    private static final Logger logger = LoggerFactory.getLogger(RestHandler.class);
 
     public static JsonElement execute(Request request) throws IOException {
         logger.info(request.method().toUpperCase() + " Request to " + request.url() + " started");

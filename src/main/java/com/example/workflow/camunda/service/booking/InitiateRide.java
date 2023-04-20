@@ -8,23 +8,18 @@ import org.camunda.bpm.engine.delegate.BpmnError;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.logging.Logger;
 
 @Service
 public class InitiateRide implements JavaDelegate {
 
+    private final Logger log = Logger.getLogger(com.example.workflow.camunda.service.booking.RideStarted.class.getName());
     @Autowired
     CamundaCoreService camundaCoreService;
-
     @Autowired
     UserService userService;
-
-    private final Logger log = Logger.getLogger(com.example.workflow.camunda.service.booking.RideStarted.class.getName());
 
     @Override
     public void execute(DelegateExecution execution) throws Exception {

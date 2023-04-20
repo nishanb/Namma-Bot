@@ -1,6 +1,5 @@
 package com.example.workflow.camunda.service.common;
 
-import com.example.workflow.camunda.service.booking.DestinationLocation;
 import com.example.workflow.config.MessageTemplate;
 import com.example.workflow.dto.SendMessageRequestDto;
 import com.example.workflow.models.User;
@@ -26,15 +25,16 @@ public class NeedHelp implements JavaDelegate {
     UserService userService;
     @Autowired
     TemplateService templateService;
+
     @Override
     public void execute(DelegateExecution execution) throws Exception {
-        try{
+        try {
             User user = userService.findUserByPhoneNumber(execution.getBusinessKey()).orElse(null);
             log.info("NeedHelp: execute method is called......");
             //TODO: Get customer support contact from Namma yatri backend
             messageService.sendTextMessage(new SendMessageRequestDto(execution.getBusinessKey(), templateService.format(MessageTemplate.NEED_HELP, user.getPreferredLanguage())));
-            execution.setVariable("called_need_help",true);
-        } catch (Exception e){
+            execution.setVariable("called_need_help", true);
+        } catch (Exception e) {
             log.warning("NeedHelp: Exception occurred......");
             throw new BpmnError("booking_flow_error", "Error sending message.....");
         }

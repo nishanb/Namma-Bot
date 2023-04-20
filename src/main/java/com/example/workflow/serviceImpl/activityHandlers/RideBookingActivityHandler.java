@@ -15,39 +15,30 @@ import org.springframework.stereotype.Service;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.example.workflow.utils.Constants.*;
+import static com.example.workflow.utils.Constants.GLOBAL_CANCELLATION_MESSAGE_EVENT_NAME;
 
 @Service
 public class RideBookingActivityHandler implements ActivityHandlerService {
 
+    private static final Logger logger = LoggerFactory.getLogger(RideBookingActivityHandler.class);
     @Autowired
     ReceiveDestinationLocation receiveDestinationLocationTask;
-
     @Autowired
     ReceiveSourceLocation receiveSourceLocationTask;
-
     @Autowired
     ManualRideConfirmation manualRideConfirmationTask;
-
     @Autowired
     ReceiveBookingType receiveBookingTypeTask;
-
     @Autowired
     ReceiveRideRating receiveRideRatingTask;
-
     @Autowired
     ReceiveRetrySelection receiveRetrySelectionTask;
-
     @Autowired
     CancelBookingByCx cancelBookingByCx;
-
     @Autowired
     NeedHelpRequest needHelpRequest;
-
     @Autowired
     CamundaCoreService camundaCoreService;
-
-    private static final Logger logger = LoggerFactory.getLogger(RideBookingActivityHandler.class);
 
     @Override
     public void handle(Task task, User user, String messageType, WebhookMessagePayload webhookMessagePayload) throws Exception {
@@ -85,8 +76,8 @@ public class RideBookingActivityHandler implements ActivityHandlerService {
     @Override
     public void handleCancelRequest(User user, String businessKey, String processDefinitionName) throws Exception {
         Map<String, Object> variables = new HashMap<>();
-        variables.put("global_cancellation",true);
+        variables.put("global_cancellation", true);
         String cancelMessageEventName = GLOBAL_CANCELLATION_MESSAGE_EVENT_NAME.get(processDefinitionName);
-        camundaCoreService.createMessageCorrelation(businessKey,cancelMessageEventName, variables);
+        camundaCoreService.createMessageCorrelation(businessKey, cancelMessageEventName, variables);
     }
 }

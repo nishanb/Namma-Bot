@@ -2,7 +2,6 @@ package com.example.workflow.camunda.service.common;
 
 import com.example.workflow.config.ConversationWorkflow;
 import com.example.workflow.config.MessageTemplate;
-import com.example.workflow.dto.SendMessageRequestDto;
 import com.example.workflow.dto.SendQuickReplyMessageDto;
 import com.example.workflow.models.User;
 import com.example.workflow.models.gupshup.MessageContent;
@@ -23,16 +22,13 @@ import static com.example.workflow.utils.Constants.MESSAGE_TYPE_QUICK_REPLY;
 @Service
 public class NoResponseClose implements JavaDelegate {
 
+    private final Logger log = Logger.getLogger(NoResponseClose.class.getName());
     @Autowired
     UserService userService;
-
     @Autowired
     MessageService messageService;
-
     @Autowired
     TemplateService templateService;
-
-    private final Logger log = Logger.getLogger(NoResponseClose.class.getName());
 
     @Override
     public void execute(DelegateExecution execution) throws Exception {

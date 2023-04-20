@@ -5,5 +5,5 @@ import com.example.workflow.models.User;
 import org.camunda.bpm.engine.task.Task;
 
 public interface BackendEventTask {
-    public void complete(Task task, User user, BackendEventRequestDto backendEventRequestDto) throws Exception;
+    void complete(Task task, User user, BackendEventRequestDto backendEventRequestDto) throws Exception;
 }

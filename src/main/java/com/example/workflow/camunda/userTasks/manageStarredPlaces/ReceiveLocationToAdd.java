@@ -20,16 +20,13 @@ import java.util.logging.Logger;
 
 @Service
 public class ReceiveLocationToAdd implements UserTask {
+    private final Logger log = Logger.getLogger(ReceiveLocationToAdd.class.getName());
     @Autowired
     CamundaCoreService camundaCoreService;
-
     @Autowired
     TemplateService templateService;
-
     @Autowired
     MessageService messageService;
-
-    private final Logger log = Logger.getLogger(ReceiveLocationToAdd.class.getName());
 
     @Override
     public void complete(Task task, User user, String messageType, WebhookMessagePayload webhookMessagePayload) throws Exception {

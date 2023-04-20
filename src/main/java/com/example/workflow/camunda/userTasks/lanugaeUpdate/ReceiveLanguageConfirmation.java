@@ -34,7 +34,7 @@ public class ReceiveLanguageConfirmation implements UserTask {
             Map<String, Object> variables = new HashMap<>();
             variables.put("languageConfirmation", webhookMessagePayload.getPostbackText());
             camundaCoreService.completeUserTaskByTaskId(task, variables);
-        }else {
+        } else {
             messageService.sendTextMessage(new SendMessageRequestDto(user.getPhoneNumber(), templateService.format(MessageTemplate.RIDE_INVALID_MESSAGE, user.getPreferredLanguage())));
         }
     }

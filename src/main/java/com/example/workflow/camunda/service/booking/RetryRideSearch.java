@@ -13,29 +13,27 @@ import java.util.logging.Logger;
 @Service
 public class RetryRideSearch implements JavaDelegate {
 
+    private final Logger log = Logger.getLogger(RetryRideSearch.class.getName());
     @Autowired
     UserService userService;
-
     @Autowired
     MessageService messageService;
 
-    private final Logger log = Logger.getLogger(RetryRideSearch.class.getName());
-
     @Override
     public void execute(DelegateExecution execution) throws Exception {
-        try{
+        try {
             Boolean hasRetryAttempts = execution.hasVariable("retry_attempts");
             Integer retryAttempts = 1;
-            if(hasRetryAttempts) {
+            if (hasRetryAttempts) {
                 retryAttempts = (Integer) execution.getVariable("retry_attempts");
                 retryAttempts += 1;
             }
             execution.setVariable("retry_attempts", retryAttempts);
             execution.setVariable("RetryRideSearch", true);
-        } catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             log.warning("RetryRideSearch: Exception occured......");
-            throw new BpmnError("booking_flow_error","Error sending message.....");
+            throw new BpmnError("booking_flow_error", "Error sending message.....");
         }
     }
 }

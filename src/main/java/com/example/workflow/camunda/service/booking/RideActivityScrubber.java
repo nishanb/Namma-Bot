@@ -21,13 +21,13 @@ import static com.example.workflow.utils.Constants.MESSAGE_TYPE_QUICK_REPLY;
 
 @Service
 public class RideActivityScrubber implements JavaDelegate {
+    private final Logger log = Logger.getLogger(RideActivityScrubber.class.getName());
     @Autowired
     UserService userService;
     @Autowired
     MessageService messageService;
     @Autowired
     TemplateService templateService;
-    private final Logger log = Logger.getLogger(RideActivityScrubber.class.getName());
 
     @Override
     public void execute(DelegateExecution execution) throws Exception {

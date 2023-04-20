@@ -1,7 +1,6 @@
 package com.example.workflow.camunda.userTasks.manageStarredPlaces;
 
 import com.example.workflow.camunda.core.CamundaCoreService;
-import com.example.workflow.camunda.service.starredPlace.ActionSelection;
 import com.example.workflow.camunda.userTasks.UserTask;
 import com.example.workflow.config.MessageTemplate;
 import com.example.workflow.dto.SendMessageRequestDto;
@@ -21,16 +20,13 @@ import java.util.logging.Logger;
 
 @Service
 public class ReceiveDesiredAction implements UserTask {
+    private final Logger log = Logger.getLogger(ReceiveDesiredAction.class.getName());
     @Autowired
     CamundaCoreService camundaCoreService;
-
     @Autowired
     TemplateService templateService;
-
     @Autowired
     MessageService messageService;
-
-    private final Logger log = Logger.getLogger(ReceiveDesiredAction.class.getName());
 
     @Override
     public void complete(Task task, User user, String messageType, WebhookMessagePayload webhookMessagePayload) throws Exception {

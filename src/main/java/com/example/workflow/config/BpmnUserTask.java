@@ -22,18 +22,6 @@ public enum BpmnUserTask {
     STARRED_PLACE_RECEIVE_LOCATION_TO_DELETE("Receive_Location_To_Delete"),
     CANCEL_RIDE_REQUEST_BY_CX("Cancel_Ride_CX"),
     Need_Help_Request("Need_Help_Request");
-    private final String taskDefinitionKey;
-
-    BpmnUserTask(String taskDefinitionKey) {
-        this.taskDefinitionKey = taskDefinitionKey;
-    }
-
-    public String getTaskDefinitionKey() {
-        return taskDefinitionKey;
-    }
-
-    // Default methods for enum reverse lookup
-
     private static final Map<String, BpmnUserTask> intToEnumMap = new HashMap<>();
 
     static {
@@ -42,7 +30,19 @@ public enum BpmnUserTask {
         }
     }
 
+    private final String taskDefinitionKey;
+
+    // Default methods for enum reverse lookup
+
+    BpmnUserTask(String taskDefinitionKey) {
+        this.taskDefinitionKey = taskDefinitionKey;
+    }
+
     public static BpmnUserTask fromTaskDefinitionKey(String taskDefinitionKey) {
         return intToEnumMap.get(taskDefinitionKey);
+    }
+
+    public String getTaskDefinitionKey() {
+        return taskDefinitionKey;
     }
 }

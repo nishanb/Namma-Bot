@@ -34,18 +34,17 @@ public class ReceiveSourceLocation implements UserTask {
             Map<String, Object> variables = new HashMap<>();
             variables.put("source_latitude", webhookMessagePayload.getPayload().get("latitude"));
             variables.put("source_longitude", webhookMessagePayload.getPayload().get("longitude"));
-            variables.put("select_favourite_place_pickup",false);
+            variables.put("select_favourite_place_pickup", false);
             camundaCoreService.completeUserTaskByTaskId(task, variables);
-        }else if (Objects.equals(messageType, Constants.MESSAGE_TYPE_LIST_REPLY)) {
+        } else if (Objects.equals(messageType, Constants.MESSAGE_TYPE_LIST_REPLY)) {
             String[] postBackResult = webhookMessagePayload.getPostbackText().split(":");
 
             Map<String, Object> variables = new HashMap<>();
             variables.put("source_latitude", postBackResult[0]);
             variables.put("source_longitude", postBackResult[1]);
-            variables.put("select_favourite_place_pickup",false);
+            variables.put("select_favourite_place_pickup", false);
             camundaCoreService.completeUserTaskByTaskId(task, variables);
-        }
-        else {
+        } else {
             messageService.sendTextMessage(new SendMessageRequestDto(user.getPhoneNumber(), templateService.format(MessageTemplate.RIDE_INVALID_MESSAGE, user.getPreferredLanguage())));
         }
     }

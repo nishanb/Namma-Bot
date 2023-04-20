@@ -1,11 +1,12 @@
 package com.example.workflow.serviceImpl;
 
-import camundajar.impl.com.google.gson.Gson;
 import camundajar.impl.com.google.gson.JsonElement;
 import com.example.workflow.dto.*;
 import com.example.workflow.helpers.PrepareRequestHelper;
 import com.example.workflow.helpers.TransformResponseHelper;
-import com.example.workflow.models.gupshup.*;
+import com.example.workflow.models.gupshup.ListMessage;
+import com.example.workflow.models.gupshup.MessageContent;
+import com.example.workflow.models.gupshup.QuickReplyMessage;
 import com.example.workflow.services.MessageService;
 import com.example.workflow.services.TemplateService;
 import com.example.workflow.utils.Constants;
@@ -18,7 +19,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static com.example.workflow.utils.Constants.*;
 
@@ -26,24 +29,18 @@ import static com.example.workflow.utils.Constants.*;
 @Service
 public class MessageServiceImpl implements MessageService {
     private final Logger logger = LoggerFactory.getLogger(MessageServiceImpl.class);
-
-    @Value("${gupshup-source-contact}")
-    private String sourceContactNo;
-
-    @Value("${gupshup-app-name}")
-    private String vendorAppName;
-
-    @Value("${gupshup-host}")
-    private String gupShupHost;
-
-    @Autowired
-    private WhatsappMsgServiceApiHelper whatsappMsgServiceApiHelper;
-
-    @Autowired
-    private PrepareRequestHelper prepareRequestHelper;
-
     @Autowired
     TemplateService templateService;
+    @Value("${gupshup-source-contact}")
+    private String sourceContactNo;
+    @Value("${gupshup-app-name}")
+    private String vendorAppName;
+    @Value("${gupshup-host}")
+    private String gupShupHost;
+    @Autowired
+    private WhatsappMsgServiceApiHelper whatsappMsgServiceApiHelper;
+    @Autowired
+    private PrepareRequestHelper prepareRequestHelper;
 
     @Override
     public Boolean sendTextMessage(SendMessageRequestDto sendMessageRequestDto) throws Exception {
@@ -59,9 +56,7 @@ public class MessageServiceImpl implements MessageService {
             JsonElement response = whatsappMsgServiceApiHelper.post(url, prepareRequestHelper.prepareRequestBodyForXUrlEncodedType(requestString));
             if (response != null) {
                 MessageServiceResponseDto messageServiceResponseDto = TransformResponseHelper.transformMessageServiceResponse(response.toString());
-                if (messageServiceResponseDto.getStatus().equals(SUBMITTED)) {
-                    return true;
-                }
+                return messageServiceResponseDto.getStatus().equals(SUBMITTED);
             }
             return false;
         } catch (Exception e) {

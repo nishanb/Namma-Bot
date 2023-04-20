@@ -13,10 +13,9 @@ import java.util.logging.Logger;
 @Service
 public class CancelFlow implements JavaDelegate {
 
+    private final Logger log = Logger.getLogger(CancelFlow.class.getName());
     @Autowired
     UserService userService;
-
-    private final Logger log = Logger.getLogger(CancelFlow.class.getName());
 
     @Override
     public void execute(DelegateExecution execution) throws Exception {

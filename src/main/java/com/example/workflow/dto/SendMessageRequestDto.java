@@ -4,7 +4,8 @@ public class SendMessageRequestDto {
     private String receiverContactNumber;
     private String message;
 
-    public SendMessageRequestDto() {}
+    public SendMessageRequestDto() {
+    }
 
     public SendMessageRequestDto(String receiverContactNumber, String message) {
         this.receiverContactNumber = receiverContactNumber;

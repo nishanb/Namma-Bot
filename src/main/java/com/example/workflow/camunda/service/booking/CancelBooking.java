@@ -14,10 +14,9 @@ import java.util.logging.Logger;
 @Service
 public class CancelBooking implements JavaDelegate {
 
+    private final Logger log = Logger.getLogger(CancelBooking.class.getName());
     @Autowired
     UserService userService;
-
-    private final Logger log = Logger.getLogger(CancelBooking.class.getName());
 
     @Override
     public void execute(DelegateExecution execution) throws Exception {

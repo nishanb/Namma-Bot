@@ -17,18 +17,6 @@ public enum PostBackText {
     STARRED_PLACE_ADD("addPlace"),
     STARRED_PLACE_REMOVE("deletePlace"),
     STARRED_PLACE_CANCEL("cancelOperation");
-    private final String postBackText;
-
-    PostBackText(String eventType) {
-        this.postBackText = eventType;
-    }
-
-    public String getPostBackText() {
-        return postBackText;
-    }
-
-    // Default methods for enum reverse lookup
-
     private static final Map<String, PostBackText> intToEnumMap = new HashMap<>();
 
     static {
@@ -37,7 +25,19 @@ public enum PostBackText {
         }
     }
 
+    private final String postBackText;
+
+    // Default methods for enum reverse lookup
+
+    PostBackText(String eventType) {
+        this.postBackText = eventType;
+    }
+
     public static PostBackText fromPostBackText(String eventType) {
         return intToEnumMap.get(eventType);
+    }
+
+    public String getPostBackText() {
+        return postBackText;
     }
 }

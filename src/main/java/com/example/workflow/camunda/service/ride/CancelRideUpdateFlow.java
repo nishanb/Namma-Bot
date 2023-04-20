@@ -15,13 +15,11 @@ import java.util.logging.Logger;
 @Service
 public class CancelRideUpdateFlow implements JavaDelegate {
 
+    private final Logger log = Logger.getLogger(DriverArrivedNotifier.class.getName());
     @Autowired
     CamundaCoreService camundaCoreService;
-
     @Autowired
     UserService userService;
-
-    private final Logger log = Logger.getLogger(DriverArrivedNotifier.class.getName());
 
     @Override
     public void execute(DelegateExecution execution) throws Exception {

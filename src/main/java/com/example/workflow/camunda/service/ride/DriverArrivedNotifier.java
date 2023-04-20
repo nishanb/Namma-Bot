@@ -13,10 +13,9 @@ import java.util.logging.Logger;
 @Service
 public class DriverArrivedNotifier implements JavaDelegate {
 
+    private final Logger log = Logger.getLogger(DriverArrivedNotifier.class.getName());
     @Autowired
     CamundaCoreService camundaCoreService;
-
-    private final Logger log = Logger.getLogger(DriverArrivedNotifier.class.getName());
 
     @Override
     public void execute(DelegateExecution execution) throws Exception {

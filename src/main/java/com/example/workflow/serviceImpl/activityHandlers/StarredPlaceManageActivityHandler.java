@@ -24,25 +24,19 @@ import static com.example.workflow.utils.Constants.GLOBAL_CANCELLATION_MESSAGE_E
 @Service
 public class StarredPlaceManageActivityHandler implements ActivityHandlerService {
 
+    private static final Logger logger = LoggerFactory.getLogger(StarredPlaceManageActivityHandler.class);
     @Autowired
     CamundaCoreService camundaCoreService;
-
     @Autowired
     ReceiveDesiredAction receiveDesiredAction;
-
     @Autowired
     ReceiveLocationToAdd receiveLocationToAdd;
-
     @Autowired
     ReceiveLocationTagToAdd receiveLocationTagToAdd;
-
     @Autowired
     ReceiveLocationToDelete receiveLocationToDelete;
-
     @Autowired
     CommonMessageService commonMessageService;
-
-    private static final Logger logger = LoggerFactory.getLogger(StarredPlaceManageActivityHandler.class);
 
     @Override
     public void handle(Task task, User user, String messageType, WebhookMessagePayload webhookMessagePayload) throws Exception {

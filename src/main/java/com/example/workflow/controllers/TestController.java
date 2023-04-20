@@ -1,5 +1,6 @@
 package com.example.workflow.controllers;
 
+import com.example.workflow.camunda.core.CamundaCoreService;
 import com.example.workflow.dto.TemplateRequestDto;
 import com.example.workflow.models.Template;
 import com.example.workflow.repository.TemplateRepository;
@@ -8,24 +9,11 @@ import com.example.workflow.services.MessageWebhookHandlerService;
 import com.example.workflow.services.NammaYathriService;
 import com.example.workflow.services.TemplateService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-
-import camundajar.impl.com.google.gson.JsonElement;
-import camundajar.impl.com.google.gson.JsonObject;
-import com.example.workflow.camunda.core.CamundaCoreService;
-//import model.User;
-import org.camunda.bpm.engine.task.Task;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.io.IOException;
-import java.lang.reflect.Array;
-import java.util.*;
+import java.util.HashMap;
 
 // Use this controller to test service / anything :( anything .... :()
 //TODO: Remove this before release

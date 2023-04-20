@@ -13,10 +13,9 @@ import java.util.logging.Logger;
 @Service
 public class ChangeLanguage implements JavaDelegate {
 
+    private final Logger log = Logger.getLogger(ChangeLanguage.class.getName());
     @Autowired
     UserService userService;
-
-    private final Logger log = Logger.getLogger(ChangeLanguage.class.getName());
 
     @Override
     public void execute(DelegateExecution execution) throws Exception {

@@ -15,16 +15,13 @@ import java.util.logging.Logger;
 
 public class InvalidMessage implements JavaDelegate {
 
+    private final Logger log = Logger.getLogger(InvalidMessage.class.getName());
     @Autowired
     TemplateService templateService;
-
     @Autowired
     MessageService messageService;
-
     @Autowired
     UserService userService;
-
-    private final Logger log = Logger.getLogger(InvalidMessage.class.getName());
 
     @Override
     public void execute(DelegateExecution execution) throws Exception {

@@ -28,18 +28,17 @@ import java.util.logging.Logger;
 @Service
 public class ManualRideConfirm implements JavaDelegate {
 
+    private final Logger log = Logger.getLogger(ManualRideConfirm.class.getName());
     @Autowired
     TemplateServiceImpl templateService;
     @Autowired
     MessageService messageService;
-
     @Autowired
     UserService userService;
 
-    private final Logger log = Logger.getLogger(ManualRideConfirm.class.getName());
     @Override
     public void execute(DelegateExecution execution) throws Exception {
-        try{
+        try {
             //call gupshup to send message
             log.info("ManualRideConfirm: execute method is called......");
 
@@ -75,27 +74,27 @@ public class ManualRideConfirm implements JavaDelegate {
 
             //List message options - only one section is being used
             List<ListMessageItemOption> rideListOptions = new ArrayList<>();
-            for (Iterator<SpinJsonNode> it = availableRides.iterator(); it.hasNext();) {
+            for (Iterator<SpinJsonNode> it = availableRides.iterator(); it.hasNext(); ) {
                 JsonObject rideObj = new JsonObject();
                 SpinJsonNode ride = it.next();
                 String driverName = (String) ride.prop("driver_name").value();
-                rideObj.addProperty("driver_name",driverName);
+                rideObj.addProperty("driver_name", driverName);
                 String driverRating = (String) ride.prop("driver_rating").value();
-                rideObj.addProperty("driver_rating",driverRating);
+                rideObj.addProperty("driver_rating", driverRating);
                 String rideFare = (String) ride.prop("ride_fare").value();
-                rideObj.addProperty("ride_fare",rideFare);
+                rideObj.addProperty("ride_fare", rideFare);
                 String rideETA = (String) ride.prop("eta_to_pickup_location").value();
-                rideObj.addProperty("eta_to_pickup_location",rideETA);
+                rideObj.addProperty("eta_to_pickup_location", rideETA);
                 String driverId = (String) ride.prop("driver_id").value();
-                rideObj.addProperty("driver_id",driverId);
+                rideObj.addProperty("driver_id", driverId);
                 String vehicleNumber = (String) ride.prop("vehicle_number").value();
-                rideObj.addProperty("vehicle_number",vehicleNumber);
+                rideObj.addProperty("vehicle_number", vehicleNumber);
                 chosenDriverId = driverId;
                 rideListOptions.add(new ListMessageItemOption(templateService.format(MessageTemplate.RIDE_MANUAL_CHOOSE_RIDER_LIST_HEADER, user.getPreferredLanguage(),
                         new ArrayList<>(Arrays.asList(driverName, driverRating))), templateService.format(MessageTemplate.RIDE_MANUAL_CHOOSE_RIDER_LIST_DESC, user.getPreferredLanguage(),
                         new ArrayList<>(Arrays.asList(rideFare, rideETA))),
                         driverId));
-                ridesToPersistObj.add(driverId,rideObj);
+                ridesToPersistObj.add(driverId, rideObj);
 
             }
             rideOptions.setOptions(rideListOptions);
@@ -103,15 +102,15 @@ public class ManualRideConfirm implements JavaDelegate {
             listMessageDto.setItems(listMessageGroup);
 
             messageService.sendListMessage(new SendListMessageRequestDto(user.getPhoneNumber(), messageService.generateListMessage(listMessageDto)));
-            JsonValue ridesToPersist =  SpinValues.jsonValue(new Gson().toJson(ridesToPersistObj)).create();
+            JsonValue ridesToPersist = SpinValues.jsonValue(new Gson().toJson(ridesToPersistObj)).create();
 
             execution.setVariable("rides_to_persist", ridesToPersist);
             execution.setVariable("ride_id", rideId);
-            execution.setVariable("chosen_driver_id",chosenDriverId);
-        } catch (Exception e){
+            execution.setVariable("chosen_driver_id", chosenDriverId);
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             log.warning("ManualRideConfirm: Exception occured......");
-            throw new BpmnError("booking_flow_error","Error sending message.....");
+            throw new BpmnError("booking_flow_error", "Error sending message.....");
         }
     }
 }

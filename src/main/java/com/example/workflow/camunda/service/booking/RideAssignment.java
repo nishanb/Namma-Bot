@@ -4,8 +4,6 @@ import camundajar.impl.com.google.gson.JsonElement;
 import camundajar.impl.com.google.gson.JsonObject;
 import com.example.workflow.config.ConversationWorkflow;
 import com.example.workflow.config.MessageTemplate;
-import com.example.workflow.config.PostBackText;
-import com.example.workflow.dto.SendMessageRequestDto;
 import com.example.workflow.dto.SendQuickReplyMessageDto;
 import com.example.workflow.models.User;
 import com.example.workflow.models.gupshup.MessageContent;
@@ -30,26 +28,21 @@ import static com.example.workflow.utils.Constants.MESSAGE_TYPE_QUICK_REPLY;
 @Service
 public class RideAssignment implements JavaDelegate {
 
+    private final Logger log = Logger.getLogger(RideAssignment.class.getName());
     @Autowired
     TemplateServiceImpl templateService;
-
     @Autowired
     NammaYathriService nammaYathriService;
-
     @Autowired
     MessageService messageService;
-
     @Autowired
     UserService userService;
-
     @Autowired
     BackendEventSimulatorHelper backendEventSimulatorHelper;
 
-    private final Logger log = Logger.getLogger(RideAssignment.class.getName());
-
     @Override
     public void execute(DelegateExecution execution) throws Exception {
-        try{
+        try {
             //call gupshup to send message
             log.info("RideAssignment: execute method is called......");
             Optional<User> userSaved = userService.findUserByPhoneNumber(execution.getBusinessKey());
@@ -59,7 +52,7 @@ public class RideAssignment implements JavaDelegate {
             String rideId = (String) execution.getVariable("ride_id");
 
             //Requesting Namma Yatri backend to assign the ride.
-            JsonElement response = nammaYathriService.bookRide(chosenDriverId,rideId);
+            JsonElement response = nammaYathriService.bookRide(chosenDriverId, rideId);
 
             //TODO: Adding validation is API call was success
             JsonObject responseData = response.getAsJsonObject().getAsJsonObject("data");
@@ -81,7 +74,7 @@ public class RideAssignment implements JavaDelegate {
             rideAssignmentMessage.setReceiverContactNumber(user.getPhoneNumber());
             rideAssignmentMessage.setType(MESSAGE_TYPE_QUICK_REPLY);
 
-            List<Map<String, String>> options = new ArrayList<>(new ArrayList<>(Arrays.asList(
+            List<Map<String, String>> options = new ArrayList<>(new ArrayList<>(List.of(
                     new HashMap<>() {{
                         put("type", "text");
                         put("title", templateService.format(MessageTemplate.RIDE_RETRY_REQUEST_CANCEL_BOOKING, user.getPreferredLanguage()));
@@ -94,7 +87,7 @@ public class RideAssignment implements JavaDelegate {
                             templateService.format(MessageTemplate.RIDE_BOOKING_TYPE_HEADER, user.getPreferredLanguage()),
                             templateService.format(MessageTemplate.RIDE_ASSIGNED_INFO,
                                     user.getPreferredLanguage(),
-                                    new ArrayList<>(Arrays.asList(driverName, pickupETA,rideFare,vehicleNumber)))
+                                    new ArrayList<>(Arrays.asList(driverName, pickupETA, rideFare, vehicleNumber)))
                     ), options, UUID.randomUUID().toString()));
 
             messageService.sendQuickReplyMessage(rideAssignmentMessage);
@@ -104,11 +97,11 @@ public class RideAssignment implements JavaDelegate {
             execution.setVariable("eta_to_drop_location", etaToDropLocation);
 
             //Simulate backend events - 40 seconds , 30 seconds , 2 minutes
-            backendEventSimulatorHelper.simulateRideEvents(execution.getBusinessKey(),10000, 10000, 50000);
-        } catch (Exception e){
+            backendEventSimulatorHelper.simulateRideEvents(execution.getBusinessKey(), 10000, 10000, 50000);
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             log.warning("RideAssignment: Exception occured......");
-            throw new BpmnError("booking_flow_error","Error sending message.....");
+            throw new BpmnError("booking_flow_error", "Error sending message.....");
         }
     }
 }
