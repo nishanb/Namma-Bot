@@ -21,6 +21,7 @@ import static com.example.workflow.utils.Constants.MESSAGE_TYPE_QUICK_REPLY;
 
 @Service
 public class CancelNotification implements JavaDelegate {
+    private final Logger log = Logger.getLogger(CancelNotification.class.getName());
     @Autowired
     MessageService messageService;
     @Autowired
@@ -28,13 +29,11 @@ public class CancelNotification implements JavaDelegate {
     @Autowired
     UserService userService;
 
-    private final Logger log = Logger.getLogger(CancelNotification.class.getName());
-
     @Override
     public void execute(DelegateExecution execution) throws Exception {
         try {
             // do not show cancel message if it's triggered from delay-signal
-            if(execution.hasVariable("NoResponseClose")){
+            if (execution.hasVariable("NoResponseClose")) {
                 return;
             }
 

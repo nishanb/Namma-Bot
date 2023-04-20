@@ -7,11 +7,11 @@ import okhttp3.RequestBody;
 import java.io.IOException;
 
 public interface MessageServiceApiHelper {
-    public JsonElement get(String url) throws IOException, HttpRequestException;
+    JsonElement get(String url) throws IOException, HttpRequestException;
 
-    public JsonElement post(String url, RequestBody body) throws IOException, HttpRequestException;
+    JsonElement post(String url, RequestBody body) throws IOException, HttpRequestException;
 
-    public JsonElement put(String url, RequestBody requestBody) throws IOException, HttpRequestException;
+    JsonElement put(String url, RequestBody requestBody) throws IOException, HttpRequestException;
 
-    public JsonElement delete(String url, RequestBody body) throws IOException, HttpRequestException;
+    JsonElement delete(String url, RequestBody body) throws IOException, HttpRequestException;
 }

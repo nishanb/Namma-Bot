@@ -21,23 +21,6 @@ public enum ConversationWorkflow {
     NEED_HELP("", "NEED_HELP"),
     FAVOURITE_PLACES("", "FAVOURITE_PLACES");
 
-    private final String processDefinitionName;
-
-    private final String postbackText;
-
-    ConversationWorkflow(String processDefinitionName, String postbackText) {
-        this.processDefinitionName = processDefinitionName;
-        this.postbackText = postbackText;
-    }
-
-    public String getProcessDefinitionName() {
-        return processDefinitionName;
-    }
-
-    public String getPostbackText() {
-        return postbackText;
-    }
-
     private static final Map<String, ConversationWorkflow> intToEnumMapProcessDefinition = new HashMap<>();
     private static final Map<String, ConversationWorkflow> intToEnumMapPostBack = new HashMap<>();
 
@@ -55,11 +38,27 @@ public enum ConversationWorkflow {
         }
     }
 
+    private final String processDefinitionName;
+    private final String postbackText;
+
+    ConversationWorkflow(String processDefinitionName, String postbackText) {
+        this.processDefinitionName = processDefinitionName;
+        this.postbackText = postbackText;
+    }
+
     public static ConversationWorkflow fromProcessDefinitionName(String processDefinitionKey) {
         return intToEnumMapProcessDefinition.get(processDefinitionKey);
     }
 
     public static ConversationWorkflow fromPostBackText(String postbackText) {
         return intToEnumMapPostBack.get(postbackText);
+    }
+
+    public String getProcessDefinitionName() {
+        return processDefinitionName;
+    }
+
+    public String getPostbackText() {
+        return postbackText;
     }
 }

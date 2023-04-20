@@ -11,5 +11,6 @@ import java.util.Optional;
 public interface UserRepository extends MongoRepository<User, String> {
 
     Optional<User> findUserByProcessInstanceId(String processInstanceId);
+
     Optional<User> findUserByPhoneNumber(String phoneNumber);
 }

@@ -4,6 +4,7 @@ public class ListMessageItemOption {
     private String type;
     private String title;
     private String description;
+    private String postbackText;
 
     public ListMessageItemOption() {
     }
@@ -22,9 +23,6 @@ public class ListMessageItemOption {
 
         this.postbackText = postbackText;
     }
-
-    private String postbackText;
-
 
     public String getType() {
         return type;

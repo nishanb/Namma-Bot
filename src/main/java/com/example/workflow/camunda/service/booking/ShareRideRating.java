@@ -27,16 +27,13 @@ import java.util.logging.Logger;
 @Service
 public class ShareRideRating implements JavaDelegate {
 
+    private final Logger log = Logger.getLogger(ShareRideRating.class.getName());
     @Autowired
     UserService userService;
-
     @Autowired
     MessageService messageService;
-
     @Autowired
     TemplateService templateService;
-
-    private final Logger log = Logger.getLogger(ShareRideRating.class.getName());
 
     @Override
     public void execute(DelegateExecution execution) throws Exception {
@@ -81,7 +78,7 @@ public class ShareRideRating implements JavaDelegate {
 
             messageService.sendListMessage(new SendListMessageRequestDto(user.getPhoneNumber(), messageService.generateListMessage(listMessageDto)));
 
-            execution.setVariable("share_ride_updates",true);
+            execution.setVariable("share_ride_updates", true);
 
         } catch (Exception e) {
             log.warning("ShareRideRating: Exception occured......");

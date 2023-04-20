@@ -17,9 +17,9 @@ import java.util.logging.Logger;
 @Service
 public class RideStartedAlert implements BackendEventTask {
 
+    private final Logger log = Logger.getLogger(RideStartedAlert.class.getName());
     @Autowired
     CamundaCoreService camundaCoreService;
-    private final Logger log = Logger.getLogger(RideStartedAlert.class.getName());
 
     @Override
     public void complete(Task task, User user, BackendEventRequestDto backendEventRequestDto) throws Exception {

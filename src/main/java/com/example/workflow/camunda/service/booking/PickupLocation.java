@@ -1,17 +1,14 @@
 package com.example.workflow.camunda.service.booking;
 
 import camundajar.impl.com.google.gson.*;
-import com.example.workflow.config.ConversationWorkflow;
 import com.example.workflow.config.MessageTemplate;
 import com.example.workflow.dto.ListMessageDto;
 import com.example.workflow.dto.SendListMessageRequestDto;
 import com.example.workflow.dto.SendMessageRequestDto;
-import com.example.workflow.dto.SendQuickReplyMessageDto;
 import com.example.workflow.models.User;
 import com.example.workflow.models.gupshup.GlobalButtons;
 import com.example.workflow.models.gupshup.ListMessageItem;
 import com.example.workflow.models.gupshup.ListMessageItemOption;
-import com.example.workflow.models.gupshup.MessageContent;
 import com.example.workflow.services.MessageService;
 import com.example.workflow.services.NammaYathriService;
 import com.example.workflow.services.TemplateService;
@@ -22,10 +19,9 @@ import org.camunda.bpm.engine.delegate.JavaDelegate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
-
-import static com.example.workflow.utils.Constants.MESSAGE_TYPE_QUICK_REPLY;
 
 @Service
 public class PickupLocation implements JavaDelegate {
@@ -49,7 +45,7 @@ public class PickupLocation implements JavaDelegate {
             JsonArray usersStarredPlaces = new JsonArray();
             log.info("PickupLocation: execute method is called......");
             Boolean hasFavouritePlaces = execution.hasVariable("favourite_places");
-            if(!hasFavouritePlaces){
+            if (!hasFavouritePlaces) {
                 JsonElement starredPlaces = nammaYathriService.getStarredPlaces(execution.getBusinessKey());
 
                 // Filter users starred places
@@ -62,19 +58,19 @@ public class PickupLocation implements JavaDelegate {
                 execution.setVariable("favourite_places", usersStarredPlaces.getAsJsonArray().toString());
                 execution.setVariable("favourite_places_size", usersStarredPlaces.getAsJsonArray().size());
             } else {
-                if((Integer) execution.getVariable("favourite_places_size") > 0){
+                if ((Integer) execution.getVariable("favourite_places_size") > 0) {
                     usersStarredPlaces = gson.fromJson(execution.getVariable("favourite_places").toString(), JsonArray.class);
                 }
             }
 
-            if(usersStarredPlaces.isEmpty()){
+            if (usersStarredPlaces.isEmpty()) {
                 messageService.sendTextMessage(new SendMessageRequestDto(execution.getBusinessKey(), templateService.format(MessageTemplate.RIDE_REQUEST_PICKUP_LOCATION,
                         user.getPreferredLanguage())));
             } else {
                 ListMessageDto listMessageDto = new ListMessageDto();
                 listMessageDto.setTitle("");
                 listMessageDto.setBody(templateService.format(MessageTemplate.RIDE_REQUEST_PICKUP_LOCATION,
-                        user.getPreferredLanguage())+ templateService.format(MessageTemplate.FAVOURITE_PLACES_OPTIONS_INFO,
+                        user.getPreferredLanguage()) + templateService.format(MessageTemplate.FAVOURITE_PLACES_OPTIONS_INFO,
                         user.getPreferredLanguage()));
 
                 // Set Global button

@@ -17,17 +17,14 @@ import java.util.Map;
 @Service
 public class CamundaCoreService {
 
-    @Value("${camunda.bpm.admin-user.id}")
-    private String camundaUserName;
-
     @Autowired
     public RuntimeService runtimeService;
-
     @Autowired
     public TaskService taskService;
-
     @Autowired
     public RepositoryService repositoryService;
+    @Value("${camunda.bpm.admin-user.id}")
+    private String camundaUserName;
 
     public ProcessInstance startProcessInstance(String processDefinitionId, String businessKey) {
         return runtimeService.startProcessInstanceById(processDefinitionId, businessKey);
@@ -75,6 +72,7 @@ public class CamundaCoreService {
         }
         return processDefinition.getName();
     }
+
     public Task getTaskByProcessDefinitionAndBusinessKey(String processInstanceId, String businessKey) {
         ActivityInstance activityInstance = runtimeService.getActivityInstance(processInstanceId);
         List<ActivityInstance> activeInstances = List.of(activityInstance.getChildActivityInstances());
@@ -85,7 +83,8 @@ public class CamundaCoreService {
         }
         return null;
     }
-    public ActivityInstance getActivityInstance(String processInstanceId){
+
+    public ActivityInstance getActivityInstance(String processInstanceId) {
         return runtimeService.getActivityInstance(processInstanceId);
     }
 }

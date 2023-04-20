@@ -21,16 +21,13 @@ import java.util.logging.Logger;
 @Service
 public class RideEnded implements JavaDelegate {
 
+    private final Logger log = Logger.getLogger(RideEnded.class.getName());
     @Autowired
     UserService userService;
-
     @Autowired
     MessageService messageService;
-
     @Autowired
     TemplateService templateService;
-
-    private final Logger log = Logger.getLogger(RideEnded.class.getName());
 
     @Override
     public void execute(DelegateExecution execution) throws Exception {

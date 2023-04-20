@@ -113,18 +113,6 @@ public enum MessageTemplate {
     OPEN_DATA_BODY("Open_Data_Body"),
     FEED_BACK_BODY("Feedback_Body"),
     PAST_RIDE_BODY("past_ride_body");
-    private final String templateId;
-
-    MessageTemplate(String eventType) {
-        this.templateId = eventType;
-    }
-
-    public String getTemplateId() {
-        return templateId;
-    }
-
-    // Default methods for enum reverse lookup
-
     private static final Map<String, MessageTemplate> intToEnumMap = new HashMap<>();
 
     static {
@@ -133,7 +121,19 @@ public enum MessageTemplate {
         }
     }
 
+    private final String templateId;
+
+    // Default methods for enum reverse lookup
+
+    MessageTemplate(String eventType) {
+        this.templateId = eventType;
+    }
+
     public static MessageTemplate fromTemplateId(String eventType) {
         return intToEnumMap.get(eventType);
+    }
+
+    public String getTemplateId() {
+        return templateId;
     }
 }

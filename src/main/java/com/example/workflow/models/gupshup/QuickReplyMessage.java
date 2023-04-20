@@ -7,6 +7,10 @@ public class QuickReplyMessage {
     private String type;
     private String msgid;
     private Map<String, String> content;
+    private List<Map<String, String>> options;
+
+    public QuickReplyMessage() {
+    }
 
     public List<Map<String, String>> getOptions() {
         return options;
@@ -14,11 +18,6 @@ public class QuickReplyMessage {
 
     public void setOptions(List<Map<String, String>> options) {
         this.options = options;
-    }
-
-    private List<Map<String, String>> options;
-
-    public QuickReplyMessage() {
     }
 
     public String getType() {

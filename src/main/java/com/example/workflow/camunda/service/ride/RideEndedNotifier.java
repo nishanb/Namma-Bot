@@ -13,9 +13,9 @@ import java.util.logging.Logger;
 @Service
 public class RideEndedNotifier implements JavaDelegate {
 
+    private final Logger log = Logger.getLogger(RideEndedNotifier.class.getName());
     @Autowired
     CamundaCoreService camundaCoreService;
-    private final Logger log = Logger.getLogger(RideEndedNotifier.class.getName());
 
     @Override
     public void execute(DelegateExecution execution) throws Exception {

@@ -28,40 +28,29 @@ import static com.example.workflow.utils.Constants.*;
 @Service
 public class WorkflowServiceImpl implements WorkflowService {
 
+    private static final Logger logger = LoggerFactory.getLogger(WorkflowServiceImpl.class);
     @Autowired
     CamundaCoreService camundaCoreService;
-
     @Autowired
     UserService userService;
-
     @Autowired
     LanguageChangeActivityHandler languageChangeActivityHandler;
-
     @Autowired
     RideBookingActivityHandler rideBookingActivityHandler;
-
     @Autowired
     StarredPlaceManageActivityHandler starredPlaceManageActivityHandler;
-
     @Autowired
     CommonMessageService commonMessageService;
-
     @Autowired
     OpenData openDataSingleMessageTask;
-
     @Autowired
     KnowMore knowMoreSingleMessageTask;
-
     @Autowired
     ViewPastRide viewPastRideSingleMessageTask;
-
     @Autowired
     ProvideFeedBack provideFeedBackSingleMessageTask;
-
     @Autowired
     NeedCommonHelp needCommonHelpSingleMessageTask;
-
-    private static final Logger logger = LoggerFactory.getLogger(WorkflowServiceImpl.class);
 
     @Override
     public void handleWorkflow(String processInstanceId, User user, String messageType, WebhookMessagePayload webhookMessagePayload) throws Exception {

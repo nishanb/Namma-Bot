@@ -22,20 +22,17 @@ import static com.example.workflow.utils.Constants.MESSAGE_TYPE_QUICK_REPLY;
 @Service
 public class RequestRetry implements JavaDelegate {
 
+    private final Logger log = Logger.getLogger(RequestRetry.class.getName());
     @Autowired
     TemplateServiceImpl templateService;
-
     @Autowired
     UserService userService;
-
     @Autowired
     MessageService messageService;
 
-    private final Logger log = Logger.getLogger(RequestRetry.class.getName());
-
     @Override
     public void execute(DelegateExecution execution) throws Exception {
-        try{
+        try {
 
             log.info("RequestRetry: execute method is called......");
             Optional<User> userSaved = userService.findUserByPhoneNumber(execution.getBusinessKey());
@@ -65,9 +62,9 @@ public class RequestRetry implements JavaDelegate {
             messageService.sendQuickReplyMessage(retrySelectionMessage);
             //set relevant variables for future ref
             execution.setVariable("RequestRetry", true);
-        } catch (Exception e){
+        } catch (Exception e) {
             log.warning("RequestRetry: Exception occured......");
-            throw new BpmnError("booking_flow_error","Error sending message.....");
+            throw new BpmnError("booking_flow_error", "Error sending message.....");
         }
     }
 }

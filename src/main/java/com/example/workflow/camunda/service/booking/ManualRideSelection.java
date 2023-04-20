@@ -12,14 +12,14 @@ public class ManualRideSelection implements JavaDelegate {
 
     @Override
     public void execute(DelegateExecution execution) throws Exception {
-        try{
+        try {
             //call gupshup to send message
             log.info("ManualRideSelection: execute method is called......");
             //set relevant variables for future ref
             execution.setVariable("ManualRideSelection", true);
-        } catch (Exception e){
+        } catch (Exception e) {
             log.warning("ManualRideSelection: Exception occured......");
-            throw new BpmnError("booking_flow_error","Error sending message.....");
+            throw new BpmnError("booking_flow_error", "Error sending message.....");
         }
     }
 }

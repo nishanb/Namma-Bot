@@ -2,7 +2,6 @@ package com.example.workflow.camunda.service.booking;
 
 import com.example.workflow.config.ConversationWorkflow;
 import com.example.workflow.config.MessageTemplate;
-import com.example.workflow.dto.SendMessageRequestDto;
 import com.example.workflow.dto.SendQuickReplyMessageDto;
 import com.example.workflow.models.User;
 import com.example.workflow.models.gupshup.MessageContent;
@@ -23,16 +22,13 @@ import static com.example.workflow.utils.Constants.MESSAGE_TYPE_QUICK_REPLY;
 @Service
 public class RideStarted implements JavaDelegate {
 
+    private final Logger log = Logger.getLogger(RideStarted.class.getName());
     @Autowired
     UserService userService;
-
     @Autowired
     MessageService messageService;
-
     @Autowired
     TemplateService templateService;
-
-    private final Logger log = Logger.getLogger(RideStarted.class.getName());
 
     @Override
     public void execute(DelegateExecution execution) throws Exception {
@@ -48,7 +44,7 @@ public class RideStarted implements JavaDelegate {
             rideStartedMessage.setReceiverContactNumber(user.getPhoneNumber());
             rideStartedMessage.setType(MESSAGE_TYPE_QUICK_REPLY);
 
-            List<Map<String, String>> options = new ArrayList<>(new ArrayList<>(Arrays.asList(
+            List<Map<String, String>> options = new ArrayList<>(new ArrayList<>(List.of(
                     new HashMap<>() {{
                         put("type", "text");
                         put("title", templateService.format(MessageTemplate.NEED_HELP_BUTTON_INFO, user.getPreferredLanguage()));

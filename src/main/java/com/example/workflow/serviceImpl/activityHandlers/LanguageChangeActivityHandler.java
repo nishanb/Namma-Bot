@@ -20,13 +20,13 @@ import static com.example.workflow.utils.Constants.GLOBAL_CANCELLATION_MESSAGE_E
 
 @Service
 public class LanguageChangeActivityHandler implements ActivityHandlerService {
+    private static final Logger logger = LoggerFactory.getLogger(RideBookingActivityHandler.class);
     @Autowired
     ReceiveLanguageConfirmation receiveLanguageConfirmation;
     @Autowired
     ReceiveLanguagePreference receiveLanguagePreference;
     @Autowired
     CamundaCoreService camundaCoreService;
-    private static final Logger logger = LoggerFactory.getLogger(RideBookingActivityHandler.class);
 
     @Override
     public void handle(Task task, User user, String messageType, WebhookMessagePayload webhookMessagePayload) throws Exception {
@@ -46,8 +46,8 @@ public class LanguageChangeActivityHandler implements ActivityHandlerService {
     @Override
     public void handleCancelRequest(User user, String businessKey, String processDefinitionName) throws Exception {
         Map<String, Object> variables = new HashMap<>();
-        variables.put("global_cancellation",true);
+        variables.put("global_cancellation", true);
         String cancelMessageEventName = GLOBAL_CANCELLATION_MESSAGE_EVENT_NAME.get(processDefinitionName);
-        camundaCoreService.createMessageCorrelation(businessKey,cancelMessageEventName, variables);
+        camundaCoreService.createMessageCorrelation(businessKey, cancelMessageEventName, variables);
     }
 }

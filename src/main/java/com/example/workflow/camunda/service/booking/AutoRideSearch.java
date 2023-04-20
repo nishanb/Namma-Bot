@@ -1,8 +1,5 @@
 package com.example.workflow.camunda.service.booking;
 
-import camundajar.impl.com.google.gson.Gson;
-import camundajar.impl.com.google.gson.JsonElement;
-import camundajar.impl.com.google.gson.JsonObject;
 import com.example.workflow.config.MessageTemplate;
 import com.example.workflow.dto.SendMessageRequestDto;
 import com.example.workflow.models.User;
@@ -13,13 +10,12 @@ import com.example.workflow.services.UserService;
 import org.camunda.bpm.engine.delegate.BpmnError;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
-import org.camunda.spin.plugin.variable.SpinValues;
-import org.camunda.spin.plugin.variable.value.JsonValue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 import java.util.logging.Logger;
+
 @Service
 public class AutoRideSearch implements JavaDelegate {
 
@@ -39,7 +35,7 @@ public class AutoRideSearch implements JavaDelegate {
 
     @Override
     public void execute(DelegateExecution execution) throws Exception {
-        try{
+        try {
             //call gupshup to send message
             log.info("AutoRideSearch: execute method is called......");
             //Fetching user - Customer requesting for ride book
@@ -47,11 +43,11 @@ public class AutoRideSearch implements JavaDelegate {
             User user = userSaved.get();
 
             messageService.sendTextMessage(new SendMessageRequestDto(user.getPhoneNumber(), templateService.format(MessageTemplate.RIDE_FETCH_NEARBY_DRIVERS, user.getPreferredLanguage())));
-            execution.setVariable("ride_selection_mode","auto");
-        } catch (Exception e){
+            execution.setVariable("ride_selection_mode", "auto");
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             log.warning("AutoRideSearch: Exception occured......");
-            throw new BpmnError("booking_flow_error","Error sending message.....");
+            throw new BpmnError("booking_flow_error", "Error sending message.....");
         }
     }
 }

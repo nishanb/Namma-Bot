@@ -18,20 +18,17 @@ import java.util.logging.Logger;
 @Service
 public class TryAgainLater implements JavaDelegate {
 
+    private final Logger log = Logger.getLogger(TryAgainLater.class.getName());
     @Autowired
     TemplateServiceImpl templateService;
-
     @Autowired
     UserService userService;
-
     @Autowired
     MessageService messageService;
 
-    private final Logger log = Logger.getLogger(TryAgainLater.class.getName());
-
     @Override
     public void execute(DelegateExecution execution) throws Exception {
-        try{
+        try {
 
             //Sending try again later message
             Optional<User> userSaved = userService.findUserByPhoneNumber(execution.getBusinessKey());
@@ -42,9 +39,9 @@ public class TryAgainLater implements JavaDelegate {
             log.info("TryAgainLater: execute method is called......");
             //set relevant variables for future ref
             execution.setVariable("try_again_later", true);
-        } catch (Exception e){
+        } catch (Exception e) {
             log.warning("TryAgainLater: Exception occured......");
-            throw new BpmnError("booking_flow_error","Error sending message.....");
+            throw new BpmnError("booking_flow_error", "Error sending message.....");
         }
     }
 }

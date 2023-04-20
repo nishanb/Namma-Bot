@@ -1,7 +1,7 @@
 package com.example.workflow.serviceImpl;
 
 import com.example.workflow.dto.WebhookEventRequestDto;
-import com.example.workflow.models.*;
+import com.example.workflow.models.User;
 import com.example.workflow.models.gupshup.InBoundUserDetails;
 import com.example.workflow.models.gupshup.WebhookMessagePayload;
 import com.example.workflow.services.MessageWebhookHandlerService;
@@ -13,20 +13,17 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
 import java.util.Optional;
 
-import static com.example.workflow.utils.Constants.*;
+import static com.example.workflow.utils.Constants.INBOUND_WEBHOOK_EVENTS;
 
 @Service
 public class MessageHandlerServiceImpl implements MessageWebhookHandlerService {
+    private static final Logger logger = LoggerFactory.getLogger(MessageHandlerServiceImpl.class);
     @Autowired
     UserService userService;
-
     @Autowired
     WorkflowService workflowService;
-
-    private static final Logger logger = LoggerFactory.getLogger(MessageHandlerServiceImpl.class);
 
     @Override
     public Boolean handleWebhookEvent(WebhookEventRequestDto webhookEventRequestDto) throws JSONException {

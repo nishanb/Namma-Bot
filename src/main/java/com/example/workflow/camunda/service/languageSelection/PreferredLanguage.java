@@ -22,16 +22,13 @@ import static com.example.workflow.utils.Constants.MESSAGE_TYPE_QUICK_REPLY;
 @Service
 public class PreferredLanguage implements JavaDelegate {
 
+    private final Logger log = Logger.getLogger(PreferredLanguage.class.getName());
     @Autowired
     MessageService messageService;
-
     @Autowired
     TemplateService templateService;
-
     @Autowired
     UserService userService;
-
-    private final Logger log = Logger.getLogger(PreferredLanguage.class.getName());
 
     @Override
     public void execute(DelegateExecution execution) throws Exception {

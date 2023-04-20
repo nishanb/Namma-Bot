@@ -16,15 +16,12 @@ import java.util.Map;
 @Service
 public class BackendEventSimulatorHelper {
 
+    private static final Logger logger = LoggerFactory.getLogger(BackendEventSimulatorHelper.class);
+    private final Gson gson;
     @Value("${callback-host}")
     private String eventCallBackHost;
-
     @Value("${event-simulator-host}")
     private String eventSimulatorHost;
-
-    private static Logger logger = LoggerFactory.getLogger(BackendEventSimulatorHelper.class);
-
-    private final Gson gson;
 
     public BackendEventSimulatorHelper() {
         this.gson = new Gson();

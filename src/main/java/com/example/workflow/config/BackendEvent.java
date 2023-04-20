@@ -10,18 +10,6 @@ public enum BackendEvent {
     RIDE_ENDED("RIDE_ENDED"),
     RIDE_CANCELED_BY_DRIVER("RIDE_ENDED_BY_DRIVER");
 
-    private final String eventType;
-
-    BackendEvent(String eventType) {
-        this.eventType = eventType;
-    }
-
-    public String getEventType() {
-        return eventType;
-    }
-
-    // Default methods for enum reverse lookup
-
     private static final Map<String, BackendEvent> intToEnumMap = new HashMap<>();
 
     static {
@@ -30,7 +18,19 @@ public enum BackendEvent {
         }
     }
 
+    private final String eventType;
+
+    // Default methods for enum reverse lookup
+
+    BackendEvent(String eventType) {
+        this.eventType = eventType;
+    }
+
     public static BackendEvent fromEventType(String eventType) {
         return intToEnumMap.get(eventType);
+    }
+
+    public String getEventType() {
+        return eventType;
     }
 }

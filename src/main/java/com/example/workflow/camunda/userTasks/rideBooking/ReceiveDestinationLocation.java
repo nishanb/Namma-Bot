@@ -17,8 +17,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-import static com.example.workflow.utils.Constants.GLOBAL_CANCELLATION_MESSAGE_EVENT_NAME;
-
 @Service
 public class ReceiveDestinationLocation implements UserTask {
     @Autowired
@@ -36,18 +34,17 @@ public class ReceiveDestinationLocation implements UserTask {
             Map<String, Object> variables = new HashMap<>();
             variables.put("destination_latitude", webhookMessagePayload.getPayload().get("latitude"));
             variables.put("destination_longitude", webhookMessagePayload.getPayload().get("longitude"));
-            variables.put("select_favourite_place_destination",false);
+            variables.put("select_favourite_place_destination", false);
             camundaCoreService.completeUserTaskByTaskId(task, variables);
-        }else if (Objects.equals(messageType, Constants.MESSAGE_TYPE_LIST_REPLY)) {
+        } else if (Objects.equals(messageType, Constants.MESSAGE_TYPE_LIST_REPLY)) {
             String[] postBackResult = webhookMessagePayload.getPostbackText().split(":");
 
             Map<String, Object> variables = new HashMap<>();
             variables.put("destination_latitude", postBackResult[0]);
             variables.put("destination_longitude", postBackResult[1]);
-            variables.put("select_favourite_place_destination",false);
+            variables.put("select_favourite_place_destination", false);
             camundaCoreService.completeUserTaskByTaskId(task, variables);
-        }
-        else {
+        } else {
             messageService.sendTextMessage(new SendMessageRequestDto(user.getPhoneNumber(), templateService.format(MessageTemplate.RIDE_INVALID_MESSAGE, user.getPreferredLanguage())));
         }
     }

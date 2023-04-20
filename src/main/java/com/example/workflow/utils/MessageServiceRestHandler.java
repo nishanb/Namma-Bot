@@ -13,10 +13,10 @@ import java.io.IOException;
 import java.util.Objects;
 
 public class MessageServiceRestHandler {
-    private static OkHttpClient client;
-    private static Gson gson;
+    private static final OkHttpClient client;
+    private static final Gson gson;
 
-    private static Logger logger = LoggerFactory.getLogger(MessageServiceRestHandler.class);
+    private static final Logger logger = LoggerFactory.getLogger(MessageServiceRestHandler.class);
 
     static {
         client = new OkHttpClient().newBuilder().build();
@@ -29,22 +29,23 @@ public class MessageServiceRestHandler {
     public static OkHttpClient getClient() {
         return client;
     }
+
     public static JsonElement execute(Request request) throws IOException, HttpRequestException {
-        System.out.println(request.method().toUpperCase() + " Request to " + request.url().toString() + " started");
-        logger.info(request.method().toUpperCase() + " Request to " + request.url().toString() + " started");
+        System.out.println(request.method().toUpperCase() + " Request to " + request.url() + " started");
+        logger.info(request.method().toUpperCase() + " Request to " + request.url() + " started");
 
         try {
             Response response = client.newCall(request).execute();
             if (response.isSuccessful()) {
-                logger.info(request.method().toUpperCase() + " Request to " + request.url().toString() + " is successful. Parsing response...");
+                logger.info(request.method().toUpperCase() + " Request to " + request.url() + " is successful. Parsing response...");
                 JsonElement jsonElement = gson.fromJson(Objects.requireNonNull(response.body()).charStream(), JsonElement.class);
-                System.out.println(request.method().toString().toUpperCase() + " Request to " + request.url().toString() + " is complete");
-                logger.info(request.method().toString().toUpperCase() + " Request to " + request.url().toString() + " is complete");
+                System.out.println(request.method().toUpperCase() + " Request to " + request.url() + " is complete");
+                logger.info(request.method().toUpperCase() + " Request to " + request.url() + " is complete");
 
                 return jsonElement;
             } else {
                 logger.error("Response failed with status code " + response.code() + " and error message: " + response.message());
-                System.out.println("<<<<<< error >>>>>" + response.toString());
+                System.out.println("<<<<<< error >>>>>" + response);
                 return null;
             }
 
