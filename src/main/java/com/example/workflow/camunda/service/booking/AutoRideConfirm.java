@@ -27,7 +27,7 @@ public class AutoRideConfirm implements JavaDelegate {
     public void execute(DelegateExecution execution) throws Exception {
         try{
             //call gupshup to send message
-            log.info("AutoRideConfirm: execute method is called......");
+            log.info("AutoRideConfirm: execute method is called..");
 
             JsonValue persistedNearbyRides = execution.getVariableTyped("rides_to_persist");
             SpinJsonNode availableRidesData = persistedNearbyRides.getValue();
