@@ -22,11 +22,12 @@ public class ViewPastRide implements SingleMessageTask {
     @Autowired
     MessageService messageService;
 
+    // TODO : fetch past ride using API and present to user , for now it's mock show no past ride history
     @Override
     public void process(User user) throws Exception {
-        SendQuickReplyMessageDto rideSelectionMessage = new SendQuickReplyMessageDto();
-        rideSelectionMessage.setReceiverContactNumber(user.getPhoneNumber());
-        rideSelectionMessage.setType(MESSAGE_TYPE_QUICK_REPLY);
+        SendQuickReplyMessageDto pastRidesMessage = new SendQuickReplyMessageDto();
+        pastRidesMessage.setReceiverContactNumber(user.getPhoneNumber());
+        pastRidesMessage.setType(MESSAGE_TYPE_QUICK_REPLY);
 
         List<Map<String, String>> options = new ArrayList<>(new ArrayList<>(List.of(
                 new HashMap<>() {{
@@ -36,17 +37,15 @@ public class ViewPastRide implements SingleMessageTask {
                 }}
         )));
 
-        rideSelectionMessage.setQuickReplyMessage(messageService.generateQuickReplyMessage(
+        pastRidesMessage.setQuickReplyMessage(messageService.generateQuickReplyMessage(
                 new MessageContent(
-                        "Alright !!",
-                        "It appears that you do not have any past ride records on our platform. " +
-                                "" +
-                                "Click on the main menu and begin a new ride."
+                        templateService.format(MessageTemplate.RIDE_BOOKING_TYPE_HEADER, user.getPreferredLanguage()),
+                        templateService.format(MessageTemplate.PAST_RIDE_BODY, user.getPreferredLanguage())
                 ),
                 options,
                 UUID.randomUUID().toString())
         );
 
-        messageService.sendQuickReplyMessage(rideSelectionMessage);
+        messageService.sendQuickReplyMessage(pastRidesMessage);
     }
 }

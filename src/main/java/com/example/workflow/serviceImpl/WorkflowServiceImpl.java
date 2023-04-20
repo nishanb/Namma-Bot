@@ -1,9 +1,7 @@
 package com.example.workflow.serviceImpl;
 
 import com.example.workflow.camunda.core.CamundaCoreService;
-import com.example.workflow.camunda.singleMessageTasks.KnowMore;
-import com.example.workflow.camunda.singleMessageTasks.OpenData;
-import com.example.workflow.camunda.singleMessageTasks.ViewPastRide;
+import com.example.workflow.camunda.singleMessageTasks.*;
 import com.example.workflow.config.ConversationWorkflow;
 import com.example.workflow.models.User;
 import com.example.workflow.models.gupshup.WebhookMessagePayload;
@@ -56,6 +54,12 @@ public class WorkflowServiceImpl implements WorkflowService {
 
     @Autowired
     ViewPastRide viewPastRideSingleMessageTask;
+
+    @Autowired
+    ProvideFeedBack provideFeedBackSingleMessageTask;
+
+    @Autowired
+    NeedCommonHelp needCommonHelpSingleMessageTask;
 
     private static final Logger logger = LoggerFactory.getLogger(WorkflowServiceImpl.class);
 
@@ -159,9 +163,11 @@ public class WorkflowServiceImpl implements WorkflowService {
         if (conversationWorkflow.getProcessDefinitionName().isEmpty()) {
             // Handling events which doesn't have workflow
             switch (conversationWorkflow) {
-                case OPEN_DATA -> openDataSingleMessageTask.process(user);
-                case KNOW_MORE -> knowMoreSingleMessageTask.process(user);
                 case PREVIOUS_RIDE -> viewPastRideSingleMessageTask.process(user);
+                case FEEDBACK -> provideFeedBackSingleMessageTask.process(user);
+                case OPEN_DATA -> openDataSingleMessageTask.process(user);
+                case SUPPORT -> needCommonHelpSingleMessageTask.process(user);
+                case KNOW_MORE -> knowMoreSingleMessageTask.process(user);
                 default -> {
                     logger.info("No process found to invoke for the task " + conversationWorkflow.getPostbackText());
                     commonMessageService.sendErrorMessage(user);

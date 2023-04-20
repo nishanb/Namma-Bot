@@ -24,9 +24,9 @@ public class OpenData implements SingleMessageTask {
 
     @Override
     public void process(User user) throws Exception {
-        SendQuickReplyMessageDto rideSelectionMessage = new SendQuickReplyMessageDto();
-        rideSelectionMessage.setReceiverContactNumber(user.getPhoneNumber());
-        rideSelectionMessage.setType(MESSAGE_TYPE_QUICK_REPLY);
+        SendQuickReplyMessageDto openDataMessage = new SendQuickReplyMessageDto();
+        openDataMessage.setReceiverContactNumber(user.getPhoneNumber());
+        openDataMessage.setType(MESSAGE_TYPE_QUICK_REPLY);
 
         List<Map<String, String>> options = new ArrayList<>(new ArrayList<>(List.of(
                 new HashMap<>() {{
@@ -36,15 +36,15 @@ public class OpenData implements SingleMessageTask {
                 }}
         )));
 
-        rideSelectionMessage.setQuickReplyMessage(messageService.generateQuickReplyMessage(
+        openDataMessage.setQuickReplyMessage(messageService.generateQuickReplyMessage(
                 new MessageContent(
-                        "Alright !!",
-                        "To view open data please visit https://nammayatri.in/open/"
+                        templateService.format(MessageTemplate.RIDE_BOOKING_TYPE_HEADER, user.getPreferredLanguage()),
+                        templateService.format(MessageTemplate.OPEN_DATA_BODY, user.getPreferredLanguage())
                 ),
                 options,
                 UUID.randomUUID().toString())
         );
 
-        messageService.sendQuickReplyMessage(rideSelectionMessage);
+        messageService.sendQuickReplyMessage(openDataMessage);
     }
 }
