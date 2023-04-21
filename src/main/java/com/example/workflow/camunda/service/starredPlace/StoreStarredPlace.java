@@ -43,7 +43,9 @@ public class StoreStarredPlace implements JavaDelegate {
             // collect api variables present in workflow
             String latitude = execution.getVariable("latitude").toString();
             String longitude = execution.getVariable("longitude").toString();
-            String name = execution.getVariable("name").toString().substring(0,20);
+
+            // Support name of length 20 (WhatsApp limit)
+            String name = execution.getVariable("name").toString().substring(0, Math.min(execution.getVariable("name").toString().length(), 20));
 
             // Store Starred place in backed
             nammaYathriService.createStarredPlace(latitude, longitude, name, user.getPhoneNumber());
