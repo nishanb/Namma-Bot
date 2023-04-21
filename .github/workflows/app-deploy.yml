@@ -7,7 +7,6 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
@@ -21,3 +20,16 @@ jobs:
         echo "${SSH_PRIVATE_KEY}" > ssh_key
         chmod 600 ssh_key
         ssh -o StrictHostKeyChecking=no -i ssh_key ${SSH_USERNAME}@${SSH_HOST} 'cd /home/ubuntu/g/projects/Namma-Bot && git pull && sudo docker compose down && sudo docker image prune -f && sudo docker-compose --env-file ~/.env.prod up -d --force-recreate --build'
+    
+  health-check:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Wait for health check endpoint
+      env:
+        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        SSH_USERNAME: ${{ secrets.SSH_USERNAME }}
+        SSH_HOST: ${{ secrets.SSH_HOST }}
+      run: |
+        echo "${SSH_PRIVATE_KEY}" > ssh_key
+        chmod 600 ssh_key
+        ssh -o StrictHostKeyChecking=no -i ssh_key ${SSH_USERNAME}@${SSH_HOST} 'timeout 240 bash -c "until curl -s -o /dev/null http://localhost:8080/ping; do sleep 5; done"'
