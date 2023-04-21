@@ -31,7 +31,9 @@ public class ReceiveLocationTagToAdd implements UserTask {
     @Override
     public void complete(Task task, User user, String messageType, WebhookMessagePayload webhookMessagePayload) throws Exception {
         log.info("Executing User Task " + this.getClass().getName());
-        if (Objects.equals(messageType, Constants.MESSAGE_TYPE_TEXT)) {
+
+        // allow names without emojis
+        if (Objects.equals(messageType, Constants.MESSAGE_TYPE_TEXT) && webhookMessagePayload.getPayload().get("text").matches("^[\\p{L}\\p{N}\\p{Z}\\p{P}]+$")) {
             Map<String, Object> variables = new HashMap<>();
             variables.put("name", webhookMessagePayload.getPayload().get("text"));
             camundaCoreService.completeUserTaskByTaskId(task, variables);
