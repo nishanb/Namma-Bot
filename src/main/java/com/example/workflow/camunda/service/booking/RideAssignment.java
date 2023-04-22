@@ -84,7 +84,7 @@ public class RideAssignment implements JavaDelegate {
 
             rideAssignmentMessage.setQuickReplyMessage(messageService.generateQuickReplyMessage(
                     new MessageContent(
-                            templateService.format(MessageTemplate.RIDE_BOOKING_TYPE_HEADER, user.getPreferredLanguage()),
+                            "",
                             templateService.format(MessageTemplate.RIDE_ASSIGNED_INFO,
                                     user.getPreferredLanguage(),
                                     new ArrayList<>(Arrays.asList(driverName, pickupETA, rideFare, vehicleNumber)))

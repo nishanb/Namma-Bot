@@ -124,4 +124,9 @@ public class CommonMessageService {
         logger.info("Invoking process under message for " + user.getPhoneNumber());
         messageService.sendTextMessage(new SendMessageRequestDto(user.getPhoneNumber(), templateService.format(MessageTemplate.REQUEST_UNDER_PROCESS, user.getPreferredLanguage())));
     }
+
+    public void sendGlobalCancellationContextMessage(User user) throws Exception {
+        logger.info("Invoking global cancellation context message for " + user.getPhoneNumber());
+        messageService.sendTextMessage(new SendMessageRequestDto(user.getPhoneNumber(), templateService.format(MessageTemplate.GLOBAL_CANCELLATION_CONTEXT, user.getPreferredLanguage())));
+    }
 }

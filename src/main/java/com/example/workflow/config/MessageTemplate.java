@@ -111,7 +111,8 @@ public enum MessageTemplate {
     KNOW_MORE_BODY("Know_More_Body"),
     OPEN_DATA_BODY("Open_Data_Body"),
     FEED_BACK_BODY("Feedback_Body"),
-    PAST_RIDE_BODY("past_ride_body");
+    PAST_RIDE_BODY("past_ride_body"),
+    GLOBAL_CANCELLATION_CONTEXT("Global_Cancellation_Context");
     private static final Map<String, MessageTemplate> intToEnumMap = new HashMap<>();
 
     static {
