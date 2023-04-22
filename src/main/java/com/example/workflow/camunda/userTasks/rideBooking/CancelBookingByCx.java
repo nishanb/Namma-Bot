@@ -40,10 +40,6 @@ public class CancelBookingByCx implements UserTask {
             Map<String, Object> variables = new HashMap<>();
             variables.put("cancel_ride_request", true);
             variables.put("global_cancellation", true);
-
-            //TODO: Get the Process definition name from config.
-            String cancelMessageEventName = GLOBAL_CANCELLATION_MESSAGE_EVENT_NAME.get("Ride_Update_Flow");
-            camundaCoreService.createMessageCorrelation(user.getPhoneNumber(), cancelMessageEventName, variables);
             camundaCoreService.completeUserTaskByTaskId(task, variables);
         } else {
             messageService.sendTextMessage(new SendMessageRequestDto(user.getPhoneNumber(), templateService.format(MessageTemplate.RIDE_INVALID_MESSAGE, user.getPreferredLanguage())));
