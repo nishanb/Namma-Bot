@@ -24,7 +24,6 @@ public class RideActivityScrubber implements JavaDelegate {
 
             // as part of cleanup detach process instance id , sub process instance id from user
             user.setProcessInstanceId(null);
-            user.setSubProcessInstanceId(null);
             userService.updateUser(execution.getBusinessKey(), user);
 
         } catch (Exception e) {
