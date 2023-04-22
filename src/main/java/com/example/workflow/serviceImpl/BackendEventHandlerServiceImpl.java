@@ -42,7 +42,7 @@ public class BackendEventHandlerServiceImpl implements BackendEventHandlerServic
         if (event.getRiderPhoneNumber() == null) return false;
 
         User user = userService.findUserByPhoneNumber(event.getRiderPhoneNumber()).orElse(null);
-        if (user == null || user.getProcessInstanceId() == null) return false;
+        if (user == null || user.getSubProcessInstanceId() == null || user.getProcessInstanceId() == null) return false;
 
         Task currentTask = camundaCoreService.getTaskByProcessDefinitionAndBusinessKey(user.getSubProcessInstanceId(), user.getPhoneNumber());
         switch (BackendEvent.fromEventType(event.getEvent())) {
@@ -64,7 +64,7 @@ public class BackendEventHandlerServiceImpl implements BackendEventHandlerServic
                 break;
             // TODO : trigger escalation event
             case RIDE_CANCELED_BY_DRIVER:
-                System.out.println("Ride canceled by rider " + event.getMessage());
+                logger.info("Ride canceled by rider " + event.getMessage());
                 break;
             case default:
         }
