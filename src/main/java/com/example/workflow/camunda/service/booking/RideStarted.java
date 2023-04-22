@@ -54,7 +54,7 @@ public class RideStarted implements JavaDelegate {
 
             rideStartedMessage.setQuickReplyMessage(messageService.generateQuickReplyMessage(
                     new MessageContent(
-                            templateService.format(MessageTemplate.RIDE_BOOKING_TYPE_HEADER, user.getPreferredLanguage()),
+                            "",
                             templateService.format(MessageTemplate.RIDE_STARTED_EVENT,
                                     user.getPreferredLanguage(),
                                     new ArrayList<>(Collections.singletonList(etaToDropLocation)))

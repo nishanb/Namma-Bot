@@ -160,6 +160,8 @@ public class WorkflowServiceImpl implements WorkflowService {
             }
             return;
         }
+        //Set Global cancellation context.
+        commonMessageService.sendGlobalCancellationContextMessage(user);
         // Starting new BPMN Workflow
         ProcessInstance processInstance = camundaCoreService.startProcessInstanceByName(conversationWorkflow.getProcessDefinitionName(), user.getPhoneNumber());
         userService.updateProcessInstanceIdByPhoneNumber(user.getPhoneNumber(), processInstance.getProcessInstanceId());

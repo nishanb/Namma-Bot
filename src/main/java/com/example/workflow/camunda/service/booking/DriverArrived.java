@@ -53,7 +53,7 @@ public class DriverArrived implements JavaDelegate {
 
             driverArrivedMessage.setQuickReplyMessage(messageService.generateQuickReplyMessage(
                     new MessageContent(
-                            templateService.format(MessageTemplate.RIDE_BOOKING_TYPE_HEADER, user.getPreferredLanguage()),
+                            "",
                             templateService.format(MessageTemplate.RIDE_DRIVER_ARRIVED_EVENT,
                                     user.getPreferredLanguage(),
                                     new ArrayList<>(Collections.singletonList(rideOtp)))
