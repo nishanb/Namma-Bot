@@ -28,7 +28,7 @@ public class DriverArrivedNotifier implements JavaDelegate {
             camundaCoreService.createMessageCorrelation(execution.getProcessBusinessKey(), "driver_arrived_update", new HashMap<>());
         } catch (Exception e) {
             log.warning("Exception occurred in Service Activity : " + this.getClass().getName() + " " + e.getMessage());
-            throw new BpmnError("booking_flow_error", "Error sending message.....");
+            throw new BpmnError("ride_update_flow_error", "Error sending message.....");
         }
     }
 }
