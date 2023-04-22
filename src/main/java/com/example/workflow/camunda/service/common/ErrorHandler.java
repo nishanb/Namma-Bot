@@ -22,8 +22,8 @@ public class ErrorHandler implements JavaDelegate {
 
     @Override
     public void execute(DelegateExecution execution) throws Exception {
+        log.info("Executing Common ErrorHandler " + this.getClass().getName());
         try {
-            log.info("ErrorHandler: execute method is called......");
             User user = userService.findUserByPhoneNumber(execution.getBusinessKey()).orElse(null);
             if (user != null) {
                 commonMessageService.sendErrorMessage(user);
@@ -34,7 +34,7 @@ public class ErrorHandler implements JavaDelegate {
                 System.out.println("User is null couldn't send message");
             }
         } catch (Exception e) {
-            log.warning("ErrorHandler: Exception occurred......" + e.getMessage());
+            log.warning("Exception occurred in Common Service Task : " + this.getClass().getName() + " " + e.getMessage());
             throw new BpmnError("booking_flow_error", "Error sending message.....");
         }
     }

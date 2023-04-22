@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.logging.Logger;
 
 @Service
 public class ReceiveLanguageConfirmation implements UserTask {
@@ -28,8 +29,12 @@ public class ReceiveLanguageConfirmation implements UserTask {
     @Autowired
     TemplateService templateService;
 
+    private final Logger logger = Logger.getLogger(ReceiveLanguageConfirmation.class.getName());
+
     @Override
     public void complete(Task task, User user, String messageType, WebhookMessagePayload webhookMessagePayload) throws Exception {
+        logger.info("Executing User Task " + this.getClass().getName());
+
         if (Objects.equals(messageType, Constants.MESSAGE_TYPE_BUTTON_REPLY)) {
             Map<String, Object> variables = new HashMap<>();
             variables.put("languageConfirmation", webhookMessagePayload.getPostbackText());

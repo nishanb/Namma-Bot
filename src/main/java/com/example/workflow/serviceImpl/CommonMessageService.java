@@ -12,6 +12,8 @@ import com.example.workflow.models.gupshup.ListMessageItem;
 import com.example.workflow.models.gupshup.ListMessageItemOption;
 import com.example.workflow.models.gupshup.MessageContent;
 import com.example.workflow.services.MessageService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,7 +30,10 @@ public class CommonMessageService {
     @Autowired
     MessageService messageService;
 
+    private static final Logger logger = LoggerFactory.getLogger(CommonMessageService.class);
+
     public void sendGreetingMessage(User user) throws Exception {
+        logger.info("Sending greeting message to " + user.getPhoneNumber() + " : " + user.getName());
         SendQuickReplyMessageDto greetingMessage = new SendQuickReplyMessageDto();
         greetingMessage.setReceiverContactNumber(user.getPhoneNumber());
         greetingMessage.setType(MESSAGE_TYPE_QUICK_REPLY);
@@ -92,10 +97,6 @@ public class CommonMessageService {
         messageService.sendListMessage(new SendListMessageRequestDto(user.getPhoneNumber(), messageService.generateListMessage(listMessageDto)));
     }
 
-    public void sendFeatureNotImplemented(User user) throws Exception {
-        messageService.sendTextMessage(new SendMessageRequestDto(user.getPhoneNumber(), "This feature is not supported yet"));
-    }
-
     public void sendErrorMessage(User user) throws Exception {
         SendQuickReplyMessageDto rideSelectionMessage = new SendQuickReplyMessageDto();
         rideSelectionMessage.setReceiverContactNumber(user.getPhoneNumber());
@@ -119,8 +120,8 @@ public class CommonMessageService {
         messageService.sendQuickReplyMessage(rideSelectionMessage);
     }
 
-    public void sendInProcessMessage(User user) throws Exception {
-        // TODO : if user is in ride we can send help message
+    public void sendTaskIsUnderProcessMessage(User user) throws Exception {
+        logger.info("Invoking process under message for " + user.getPhoneNumber());
         messageService.sendTextMessage(new SendMessageRequestDto(user.getPhoneNumber(), templateService.format(MessageTemplate.REQUEST_UNDER_PROCESS, user.getPreferredLanguage())));
     }
 }

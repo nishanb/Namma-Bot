@@ -11,6 +11,8 @@ import com.example.workflow.models.User;
 import com.example.workflow.services.BackendEventHandlerService;
 import com.example.workflow.services.UserService;
 import org.camunda.bpm.engine.task.Task;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,8 +34,11 @@ public class BackendEventHandlerServiceImpl implements BackendEventHandlerServic
     @Autowired
     RideStartedAlert rideStartedAlert;
 
+    private static final Logger logger = LoggerFactory.getLogger(BackendEventHandlerServiceImpl.class);
+
     @Override
     public boolean handelEvent(BackendEventRequestDto event) throws Exception {
+        logger.info("<--- Received Backend Event  " + event.getEvent() + " --->" + event.getRiderPhoneNumber() + " --->" + event.getMessage());
         if (event.getRiderPhoneNumber() == null) return false;
 
         User user = userService.findUserByPhoneNumber(event.getRiderPhoneNumber()).orElse(null);
@@ -57,7 +62,7 @@ public class BackendEventHandlerServiceImpl implements BackendEventHandlerServic
                     rideEndedAlert.complete(currentTask, user, event);
                 }
                 break;
-            // TODO : handel this dude
+            // TODO : trigger escalation event
             case RIDE_CANCELED_BY_DRIVER:
                 System.out.println("Ride canceled by rider " + event.getMessage());
                 break;

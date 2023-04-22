@@ -31,6 +31,7 @@ public class ReceiveLocationToDelete implements UserTask {
     @Override
     public void complete(Task task, User user, String messageType, WebhookMessagePayload webhookMessagePayload) throws Exception {
         log.info("Executing User Task " + this.getClass().getName());
+
         if (Objects.equals(messageType, Constants.MESSAGE_TYPE_LIST_REPLY)) {
             String[] postBackResult = webhookMessagePayload.getPostbackText().split(":");
 

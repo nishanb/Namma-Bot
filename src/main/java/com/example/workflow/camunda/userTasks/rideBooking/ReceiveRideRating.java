@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.logging.Logger;
 
 @Service
 public class ReceiveRideRating implements UserTask {
@@ -29,8 +30,12 @@ public class ReceiveRideRating implements UserTask {
     @Autowired
     MessageService messageService;
 
+    private final Logger logger = Logger.getLogger(ReceiveRideRating.class.getName());
+
     @Override
     public void complete(Task task, User user, String messageType, WebhookMessagePayload webhookMessagePayload) throws Exception {
+        logger.info("Executing User Task " + this.getClass().getName());
+
         if (Objects.equals(messageType, Constants.MESSAGE_TYPE_LIST_REPLY)) {
 
             // thank user on rating receive
@@ -40,7 +45,7 @@ public class ReceiveRideRating implements UserTask {
             Map<String, Object> variables = new HashMap<>();
             variables.put("rating_offered_by_passenger", webhookMessagePayload.getPostbackText());
 
-            // TODO : in time of integration with actual API , push rating to Namma yatri backend
+            // TODO : push rating to Namma yatri backend
             camundaCoreService.completeUserTaskByTaskId(task, variables);
         } else {
             messageService.sendTextMessage(new SendMessageRequestDto(user.getPhoneNumber(), templateService.format(MessageTemplate.RIDE_INVALID_MESSAGE, user.getPreferredLanguage())));

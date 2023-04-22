@@ -32,7 +32,7 @@ public class ReceiveLocationTagToAdd implements UserTask {
     public void complete(Task task, User user, String messageType, WebhookMessagePayload webhookMessagePayload) throws Exception {
         log.info("Executing User Task " + this.getClass().getName());
 
-        // allow names without emojis
+        // do not allow emoji's in the name
         if (Objects.equals(messageType, Constants.MESSAGE_TYPE_TEXT) && webhookMessagePayload.getPayload().get("text").matches("^[\\p{L}\\p{N}\\p{Z}\\p{P}]+$")) {
             Map<String, Object> variables = new HashMap<>();
             variables.put("name", webhookMessagePayload.getPayload().get("text"));

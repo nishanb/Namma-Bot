@@ -33,6 +33,8 @@ public class RideSearchWorker implements ExternalTaskHandler {
 
     @Override
     public void execute(ExternalTask externalTask, ExternalTaskService externalTaskService) {
+        log.info("Executing External Task " + this.getClass().getName());
+
         try {
             log.info("RideSearchWorker: execute method called......");
             //Fetching all the variables from the process instance required for execution.
@@ -41,7 +43,7 @@ public class RideSearchWorker implements ExternalTaskHandler {
             String sourceLatitude = externalTask.getVariable("source_latitude");
             String sourceLongitude = externalTask.getVariable("source_longitude");
             String rideSelectionMode = externalTask.getVariable("ride_selection_mode");
-//            TimeUnit.SECONDS.sleep(25);
+
             //Requesting Namma Yatri backend to find manual rides.
             JsonElement response = nammaYathriService.findNearByRide(sourceLatitude, sourceLongitude, destinationLatitude, destinationLongitude, rideSelectionMode);
 
@@ -55,8 +57,7 @@ public class RideSearchWorker implements ExternalTaskHandler {
             externalTaskService.complete(externalTask, variables);
 
         } catch (Exception e) {
-            System.out.println(e.getMessage());
-            log.warning("RideSearchWorker: Exception occured......");
+            log.warning("Exception occurred in Service Task : " + this.getClass().getName() + " " + e.getMessage());
         }
     }
 }

@@ -31,24 +31,15 @@ public class MessageServiceRestHandler {
     }
 
     public static JsonElement execute(Request request) throws IOException, HttpRequestException {
-        System.out.println(request.method().toUpperCase() + " Request to " + request.url() + " started");
-        logger.info(request.method().toUpperCase() + " Request to " + request.url() + " started");
-
         try {
             Response response = client.newCall(request).execute();
             if (response.isSuccessful()) {
-                logger.info(request.method().toUpperCase() + " Request to " + request.url() + " is successful. Parsing response...");
                 JsonElement jsonElement = gson.fromJson(Objects.requireNonNull(response.body()).charStream(), JsonElement.class);
-                System.out.println(request.method().toUpperCase() + " Request to " + request.url() + " is complete");
-                logger.info(request.method().toUpperCase() + " Request to " + request.url() + " is complete");
-
                 return jsonElement;
             } else {
                 logger.error("Response failed with status code " + response.code() + " and error message: " + response.message());
-                System.out.println("<<<<<< error >>>>>" + response);
                 return null;
             }
-
         } catch (Exception e) {
             throw new HttpRequestException(e.getMessage());
         }

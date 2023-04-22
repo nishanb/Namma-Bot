@@ -21,6 +21,8 @@ public class RetryRideSearch implements JavaDelegate {
 
     @Override
     public void execute(DelegateExecution execution) throws Exception {
+        log.info("Executing Service Task " + this.getClass().getName() + " For Business Key: " + execution.getBusinessKey());
+
         try {
             Boolean hasRetryAttempts = execution.hasVariable("retry_attempts");
             Integer retryAttempts = 1;
@@ -31,8 +33,7 @@ public class RetryRideSearch implements JavaDelegate {
             execution.setVariable("retry_attempts", retryAttempts);
             execution.setVariable("RetryRideSearch", true);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
-            log.warning("RetryRideSearch: Exception occured......");
+            log.warning("Exception occurred in Service Task : " + this.getClass().getName() + " " + e.getMessage());
             throw new BpmnError("booking_flow_error", "Error sending message.....");
         }
     }

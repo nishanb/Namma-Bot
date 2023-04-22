@@ -60,6 +60,7 @@ public class MessageServiceImpl implements MessageService {
             }
             return false;
         } catch (Exception e) {
+            logger.error("Failed to send text message " + e.getMessage());
             return false;
         }
     }
@@ -110,7 +111,6 @@ public class MessageServiceImpl implements MessageService {
 
                 message = PrepareRequestHelper.stringifyJson(requestMap);
             }
-
 
             String requestString = PrepareRequestHelper.stringifyRequestBody(WHATSAPP_CHANNEL, sourceContactNo, sendAttachmentMessageDto.getReceiverContactNumber(), message, vendorAppName);
 

@@ -31,7 +31,7 @@ public class RideActivityScrubber implements JavaDelegate {
 
     @Override
     public void execute(DelegateExecution execution) throws Exception {
-        log.info("Activity_Scrubber is executed");
+        log.info("Executing Service Task " + this.getClass().getName() + " For Business Key: " + execution.getBusinessKey());
         try {
             User user = userService.findUserByPhoneNumber(execution.getBusinessKey()).orElse(null);
 
@@ -62,7 +62,7 @@ public class RideActivityScrubber implements JavaDelegate {
             );
             messageService.sendQuickReplyMessage(thankYouMessage);
         } catch (Exception e) {
-            log.warning("Activity Scrubber: Exception occurred......" + e.getMessage());
+            log.warning("Exception occurred in Service Task : " + this.getClass().getName() + " " + e.getMessage());
             throw new BpmnError("Activity_Scrubber", "Error sending message.....");
         }
     }

@@ -28,19 +28,17 @@ public class TryAgainLater implements JavaDelegate {
 
     @Override
     public void execute(DelegateExecution execution) throws Exception {
-        try {
+        log.info("Executing Service Task " + this.getClass().getName() + " For Business Key: " + execution.getBusinessKey());
 
+        try {
             //Sending try again later message
             Optional<User> userSaved = userService.findUserByPhoneNumber(execution.getBusinessKey());
             User user = userSaved.get();
 
             messageService.sendTextMessage(new SendMessageRequestDto(user.getPhoneNumber(), templateService.format(MessageTemplate.RIDE_RETRY_THRESHOLD_NOTIFICATION_BOOKING, user.getPreferredLanguage())));
-            //call gupshup to send message
-            log.info("TryAgainLater: execute method is called......");
-            //set relevant variables for future ref
             execution.setVariable("try_again_later", true);
         } catch (Exception e) {
-            log.warning("TryAgainLater: Exception occured......");
+            log.warning("Exception occurred in Service Task : " + this.getClass().getName() + " " + e.getMessage());
             throw new BpmnError("booking_flow_error", "Error sending message.....");
         }
     }

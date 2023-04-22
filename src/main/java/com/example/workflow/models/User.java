@@ -29,9 +29,10 @@ public class User {
     @Field
     private Date updatedAt = new Date();
 
-    public User(String processInstanceId, String phoneNumber) {
+    public User(String processInstanceId, String phoneNumber, String name) {
         this.processInstanceId = processInstanceId;
         this.phoneNumber = phoneNumber;
+        this.name = name;
     }
 
     public String getName() {

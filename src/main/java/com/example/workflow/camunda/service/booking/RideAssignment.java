@@ -42,9 +42,9 @@ public class RideAssignment implements JavaDelegate {
 
     @Override
     public void execute(DelegateExecution execution) throws Exception {
+        log.info("Executing Service Task " + this.getClass().getName() + " For Business Key: " + execution.getBusinessKey());
+
         try {
-            //call gupshup to send message
-            log.info("RideAssignment: execute method is called......");
             Optional<User> userSaved = userService.findUserByPhoneNumber(execution.getBusinessKey());
             User user = userSaved.get();
 
@@ -99,8 +99,7 @@ public class RideAssignment implements JavaDelegate {
             //Simulate backend events - 40 seconds , 30 seconds , 2 minutes
             backendEventSimulatorHelper.simulateRideEvents(execution.getBusinessKey(), 10000, 10000, 50000);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
-            log.warning("RideAssignment: Exception occured......");
+            log.warning("Exception occurred in Service Task : " + this.getClass().getName() + " " + e.getMessage());
             throw new BpmnError("booking_flow_error", "Error sending message.....");
         }
     }

@@ -32,7 +32,7 @@ public class RideStarted implements JavaDelegate {
 
     @Override
     public void execute(DelegateExecution execution) throws Exception {
-        log.info("RideStarted: execute method is called......");
+        log.info("Executing Service Task " + this.getClass().getName() + " For Business Key: " + execution.getBusinessKey());
 
         // TODO : add support for emergency & support option
         try {
@@ -64,7 +64,7 @@ public class RideStarted implements JavaDelegate {
             execution.setVariable("ride_status", "ongoing");
 
         } catch (Exception e) {
-            log.warning("RideStarted: Exception occurred......" + e.getMessage());
+            log.warning("Exception occurred in Service Task : " + this.getClass().getName() + " " + e.getMessage());
             throw new BpmnError("booking_flow_error", "Error sending message.....");
         }
     }

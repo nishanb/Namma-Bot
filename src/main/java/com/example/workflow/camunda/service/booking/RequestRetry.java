@@ -32,9 +32,9 @@ public class RequestRetry implements JavaDelegate {
 
     @Override
     public void execute(DelegateExecution execution) throws Exception {
-        try {
+        log.info("Executing Service Task " + this.getClass().getName() + " For Business Key: " + execution.getBusinessKey());
 
-            log.info("RequestRetry: execute method is called......");
+        try {
             Optional<User> userSaved = userService.findUserByPhoneNumber(execution.getBusinessKey());
             User user = userSaved.get();
 
@@ -63,7 +63,7 @@ public class RequestRetry implements JavaDelegate {
             //set relevant variables for future ref
             execution.setVariable("RequestRetry", true);
         } catch (Exception e) {
-            log.warning("RequestRetry: Exception occured......");
+            log.warning("Exception occurred in Service Task : " + this.getClass().getName() + " " + e.getMessage());
             throw new BpmnError("booking_flow_error", "Error sending message.....");
         }
     }

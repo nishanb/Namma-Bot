@@ -35,7 +35,7 @@ public class StoreStarredPlace implements JavaDelegate {
 
     @Override
     public void execute(DelegateExecution execution) throws Exception {
-        log.info("Executing Service" + this.getClass().getName());
+        log.info("Executing Service Task " + this.getClass().getName());
         try {
             User user = userService.findUserByPhoneNumber(execution.getBusinessKey()).orElse(null);
             assert user != null;

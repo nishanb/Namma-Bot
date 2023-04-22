@@ -19,6 +19,8 @@ public class CancelFlow implements JavaDelegate {
 
     @Override
     public void execute(DelegateExecution execution) throws Exception {
+        log.info("Executing Service Task " + this.getClass().getName() + " For Business Key: " + execution.getBusinessKey());
+
         try {
             User user = userService.findUserByPhoneNumber(execution.getBusinessKey()).orElse(null);
             assert user != null;
@@ -27,9 +29,8 @@ public class CancelFlow implements JavaDelegate {
             user.setProcessInstanceId(null);
             user.setSubProcessInstanceId(null);
             userService.updateUser(execution.getBusinessKey(), user);
-            log.info("Cancel flow called");
         } catch (Exception e) {
-            log.warning("CancelFlow: Exception occurred......" + e.getMessage());
+            log.warning("Exception occurred in Service Activity : " + this.getClass().getName() + " " + e.getMessage());
             throw new BpmnError("booking_flow_error", "Error sending message.....");
         }
     }

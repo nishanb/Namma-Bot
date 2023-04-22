@@ -19,15 +19,15 @@ public class RideEndedNotifier implements JavaDelegate {
 
     @Override
     public void execute(DelegateExecution execution) throws Exception {
-        try {
-            log.info("<-- Ride Ended  Message-Service method executed -->");
+        log.info("Executing Service Task " + this.getClass().getName() + " For Business Key: " + execution.getBusinessKey());
 
+        try {
             // driver has ended the ride
             execution.setVariable("ride_status", "ride_ended");
 
             camundaCoreService.createMessageCorrelation(execution.getProcessBusinessKey(), "ride_ended_update", new HashMap<>());
         } catch (Exception e) {
-            log.warning("RideEnded: Exception occurred......" + e.getMessage());
+            log.warning("Exception occurred in Service Activity : " + this.getClass().getName() + " " + e.getMessage());
             throw new BpmnError("booking_flow_error", "Error sending message.....");
         }
     }

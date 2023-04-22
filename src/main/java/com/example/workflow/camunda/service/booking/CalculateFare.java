@@ -38,6 +38,8 @@ public class CalculateFare implements JavaDelegate {
 
     @Override
     public void execute(DelegateExecution execution) throws Exception {
+        log.info("Executing Service Task " + this.getClass().getName() + " For Business Key: " + execution.getBusinessKey());
+
         try {
             // Get estimates from namma yatri side & notify user
             User user = userService.findUserByPhoneNumber(execution.getBusinessKey()).orElseGet(null);
@@ -74,9 +76,8 @@ public class CalculateFare implements JavaDelegate {
             execution.setVariable("price_est_low", estimationData.get("price_est_low").getAsString());
             execution.setVariable("price_est_high", estimationData.get("price_est_high").getAsString());
 
-            log.info("CalculateFare: execute method is called......");
         } catch (Exception e) {
-            log.warning("CalculateFare: Exception occurred......" + e.getMessage());
+            log.warning("Exception occurred in Service Task : " + this.getClass().getName() + " " + e.getMessage());
             throw new BpmnError("booking_flow_error", "Error sending message.....");
         }
     }

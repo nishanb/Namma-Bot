@@ -32,7 +32,8 @@ public class DriverArrived implements JavaDelegate {
 
     @Override
     public void execute(DelegateExecution execution) throws Exception {
-        log.info("--> Executing driver arrived service task <<--");
+        log.info("Executing Service Task " + this.getClass().getName() + " For Business Key: " + execution.getBusinessKey());
+
         try {
             User user = userService.findUserByPhoneNumber(execution.getBusinessKey()).orElseGet(null);
 
@@ -60,7 +61,7 @@ public class DriverArrived implements JavaDelegate {
 
             messageService.sendQuickReplyMessage(driverArrivedMessage);
         } catch (Exception e) {
-            log.warning("DriverArrived: Exception occurred......" + e.getMessage());
+            log.warning("Exception occurred in Service Task : " + this.getClass().getName() + " " + e.getMessage());
             throw new BpmnError("booking_flow_error", "Error sending message.....");
         }
     }

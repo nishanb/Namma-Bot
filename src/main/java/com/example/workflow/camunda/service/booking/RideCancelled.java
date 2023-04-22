@@ -32,6 +32,8 @@ public class RideCancelled implements JavaDelegate {
 
     @Override
     public void execute(DelegateExecution execution) throws Exception {
+        log.info("Executing Service Task " + this.getClass().getName() + " For Business Key: " + execution.getBusinessKey());
+
         try {
             //Sending ride cancelled message only if the user requested for cancellation
             Boolean isNoResponseClose = execution.hasVariable("NoResponseClose");
@@ -62,10 +64,9 @@ public class RideCancelled implements JavaDelegate {
 
                 messageService.sendQuickReplyMessage(rideCancelledMessage);
             }
-            log.info("RideCancelled: execute method is called......");
             execution.setVariable("RideCancelled", true);
         } catch (Exception e) {
-            log.warning("RideCancelled: Exception occured......");
+            log.warning("Exception occurred in Service Task : " + this.getClass().getName() + " " + e.getMessage());
             throw new BpmnError("booking_flow_error", "Error sending message.....");
         }
     }

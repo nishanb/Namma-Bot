@@ -18,8 +18,8 @@ import java.util.Optional;
 import static com.example.workflow.utils.Constants.INBOUND_WEBHOOK_EVENTS;
 
 @Service
-public class MessageHandlerServiceImpl implements MessageWebhookHandlerService {
-    private static final Logger logger = LoggerFactory.getLogger(MessageHandlerServiceImpl.class);
+public class IncomingMessageHandlerServiceImpl implements MessageWebhookHandlerService {
+    private static final Logger logger = LoggerFactory.getLogger(IncomingMessageHandlerServiceImpl.class);
     @Autowired
     UserService userService;
     @Autowired
@@ -34,28 +34,28 @@ public class MessageHandlerServiceImpl implements MessageWebhookHandlerService {
                 inBoundUserDetails.setName(webhookEventRequestDto.getWebhookMessagePayload().getSender().get("name"));
                 inBoundUserDetails.setPhone(webhookEventRequestDto.getWebhookMessagePayload().getSender().get("phone"));
 
-                logger.info(">>> Received message from " + inBoundUserDetails.getPhone());
+                logger.info(">>> Received : Incoming message from " + inBoundUserDetails.getPhone());
                 handleIncomingMessage(inBoundUserDetails, webhookEventRequestDto.getWebhookMessagePayload().getType(), webhookEventRequestDto.getWebhookMessagePayload());
             } else {
                 logger.info("<--- Ignoring : Received message webhook ---> " + webhookEventRequestDto.getType());
             }
         } catch (Exception e) {
-            logger.error(e.getMessage());
+            logger.error("Failed to process webhook  " + e.getMessage());
         }
         return false;
     }
 
     public void handleIncomingMessage(InBoundUserDetails inboundUserDetails, String messageType, WebhookMessagePayload webhookMessagePayload) {
         try {
-            // TODO : Sync users with namma yatri backend
+            // TODO : Sync users with Namma Yatri backend
             Optional<User> userDetails = userService.findUserByPhoneNumber(inboundUserDetails.getPhone());
-            User user = userDetails.orElseGet(() -> userService.createUser(new User(null, inboundUserDetails.getPhone())));
-            user.setName(inboundUserDetails.getName());
+            User user = userDetails.orElseGet(() -> userService.createUser(new User(null, inboundUserDetails.getPhone(), inboundUserDetails.getName())));
 
             // pass context to workflow service
             workflowService.process(user, messageType, webhookMessagePayload);
         } catch (Exception e) {
             logger.error("Failed to process message " + e.getMessage());
+            e.printStackTrace();
         }
     }
 }

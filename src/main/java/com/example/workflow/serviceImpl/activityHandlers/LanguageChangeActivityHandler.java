@@ -30,6 +30,8 @@ public class LanguageChangeActivityHandler implements ActivityHandlerService {
 
     @Override
     public void handle(Task task, User user, String messageType, WebhookMessagePayload webhookMessagePayload) throws Exception {
+        logger.info(String.format("Handling User Task -> " + task.getName() + " For user -> " + user.getPhoneNumber() + " in Language Selection Workflow"));
+
         switch (BpmnUserTask.fromTaskDefinitionKey(task.getTaskDefinitionKey())) {
             case LANGUAGE_UPDATE_PREFERENCE_SELECTION -> {
                 receiveLanguagePreference.complete(task, user, messageType, webhookMessagePayload);

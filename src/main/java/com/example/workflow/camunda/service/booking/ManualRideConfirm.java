@@ -38,10 +38,9 @@ public class ManualRideConfirm implements JavaDelegate {
 
     @Override
     public void execute(DelegateExecution execution) throws Exception {
-        try {
-            //call gupshup to send message
-            log.info("ManualRideConfirm: execute method is called......");
+        log.info("Executing Service Task " + this.getClass().getName() + " For Business Key: " + execution.getBusinessKey());
 
+        try {
             //variables to store driver details if user will not select ride in the limited time.
             String chosenDriverId = "";
 
@@ -109,7 +108,7 @@ public class ManualRideConfirm implements JavaDelegate {
             execution.setVariable("chosen_driver_id", chosenDriverId);
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            log.warning("ManualRideConfirm: Exception occured......");
+            log.warning("Exception occurred in Service Task : " + this.getClass().getName() + " " + e.getMessage());
             throw new BpmnError("booking_flow_error", "Error sending message.....");
         }
     }

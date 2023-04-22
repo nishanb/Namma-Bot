@@ -19,10 +19,9 @@ public class AutoRideConfirm implements JavaDelegate {
 
     @Override
     public void execute(DelegateExecution execution) throws Exception {
-        try {
-            //call gupshup to send message
-            log.info("AutoRideConfirm: execute method is called..");
+        log.info("Executing Service Task " + this.getClass().getName() + " For Business Key: " + execution.getBusinessKey());
 
+        try {
             JsonValue persistedNearbyRides = execution.getVariableTyped("rides_to_persist");
             SpinJsonNode availableRidesData = persistedNearbyRides.getValue();
 
@@ -55,8 +54,7 @@ public class AutoRideConfirm implements JavaDelegate {
             execution.setVariable("rides_to_persist", ridesToPersist);
 
         } catch (Exception e) {
-            System.out.println(e.getMessage());
-            log.warning("AutoRideConfirm: Exception occured......");
+            log.warning("Exception occurred in Service Task : " + this.getClass().getName() + " " + e.getMessage());
             throw new BpmnError("booking_flow_error", "Error sending message.....");
         }
     }
