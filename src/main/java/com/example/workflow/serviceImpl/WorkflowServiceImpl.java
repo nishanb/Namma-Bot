@@ -76,23 +76,14 @@ public class WorkflowServiceImpl implements WorkflowService {
                 case MANAGE_PLACES -> {
                     starredPlaceManageActivityHandler.handle(task, user, messageType, webhookMessagePayload);
                 }
-                case SUPPORT -> {
-                    commonMessageService.sendGreetingMessage(user);
-                    logger.info(">>>>>>>> Invoked Support flow");
-                }
-                case FEEDBACK -> {
-                    commonMessageService.sendGreetingMessage(user);
-                    logger.info(">>>>>>>> Invoked feedback flow");
-                }
                 case default -> {
                     logger.info(String.format(">>>>>>>> No user task class found for %s  %s<<<<<<<<<", task.getName(), task.getName()));
                 }
             }
         }
-        // user has process and no task found indicates user bpmn context is with serice task
+        // user has process and no task found indicates user bpmn context is with service task
         else if (task == null && !cancelRequest) {
-            logger.info("Invoking process under message for " + user.getPhoneNumber());
-            commonMessageService.sendInProcessMessage(user);
+            commonMessageService.sendTaskIsUnderProcessMessage(user);
         }
     }
 
@@ -100,32 +91,37 @@ public class WorkflowServiceImpl implements WorkflowService {
     public void process(User user, String messageType, WebhookMessagePayload webhookMessagePayload) throws Exception {
 
         if (user.getProcessInstanceId() == null || user.getProcessInstanceId().isEmpty()) {
-            // // Message callback coming from main greet section
 
+            // --> Message callback coming from main greet section
             if (messageType.equals(MESSAGE_TYPE_BUTTON_REPLY)) {
                 switch (ConversationWorkflow.fromPostBackText(webhookMessagePayload.getPostbackText())) {
                     // Initiate booking task
                     case RIDE_BOOKING -> initiateWorkflow(user, ConversationWorkflow.RIDE_BOOKING);
 
-                    // Initiate previous ride task
+                    // Initiate Starred Places Flow
                     case MANAGE_PLACES -> initiateWorkflow(user, ConversationWorkflow.MANAGE_PLACES);
-
-                    // Send main greeting option to choose from
-                    case MAIN_MENU -> commonMessageService.sendGreetingMessage(user);
 
                     // Send others option for customer to choose
                     case OTHER -> commonMessageService.sendOtherOptions(user);
+
+                    // Send main greeting option to choose from
+                    case MAIN_MENU -> commonMessageService.sendGreetingMessage(user);
 
                     // Did not understand button reply
                     case default -> commonMessageService.sendErrorMessage(user);
                 }
             }
+
             // --> Message callback coming from others section
             else if (messageType.equals(MESSAGE_TYPE_LIST_REPLY)) {
+
                 // --> Valid Workflows present in others sections
                 List<ConversationWorkflow> allowedWorkFlows = new ArrayList<>(List.of(
-                        ConversationWorkflow.SUPPORT, ConversationWorkflow.UPDATE_LANGUAGE,
-                        ConversationWorkflow.FEEDBACK, ConversationWorkflow.KNOW_MORE, ConversationWorkflow.OPEN_DATA,
+                        ConversationWorkflow.SUPPORT,
+                        ConversationWorkflow.UPDATE_LANGUAGE,
+                        ConversationWorkflow.FEEDBACK,
+                        ConversationWorkflow.KNOW_MORE,
+                        ConversationWorkflow.OPEN_DATA,
                         ConversationWorkflow.PREVIOUS_RIDE
                 ));
 
@@ -135,7 +131,6 @@ public class WorkflowServiceImpl implements WorkflowService {
                 } else {
                     commonMessageService.sendErrorMessage(user);
                 }
-
             } else {
                 // --> user without any process running
                 commonMessageService.sendGreetingMessage(user);
@@ -149,8 +144,9 @@ public class WorkflowServiceImpl implements WorkflowService {
     }
 
     private void initiateWorkflow(User user, ConversationWorkflow conversationWorkflow) throws Exception {
+        // Handling events which doesn't have BPMN Workflow
         if (conversationWorkflow.getProcessDefinitionName().isEmpty()) {
-            // Handling events which doesn't have workflow
+            logger.info("Invoking single message task -> " + conversationWorkflow.getProcessDefinitionName() + " For user -> " + user.getPhoneNumber());
             switch (conversationWorkflow) {
                 case PREVIOUS_RIDE -> viewPastRideSingleMessageTask.process(user);
                 case FEEDBACK -> provideFeedBackSingleMessageTask.process(user);
@@ -164,6 +160,7 @@ public class WorkflowServiceImpl implements WorkflowService {
             }
             return;
         }
+        // Starting new BPMN Workflow
         ProcessInstance processInstance = camundaCoreService.startProcessInstanceByName(conversationWorkflow.getProcessDefinitionName(), user.getPhoneNumber());
         userService.updateProcessInstanceIdByPhoneNumber(user.getPhoneNumber(), processInstance.getProcessInstanceId());
         logger.info(String.format("Process %s started for user %s with processInstance ID %s", conversationWorkflow.getProcessDefinitionName(), user.getPhoneNumber(), processInstance.getProcessInstanceId()));
@@ -173,7 +170,7 @@ public class WorkflowServiceImpl implements WorkflowService {
         boolean isCancelRequest = false;
         if (messageType.equals(MESSAGE_TYPE_TEXT)) {
             Map<String, String> messageText = webhookMessagePayload.getPayload();
-            if (messageText.get("text").equalsIgnoreCase("cancel")) {
+            if (messageText.get("text").toLowerCase().contains("cancel")) {
                 isCancelRequest = true;
                 this.handleGlobalCancelRequest(user, processDefinitionName);
             }
@@ -185,20 +182,16 @@ public class WorkflowServiceImpl implements WorkflowService {
         //TODO: All the flows should check if the current execution can be cancelled based on the business logic.
         switch (ConversationWorkflow.fromProcessDefinitionName(processDefinitionName)) {
             case RIDE_BOOKING -> {
+                logger.info(">>>>>>>> Invoked Book Ride cancel flow");
                 rideBookingActivityHandler.handleCancelRequest(user, user.getPhoneNumber(), processDefinitionName);
             }
             case UPDATE_LANGUAGE -> {
+                logger.info(">>>>>>>> Invoked Update Language cancel flow");
                 languageChangeActivityHandler.handleCancelRequest(user, user.getPhoneNumber(), processDefinitionName);
             }
             case MANAGE_PLACES -> {
-                starredPlaceManageActivityHandler.handleCancelRequest(user, user.getPhoneNumber(), processDefinitionName);
                 logger.info(">>>>>>>> Invoked Manage places cancel flow");
-            }
-            case SUPPORT -> {
-                logger.info(">>>>>>>> Invoked Support cancel flow");
-            }
-            case FEEDBACK -> {
-                logger.info(">>>>>>>> Invoked feedback cancel flow");
+                starredPlaceManageActivityHandler.handleCancelRequest(user, user.getPhoneNumber(), processDefinitionName);
             }
             case default -> {
                 logger.info(String.format(">>>>>>>> No cancel handler found for process definition %s  %s<<<<<<<<<", processDefinitionName));

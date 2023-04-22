@@ -31,7 +31,7 @@ public class RideEnded implements JavaDelegate {
 
     @Override
     public void execute(DelegateExecution execution) throws Exception {
-        log.info("RideEnded: execute method is called......");
+        log.info("Executing Service Task " + this.getClass().getName() + " For Business Key: " + execution.getBusinessKey());
 
         try {
             User user = userService.findUserByPhoneNumber(execution.getBusinessKey()).orElseGet(null);
@@ -48,7 +48,7 @@ public class RideEnded implements JavaDelegate {
                     templateService.format(MessageTemplate.RIDE_ENDED_EVENT, user.getPreferredLanguage(), new ArrayList<>(Collections.singletonList(rideFare)))));
 
         } catch (Exception e) {
-            log.warning("RideEnded: Exception occurred......" + e.getMessage());
+            log.warning("Exception occurred in Service Task : " + this.getClass().getName() + " " + e.getMessage());
             throw new BpmnError("booking_flow_error", "Error sending message.....");
         }
     }

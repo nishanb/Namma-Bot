@@ -37,7 +37,7 @@ public class ShareRideRating implements JavaDelegate {
 
     @Override
     public void execute(DelegateExecution execution) throws Exception {
-        log.info("<<-- Share ride rating is called");
+        log.info("Executing Service Task " + this.getClass().getName() + " For Business Key: " + execution.getBusinessKey());
         try {
 
             User user = userService.findUserByPhoneNumber(execution.getBusinessKey()).orElseGet(null);
@@ -81,7 +81,7 @@ public class ShareRideRating implements JavaDelegate {
             execution.setVariable("share_ride_updates", true);
 
         } catch (Exception e) {
-            log.warning("ShareRideRating: Exception occured......");
+            log.warning("Exception occurred in Service Task : " + this.getClass().getName() + " " + e.getMessage());
             throw new BpmnError("booking_flow_error", "Error sending message.....");
         }
     }

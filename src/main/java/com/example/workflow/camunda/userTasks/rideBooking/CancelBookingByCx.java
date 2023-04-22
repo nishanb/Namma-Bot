@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.logging.Logger;
 
 import static com.example.workflow.utils.Constants.GLOBAL_CANCELLATION_MESSAGE_EVENT_NAME;
 
@@ -29,12 +30,17 @@ public class CancelBookingByCx implements UserTask {
     @Autowired
     TemplateService templateService;
 
+    private final Logger logger = Logger.getLogger(CancelBookingByCx.class.getName());
+
     @Override
     public void complete(Task task, User user, String messageType, WebhookMessagePayload webhookMessagePayload) throws Exception {
+        logger.info("Executing User Task " + this.getClass().getName());
+
         if (Objects.equals(messageType, Constants.MESSAGE_TYPE_BUTTON_REPLY)) {
             Map<String, Object> variables = new HashMap<>();
             variables.put("cancel_ride_request", true);
             variables.put("global_cancellation", true);
+
             //TODO: Get the Process definition name from config.
             String cancelMessageEventName = GLOBAL_CANCELLATION_MESSAGE_EVENT_NAME.get("Ride_Update_Flow");
             camundaCoreService.createMessageCorrelation(user.getPhoneNumber(), cancelMessageEventName, variables);

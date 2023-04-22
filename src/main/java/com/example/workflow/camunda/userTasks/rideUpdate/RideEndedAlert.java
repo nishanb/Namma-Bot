@@ -22,12 +22,17 @@ public class RideEndedAlert implements BackendEventTask {
 
     @Override
     public void complete(Task task, User user, BackendEventRequestDto backendEventRequestDto) throws Exception {
-        log.info("--> Executing Ride Ended backend event user task <--");
-        if (backendEventRequestDto.getEvent().equals(BackendEvent.RIDE_ENDED.getEventType())) {
-            Map<String, Object> variables = new HashMap<>();
-            variables.put("namma_yatri_rider_ended_notify", true);
-            variables.put("namma_yatri_rider_ended_timestamp", LocalTime.now().toString());
-            camundaCoreService.completeUserTaskByTaskId(task, variables);
+        log.info("Executing User Task " + this.getClass().getName());
+        try {
+            if (backendEventRequestDto.getEvent().equals(BackendEvent.RIDE_ENDED.getEventType())) {
+                Map<String, Object> variables = new HashMap<>();
+                variables.put("namma_yatri_rider_ended_notify", true);
+                variables.put("namma_yatri_rider_ended_timestamp", LocalTime.now().toString());
+                camundaCoreService.completeUserTaskByTaskId(task, variables);
+            }
+
+        } catch (Exception e) {
+            log.warning("Exception occurred in User Task : " + this.getClass().getName() + " " + e.getMessage());
         }
     }
 }

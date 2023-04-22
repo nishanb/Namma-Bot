@@ -22,14 +22,12 @@ public class BackendEventSimulatorHelper {
     private String eventCallBackHost;
     @Value("${event-simulator-host}")
     private String eventSimulatorHost;
-
     public BackendEventSimulatorHelper() {
         this.gson = new Gson();
     }
 
     public void simulateRideEvents(String riderPhoneNumber, Integer rideArrivedDelay, Integer rideStartedDelay, Integer rideEndedDelay) throws IOException {
         try {
-
             logger.info("Initiated Ride simulated event for  " + riderPhoneNumber);
 
             Map<String, String> requestBodyMap = new HashMap<>();

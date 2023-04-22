@@ -19,15 +19,15 @@ public class RideStartedNotifier implements JavaDelegate {
 
     @Override
     public void execute(DelegateExecution execution) throws Exception {
-        try {
-            log.info("<-- Ride Started Message-Service method executed -->");
+        log.info("Executing Service Task " + this.getClass().getName() + " For Business Key: " + execution.getBusinessKey());
 
+        try {
             // driver has started the ride
             execution.setVariable("ride_status", "ongoing");
 
             camundaCoreService.createMessageCorrelation(execution.getProcessBusinessKey(), "ride_started_update", new HashMap<>());
         } catch (Exception e) {
-            log.warning("ride.RideStarted: Exception occurred......");
+            log.warning("Exception occurred in Service Activity : " + this.getClass().getName() + " " + e.getMessage());
             throw new BpmnError("booking_flow_error", "Error sending message.....");
         }
     }

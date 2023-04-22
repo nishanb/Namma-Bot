@@ -40,6 +40,8 @@ public class StarredPlaceManageActivityHandler implements ActivityHandlerService
 
     @Override
     public void handle(Task task, User user, String messageType, WebhookMessagePayload webhookMessagePayload) throws Exception {
+        logger.info(String.format("Handling User Task -> " + task.getName() + " For user -> " + user.getPhoneNumber() + " in Starred Places Workflow"));
+
         switch (BpmnUserTask.fromTaskDefinitionKey(task.getTaskDefinitionKey())) {
             case STARRED_PLACE_DESIRED_ACTION -> {
                 receiveDesiredAction.complete(task, user, messageType, webhookMessagePayload);

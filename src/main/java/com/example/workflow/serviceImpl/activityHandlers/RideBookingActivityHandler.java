@@ -42,6 +42,8 @@ public class RideBookingActivityHandler implements ActivityHandlerService {
 
     @Override
     public void handle(Task task, User user, String messageType, WebhookMessagePayload webhookMessagePayload) throws Exception {
+        logger.info(String.format("Handling User Task -> " + task.getName() + " For user -> " + user.getPhoneNumber() + " in Ride Booking Workflow"));
+
         switch (BpmnUserTask.fromTaskDefinitionKey(task.getTaskDefinitionKey())) {
             case RIDE_RECEIVE_DESTINATION_LOCATION -> {
                 receiveDestinationLocationTask.complete(task, user, messageType, webhookMessagePayload);
@@ -68,7 +70,7 @@ public class RideBookingActivityHandler implements ActivityHandlerService {
                 needHelpRequest.complete(task, user, messageType, webhookMessagePayload);
             }
             case default -> {
-                logger.info(String.format(">>>>>>>> No user task class found for %s <<<<<<<<<", task.getName()));
+                logger.info(String.format(">>>>>>>> No user task class found for %s , for user %s <<<<<<<<<", task.getName(), user.getPhoneNumber()));
             }
         }
     }

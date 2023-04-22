@@ -40,10 +40,11 @@ public class PickupLocation implements JavaDelegate {
 
     @Override
     public void execute(DelegateExecution execution) throws Exception {
+        log.info("Executing Service Task " + this.getClass().getName() + " For Business Key: " + execution.getBusinessKey());
+
         try {
             User user = userService.findUserByPhoneNumber(execution.getBusinessKey()).orElse(null);
             JsonArray usersStarredPlaces = new JsonArray();
-            log.info("PickupLocation: execute method is called......");
             Boolean hasFavouritePlaces = execution.hasVariable("favourite_places");
             if (!hasFavouritePlaces) {
                 JsonElement starredPlaces = nammaYathriService.getStarredPlaces(execution.getBusinessKey());
@@ -104,7 +105,7 @@ public class PickupLocation implements JavaDelegate {
                 messageService.sendListMessage(new SendListMessageRequestDto(user.getPhoneNumber(), messageService.generateListMessage(listMessageDto)));
             }
         } catch (Exception e) {
-            log.warning("PickupLocation: Exception occurred......" + e.getMessage());
+            log.warning("Exception occurred in Service Task : " + this.getClass().getName() + " " + e.getMessage());
             throw new BpmnError("booking_flow_error", "Error sending message.....");
         }
     }

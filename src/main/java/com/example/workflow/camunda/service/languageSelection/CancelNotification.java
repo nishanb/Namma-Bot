@@ -31,6 +31,8 @@ public class CancelNotification implements JavaDelegate {
 
     @Override
     public void execute(DelegateExecution execution) throws Exception {
+        log.info("Executing Service Task " + this.getClass().getName() + " For Business Key: " + execution.getBusinessKey());
+
         try {
             // do not show cancel message if it's triggered from delay-signal
             if (execution.hasVariable("NoResponseClose")) {
@@ -60,9 +62,8 @@ public class CancelNotification implements JavaDelegate {
             );
 
             messageService.sendQuickReplyMessage(rideSelectionMessage);
-            log.info("Cancel flow notify called");
         } catch (Exception e) {
-            log.warning("CancelFlow: Exception occurred......" + e.getMessage());
+            log.warning("Exception occurred in Service Activity : " + this.getClass().getName() + " " + e.getMessage());
             throw new BpmnError("booking_flow_error", "Error sending message.....");
         }
     }

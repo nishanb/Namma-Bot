@@ -32,6 +32,8 @@ public class PreferredLanguage implements JavaDelegate {
 
     @Override
     public void execute(DelegateExecution execution) throws Exception {
+        log.info("Executing Service Task " + this.getClass().getName() + " For Business Key: " + execution.getBusinessKey());
+
         try {
             User user = userService.findUserByPhoneNumber(execution.getBusinessKey()).orElse(null);
 
@@ -65,10 +67,8 @@ public class PreferredLanguage implements JavaDelegate {
                     ), options, UUID.randomUUID().toString()));
 
             messageService.sendQuickReplyMessage(rideSelectionMessage);
-
-            log.info("PreferredLanguage: execute method is called......");
         } catch (Exception e) {
-            log.warning("PreferredLanguage: Exception occurred......");
+            log.warning("Exception occurred in Service Activity : " + this.getClass().getName() + " " + e.getMessage());
             throw new BpmnError("booking_flow_error", "Error sending message.....");
         }
     }

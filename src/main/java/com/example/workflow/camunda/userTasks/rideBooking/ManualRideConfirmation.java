@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.logging.Logger;
 
 @Service
 public class ManualRideConfirmation implements UserTask {
@@ -29,8 +30,12 @@ public class ManualRideConfirmation implements UserTask {
     @Autowired
     TemplateService templateService;
 
+    private final Logger logger = Logger.getLogger(ManualRideConfirmation.class.getName());
+
     @Override
     public void complete(Task task, User user, String messageType, WebhookMessagePayload webhookMessagePayload) throws Exception {
+        logger.info("Executing User Task " + this.getClass().getName());
+
         if (Objects.equals(messageType, Constants.MESSAGE_TYPE_LIST_REPLY)) {
             //Post back text has both ID and name. TODO: Fetch the name from Drivers entity with ID.
             String chosenDriverId = webhookMessagePayload.getPostbackText();

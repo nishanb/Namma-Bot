@@ -35,18 +35,16 @@ public class AutoRideSearch implements JavaDelegate {
 
     @Override
     public void execute(DelegateExecution execution) throws Exception {
+        log.info("Executing Service Task " + this.getClass().getName() + " For Business Key: " + execution.getBusinessKey());
+
         try {
-            //call gupshup to send message
-            log.info("AutoRideSearch: execute method is called......");
-            //Fetching user - Customer requesting for ride book
             Optional<User> userSaved = userService.findUserByPhoneNumber(execution.getBusinessKey());
             User user = userSaved.get();
 
             messageService.sendTextMessage(new SendMessageRequestDto(user.getPhoneNumber(), templateService.format(MessageTemplate.RIDE_FETCH_NEARBY_DRIVERS, user.getPreferredLanguage())));
             execution.setVariable("ride_selection_mode", "auto");
         } catch (Exception e) {
-            System.out.println(e.getMessage());
-            log.warning("AutoRideSearch: Exception occured......");
+            log.warning("Exception occurred in Service Task : " + this.getClass().getName() + " " + e.getMessage());
             throw new BpmnError("booking_flow_error", "Error sending message.....");
         }
     }

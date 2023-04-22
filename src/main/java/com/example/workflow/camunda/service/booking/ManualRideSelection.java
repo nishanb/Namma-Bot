@@ -12,13 +12,12 @@ public class ManualRideSelection implements JavaDelegate {
 
     @Override
     public void execute(DelegateExecution execution) throws Exception {
+        log.info("Executing Service Task " + this.getClass().getName() + " For Business Key: " + execution.getBusinessKey());
+
         try {
-            //call gupshup to send message
-            log.info("ManualRideSelection: execute method is called......");
-            //set relevant variables for future ref
             execution.setVariable("ManualRideSelection", true);
         } catch (Exception e) {
-            log.warning("ManualRideSelection: Exception occured......");
+            log.warning("Exception occurred in Service Task : " + this.getClass().getName() + " " + e.getMessage());
             throw new BpmnError("booking_flow_error", "Error sending message.....");
         }
     }

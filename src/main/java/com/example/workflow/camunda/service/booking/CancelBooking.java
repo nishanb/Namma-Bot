@@ -20,6 +20,8 @@ public class CancelBooking implements JavaDelegate {
 
     @Override
     public void execute(DelegateExecution execution) throws Exception {
+        log.info("Executing Service Task " + this.getClass().getName() + " For Business Key: " + execution.getBusinessKey());
+
         try {
             Optional<User> userSaved = userService.findUserByPhoneNumber(execution.getBusinessKey());
             User user = userSaved.get();
@@ -27,12 +29,9 @@ public class CancelBooking implements JavaDelegate {
             //Updating user process instance by empty string
             userService.updateProcessInstanceIdByUserId(user.getId(), null);
 
-            //call gupshup to send message
-            log.info("CancelBooking: execute method is called......");
-            //set relevant variables for future ref
             execution.setVariable("CancelBooking", true);
         } catch (Exception e) {
-            log.warning("CancelBooking: Exception occured......");
+            log.warning("Exception occurred in Service Task : " + this.getClass().getName() + " " + e.getMessage());
             throw new BpmnError("booking_flow_error", "Error sending message.....");
         }
     }

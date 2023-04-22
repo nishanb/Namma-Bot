@@ -10,6 +10,5 @@ public interface TemplateService {
 
     String format(MessageTemplate messageTemplate, String language);
 
-
     Template getTemplateById(String templateId);
 }

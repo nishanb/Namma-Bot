@@ -66,5 +66,4 @@ public class UserServiceImpl implements UserService {
         userSaved.setPreferredLanguage(preferredLanguage);
         return updateUser(userSaved.getId(), userSaved);
     }
-
 }

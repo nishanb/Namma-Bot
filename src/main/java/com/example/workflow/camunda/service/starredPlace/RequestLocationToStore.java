@@ -27,7 +27,7 @@ public class RequestLocationToStore implements JavaDelegate {
 
     @Override
     public void execute(DelegateExecution execution) throws Exception {
-        log.info("Executing Service Task " + this.getClass().getName());
+        log.info("Executing Service Task " + this.getClass().getName() + " For Business Key: " + execution.getBusinessKey());
         try {
             User user = userService.findUserByPhoneNumber(execution.getBusinessKey()).orElse(null);
             messageService.sendTextMessage(new SendMessageRequestDto(execution.getBusinessKey(), templateService.format(MessageTemplate.STARRED_PLACE_ADD_LOC_BODY, user.getPreferredLanguage())));

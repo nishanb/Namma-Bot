@@ -32,8 +32,9 @@ public class NoResponseClose implements JavaDelegate {
 
     @Override
     public void execute(DelegateExecution execution) throws Exception {
+        log.info("Executing Common NoResponseClose Service Task " + this.getClass().getName());
+
         try {
-            log.info("NoResponseClose: execute method is called......");
             User user = userService.findUserByPhoneNumber(execution.getBusinessKey()).orElse(null);
 
             SendQuickReplyMessageDto rideSelectionMessage = new SendQuickReplyMessageDto();
@@ -62,7 +63,7 @@ public class NoResponseClose implements JavaDelegate {
             // To disable cancel message to user
             execution.setVariable("NoResponseClose", true);
         } catch (Exception e) {
-            log.warning("NoResponseClose: Exception occurred......" + e.getMessage());
+            log.warning("Exception occurred in Common Service Task : " + this.getClass().getName() + " " + e.getMessage());
             throw new BpmnError("booking_flow_error", "Error sending message.....");
         }
     }

@@ -23,6 +23,8 @@ public class InitiateRide implements JavaDelegate {
 
     @Override
     public void execute(DelegateExecution execution) throws Exception {
+        log.info("Executing Service Task " + this.getClass().getName() + " For Business Key: " + execution.getBusinessKey());
+
         try {
             User user = userService.findUserByPhoneNumber(execution.getBusinessKey()).orElse(null);
 
@@ -34,7 +36,7 @@ public class InitiateRide implements JavaDelegate {
             user.setSubProcessInstanceId(subprocessRideFlowId);
             userService.updateUser(execution.getBusinessKey(), user);
         } catch (Exception e) {
-            log.warning("book.InitiateRide: Exception occurred......" + e.getMessage());
+            log.warning("Exception occurred in Service Task : " + this.getClass().getName() + " " + e.getMessage());
             throw new BpmnError("booking_flow_error", "Error sending message.....");
         }
     }

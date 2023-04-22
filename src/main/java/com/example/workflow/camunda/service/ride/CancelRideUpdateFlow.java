@@ -24,7 +24,7 @@ public class CancelRideUpdateFlow implements JavaDelegate {
     @Override
     public void execute(DelegateExecution execution) throws Exception {
         try {
-            log.info("<-- Ride Arrived Message-Service executed -->");
+            log.info("Executing Service Task " + this.getClass().getName() + " For Business Key: " + execution.getBusinessKey());
 
             Optional<User> userSaved = userService.findUserByPhoneNumber(execution.getBusinessKey());
             User user = userSaved.get();
@@ -33,8 +33,7 @@ public class CancelRideUpdateFlow implements JavaDelegate {
             user.setSubProcessInstanceId(null);
             userService.updateUser(execution.getBusinessKey(), user);
         } catch (Exception e) {
-            System.out.println("Exception >>>>>>" + e.getMessage());
-            log.warning("ride.DriverArrived: Exception occurred......" + e.getMessage());
+            log.warning("Exception occurred in Service Activity : " + this.getClass().getName() + " " + e.getMessage());
             throw new BpmnError("booking_flow_error", "Error sending message.....");
         }
     }

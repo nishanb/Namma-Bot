@@ -28,14 +28,15 @@ public class NeedHelp implements JavaDelegate {
 
     @Override
     public void execute(DelegateExecution execution) throws Exception {
+        log.info("Executing Common  Service Task " + this.getClass().getName());
         try {
             User user = userService.findUserByPhoneNumber(execution.getBusinessKey()).orElse(null);
-            log.info("NeedHelp: execute method is called......");
+
             //TODO: Get customer support contact from Namma yatri backend
             messageService.sendTextMessage(new SendMessageRequestDto(execution.getBusinessKey(), templateService.format(MessageTemplate.NEED_HELP, user.getPreferredLanguage())));
             execution.setVariable("called_need_help", true);
         } catch (Exception e) {
-            log.warning("NeedHelp: Exception occurred......");
+            log.warning("Exception occurred in Common Service Task : " + this.getClass().getName() + " " + e.getMessage());
             throw new BpmnError("booking_flow_error", "Error sending message.....");
         }
     }

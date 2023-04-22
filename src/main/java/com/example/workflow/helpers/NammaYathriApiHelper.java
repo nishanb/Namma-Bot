@@ -12,6 +12,7 @@ import java.io.IOException;
 @Service
 public class NammaYathriApiHelper {
 
+    // TODO : Replace these api calls with NammaYatri SDK
     @Value("${ny-backend-host}")
     private String NammaYathriApiUrl;
 

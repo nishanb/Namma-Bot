@@ -28,9 +28,9 @@ public class ManualRideSearch implements JavaDelegate {
 
     @Override
     public void execute(DelegateExecution execution) throws Exception {
+        log.info("Executing Service Task " + this.getClass().getName() + " For Business Key: " + execution.getBusinessKey());
+
         try {
-            //call gupshup to send message
-            log.info("ManualRideSearch: execute method is called......");
             Optional<User> userSaved = userService.findUserByPhoneNumber(execution.getBusinessKey());
             User user = userSaved.get();
 
@@ -39,7 +39,7 @@ public class ManualRideSearch implements JavaDelegate {
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            log.warning("ManualRideSearch: Exception occured......");
+            log.warning("Exception occurred in Service Task : " + this.getClass().getName() + " " + e.getMessage());
             throw new BpmnError("booking_flow_error", "Error sending message.....");
         }
     }

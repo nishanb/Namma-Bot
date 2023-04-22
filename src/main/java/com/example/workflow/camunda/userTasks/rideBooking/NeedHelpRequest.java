@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.logging.Logger;
 
 @Service
 public class NeedHelpRequest implements UserTask {
@@ -27,8 +28,12 @@ public class NeedHelpRequest implements UserTask {
     @Autowired
     TemplateService templateService;
 
+    private final Logger logger = Logger.getLogger(NeedHelpRequest.class.getName());
+
     @Override
     public void complete(Task task, User user, String messageType, WebhookMessagePayload webhookMessagePayload) throws Exception {
+        logger.info("Executing User Task " + this.getClass().getName());
+
         if (Objects.equals(messageType, Constants.MESSAGE_TYPE_BUTTON_REPLY)) {
             Map<String, Object> variables = new HashMap<>();
             camundaCoreService.completeUserTaskByTaskId(task, variables);
