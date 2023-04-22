@@ -34,7 +34,7 @@ public class CancelRideUpdateFlow implements JavaDelegate {
             userService.updateUser(execution.getBusinessKey(), user);
         } catch (Exception e) {
             log.warning("Exception occurred in Service Activity : " + this.getClass().getName() + " " + e.getMessage());
-            throw new BpmnError("booking_flow_error", "Error sending message.....");
+            throw new BpmnError("ride_update_flow_error", "Error sending message.....");
         }
     }
 }

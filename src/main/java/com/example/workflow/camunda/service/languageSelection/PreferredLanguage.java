@@ -69,7 +69,7 @@ public class PreferredLanguage implements JavaDelegate {
             messageService.sendQuickReplyMessage(rideSelectionMessage);
         } catch (Exception e) {
             log.warning("Exception occurred in Service Activity : " + this.getClass().getName() + " " + e.getMessage());
-            throw new BpmnError("booking_flow_error", "Error sending message.....");
+            throw new BpmnError("language_flow_error", "Error sending message.....");
         }
     }
 }
