@@ -14,7 +14,6 @@
 Karna is a Chatbot designed to facilitate ride booking on the Namma Yatri Ride Hailing Platform. The chatbot is integrated with WhatsApp and provides multilingual support to users. Its primary goal is to deliver a seamless and convenient booking experience, free of any complications. Additionally, Karna offers a range of other features to enhance user experience.
 
 ## Features 
-##### Below are the key features of the Karna Chat bot:
 
 -  **End-to-End Ride Booking** : Users can book a ride from start to finish using the Karna Chat bot.
 
