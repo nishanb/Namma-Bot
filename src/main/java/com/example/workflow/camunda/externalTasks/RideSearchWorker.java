@@ -55,7 +55,7 @@ public class RideSearchWorker implements ExternalTaskHandler {
             variables.put("rides_to_persist", ridesToPersist);
             variables.put("ride_found", true);
             externalTaskService.complete(externalTask, variables);
-
+            log.info("RideSearchWorker: execute method completed......");
         } catch (Exception e) {
             log.warning("Exception occurred in Service Task : " + this.getClass().getName() + " " + e.getMessage());
         }
