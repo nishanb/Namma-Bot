@@ -7,7 +7,7 @@
 
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-![build-status workflow](https://github.com/nishan.b/Namma-Bot/actions/workflows/app-deploy.yml/badge.svg)
+![build-status workflow](https://github.com/nishanb/Namma-Bot/actions/workflows/app-deploy.yml/badge.svg)
 ![Contributors workflow](https://img.shields.io/github/contributors/nishanb/Namma-Bot)
 ![GitHub issues](https://img.shields.io/github/issues/nishanb/Namma-Bot)
 
