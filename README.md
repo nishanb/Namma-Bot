@@ -71,14 +71,44 @@ enhance user experience.
 
 - **Additional Features** : The bot provides additional features such as support, FAQ section, and more.
 
-## Roadmap & Future Scope
-- [X] Analytics Dashboard
-- [ ] Build Adapter model to easily integrate with multiple Messaging Platforms
-- [ ] DashBoard to manage Template and Conversation
-
 ## Tech Stack
 
-TODO section
+- [Camunda](https://camunda.com/): Camunda is a popular open-source platform for workflow automation and business process management.
+
+
+- [Spring Boot](https://spring.io/projects/spring-boot): Spring Boot is a popular framework for building REST APIs in Java.
+
+
+- [Redis](https://redis.io/):  Redis is an in-memory data structure store that is often used as a database, cache, and message broker.
+
+
+- [Mockoon](https://mockoon.com/): Mockoon is an open-source tool that helps developers to simulate APIs. Mockoon was used to simulate Namma Yatri APIs.
+
+
+- [MongoDB](https://www.mongodb.com/): MongoDB is a popular NoSQL document database. We used MongoDB, to store our system's data and analytics details.
+
+By using open-source technologies, we were able to build a scalable and robust ride-booking system that is both efficient and cost-effective.
+
+## Bot In Action
+
+Watch the video to get a better idea on how bot works
+
+> Booking Ride on Namma Yatri Service
+
+`Drop Video or video links here`
+
+
+> Cancelling Ride on Namma Yatri Service
+
+`Drop Video or video links here`
+
+> Multi Lingual Support
+
+`Drop Video or video links here`
+
+> Managing Starred Places
+
+`Drop Video or video links here`
 
 ## Architecture
 
@@ -86,24 +116,22 @@ TODO section
 
 ## Technical Documentation
 
+TODO section
+
 ## Prerequisites to use Bot
 
 To use Namma Yatri Service chatbot, you need to have an active WhatsApp account and a smartphone with a reliable
 internet connection. Ensure that your WhatsApp account is registered with the phone number you wish to use to interact
 with the chatbot.
 
-## Bot in Action
+## Try It Out
+We are excited about the Karna Chat bot and can't wait for you to try it out. While we are not ready to make it public yet, we are building a waitlist for early access. Joining our waitlist will give you an exclusive opportunity to try out the Karna Chat bot. To join our waitlist, please register here [Link Goes Here]
 
-> Watch the video to get a better idea on how bot works
+## Roadmap & Future Scope
+- [X] Analytics Dashboard
+- [ ] Build Adapter model to easily integrate with multiple Messaging Platforms
+- [ ] DashBoard to manage Template and Conversation
 
-<center>
-<a href="https://youtu.be/7F42Z0mBuok" target="_blank" rel="noopener"><img src="./public/obs-studio-video.png"/></a>
-</center>
-
-
-## Try it out
-
-TODO
 
 ## How to set up
 
