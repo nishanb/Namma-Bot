@@ -110,13 +110,19 @@ Watch the video to get a better idea on how bot works
 
 `Drop Video or video links here`
 
-## Architecture
+## System Architecture
 
 TODO section
 
 ## Technical Documentation
 
 TODO section
+
+## Open Analytics Dashboard
+The analytics dashboard provides insights into the usage of the Karna Chat bot, such as the number of users, user trends, and active conversations. This information can be used to improve the bot's performance and user experience.
+
+<iframe style="background: #F1F5F4;border: none;border-radius: 2px;box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);width: 100vw;height: 100vh;"  src="https://charts.mongodb.com/charts-test-hwppi/embed/dashboards?id=5f6a3bd3-8ed8-44e9-8480-f9915f290cc7&theme=light&autoRefresh=true&maxDataAge=3600&showTitleAndDesc=true&scalingWidth=scale&scalingHeight=scale"></iframe>
+
 
 ## Prerequisites to use Bot
 
@@ -131,6 +137,8 @@ We are excited about the Karna Chat bot and can't wait for you to try it out. Wh
 - [X] Analytics Dashboard
 - [ ] Build Adapter model to easily integrate with multiple Messaging Platforms
 - [ ] DashBoard to manage Template and Conversation
+
+
 
 
 ## How to set up
