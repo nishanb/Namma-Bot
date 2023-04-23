@@ -11,72 +11,121 @@
 ![Contributors workflow](https://img.shields.io/github/contributors/nishanb/Namma-Bot)
 ![GitHub issues](https://img.shields.io/github/issues/nishanb/Namma-Bot)
 
-Karna is a Chatbot designed to facilitate ride booking on the Namma Yatri Ride Hailing Platform. The chatbot is integrated with WhatsApp and provides multilingual support to users. Its primary goal is to deliver a seamless and convenient booking experience, free of any complications. Additionally, Karna offers a range of other features to enhance user experience.
+Karna is a Chatbot designed to facilitate ride booking on the Namma Yatri Ride Hailing Platform. The chatbot is
+integrated with WhatsApp and provides multilingual support to users. Its primary goal is to deliver a seamless and
+convenient booking experience, free of any complications. Additionally, Karna offers a range of other features to
+enhance user experience.
 
-## Features 
+## Features
 
--  **End-to-End Ride Booking** : Users can book a ride from start to finish using the Karna Chat bot.
+> System Features
 
-
--  **Ride Status Tracking** : The bot provides users with real-time updates on the status of their ride, such as driver ETA and current location.
-
-
--  **Ride Cancellation** : Users can cancel their booked ride using the bot.
-
-
--  **Feedback Provision** : The bot allows users to provide feedback on their ride experience.
+- **Multi-Platform Support**: The Karna Chat bot is designed to be integrated with multiple platforms, including WhatsApp, Telegram, Slack, and others. 
 
 
--  **Multi-Language Support** : The bot supports multiple languages to cater to a wider user base, currently Kannada, Hindi and English are suppored.
+- **Parallel Conversation Support**: The bot is highly scalable and can handle a large number of conversations for multiple users parallel. 
 
 
--  **Starred Places Management** : Users can manage their frequently used or favorite locations and use them for booking rides quickly.
+- **Conversation Isolation** : The bot is designed to handle multiple conversations at the same time without interfering with other user conversations.
 
 
--  **View Past Rides** : Users can view their ride history and check ride details.
+- **State-Aware Conversation**: The bot is designed to maintain the state of the conversation with the user. This means that the bot can remember information provided by the user earlier in the conversation and use it to provide more personalized responses. For example, if the user has already provided their location, the bot can use that information to suggest nearby ride options.
 
 
--  **Namma Yatri Open Data** : The bot provides access to Namma Yatri Open Data, which includes information on bus routes, schedules, and fares.
+- **Integrated Template Engine**: The bot includes a template engine that allows the generation of messages and responses to user queries quickly and efficiently in multiple languages.
 
 
--  **Additional Features** : The bot provides additional features such as support, FAQ section, and more.
+- **Horizontal Scalability**: The bot is designed to be horizontally scalable, meaning that it can handle a large number of users by distributing the workload across multiple servers.
 
-Overall, Karna Chat bot offers a comprehensive ride-booking solution with multiple features for a seamless experience.
+
+- **Auto Conversation Closing**: The bot is designed to automatically close conversations with users after a specified period of inactivity.
+
+> Bot Features
+
+- **End-to-End Ride Booking** : Users can book a ride in Namma Yatri Platform from start to finish using the Karna Chat bot.
+
+
+- **Ride Status Tracking** : The bot provides users with real-time updates on the status of their ride, such as driver
+  ETA and more.
+
+
+- **Ride Cancellation** : Users can cancel their booked ride using the bot.
+
+
+- **Feedback Provision** : The bot allows users to provide feedback on their ride experience.
+
+
+- **Multi-Language Support** : The bot supports multiple languages to cater to a wider user base, currently Kannada,
+  Hindi and English are supported.
+
+
+- **Starred Places Management** : Users can manage their frequently used or favorite locations and use them for booking
+  rides quickly.
+
+
+- **View Past Rides** : Users can view their ride history and check ride details.
+
+
+- **Namma Yatri Open Data** : The bot provides access to Namma Yatri Open Data.
+
+
+- **Additional Features** : The bot provides additional features such as support, FAQ section, and more.
 
 ## Roadmap & Future Scope
-TODO section
+- [X] Analytics Dashboard
+- [ ] Build Adapter model to easily integrate with multiple Messaging Platforms
+- [ ] DashBoard to manage Template and Conversation
 
 ## Tech Stack
+
 TODO section
 
 ## Architecture
+
 TODO section
 
 ## Technical Documentation
 
 ## Prerequisites to use Bot
-To use Namma Yatri Service chatbot, you need to have an active WhatsApp account and a smartphone with a reliable internet connection. Ensure that your WhatsApp account is registered with the phone number you wish to use to interact with the chatbot.
 
-## Bot in Action 
-TODO 
+To use Namma Yatri Service chatbot, you need to have an active WhatsApp account and a smartphone with a reliable
+internet connection. Ensure that your WhatsApp account is registered with the phone number you wish to use to interact
+with the chatbot.
+
+## Bot in Action
+
+> Watch the video to get a better idea on how bot works
+
+<center>
+<a href="https://youtu.be/7F42Z0mBuok" target="_blank" rel="noopener"><img src="./public/obs-studio-video.png"/></a>
+</center>
+
 
 ## Try it out
+
 TODO
 
 ## How to set up
+
 `docker-compose --env-file ~/.env.prod build`
 
 ## License
+
 TODO
 
 ## Contribution
-TODO 
+
+TODO
 
 ## Issues
-TODO 
+
+TODO
 
 ## Conclusion
-The Namma Yatri Service chatbot is an innovative and user-friendly solution for booking rides on WhatsApp. It is designed to provide a hassle-free and convenient booking experience for users who prefer to use chatbots to interact with services. We hope you find it useful and welcome any feedback or suggestions you may have.
+
+The Namma Yatri Service chatbot is an innovative and user-friendly solution for booking rides on WhatsApp. It is
+designed to provide a hassle-free and convenient booking experience for users who prefer to use chatbots to interact
+with services. We hope you find it useful and welcome any feedback or suggestions you may have.
 
 
 
