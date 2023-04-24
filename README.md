@@ -71,20 +71,60 @@ enhance user experience.
 
 - **Additional Features** : The bot provides additional features such as support, FAQ section, and more.
 
-## Roadmap & Future Scope
-- [X] Analytics Dashboard
-- [ ] Build Adapter model to easily integrate with multiple Messaging Platforms
-- [ ] DashBoard to manage Template and Conversation
-
 ## Tech Stack
 
-TODO section
+- [Camunda](https://camunda.com/): Camunda is a popular open-source platform for workflow automation and business process management.
 
-## Architecture
 
-TODO section
+- [Spring Boot](https://spring.io/projects/spring-boot): Spring Boot is a popular framework for building REST APIs in Java.
+
+
+- [Redis](https://redis.io/):  Redis is an in-memory data structure store that is often used as a database, cache, and message broker.
+
+
+- [Mockoon](https://mockoon.com/): Mockoon is an open-source tool that helps developers to simulate APIs. Mockoon was used to simulate Namma Yatri APIs.
+
+
+- [MongoDB](https://www.mongodb.com/): MongoDB is a popular NoSQL document database. We used MongoDB, to store our system's data and analytics details.
+
+By using open-source technologies, we were able to build a scalable and robust ride-booking system that is both efficient and cost-effective.
+
+## Bot In Action
+
+Watch the video to get a better idea on how bot works
+
+> Booking Ride on Namma Yatri Service
+
+`Drop Video or video links here`
+
+
+> Cancelling Ride on Namma Yatri Service
+
+`Drop Video or video links here`
+
+> Multi Lingual Support
+
+`Drop Video or video links here`
+
+> Managing Starred Places
+
+`Drop Video or video links here`
+
+## System Architecture
+
+![](assets/design/karna-bot-hld-v2.png)
 
 ## Technical Documentation
+
+TODO section
+
+## Open Analytics Dashboard
+The analytics dashboard provides insights into the usage of the Karna Chat bot, such as the number of users, user trends, and active conversations. This information can be used to improve the bot's performance and user experience.
+
+[Click here to view Live Analytics DashBoard ](https://charts.mongodb.com/charts-test-hwppi/public/dashboards/5f6a3bd3-8ed8-44e9-8480-f9915f290cc7)
+
+![Screenshot 2023-04-23 at 10 12 49 PM](https://user-images.githubusercontent.com/21797317/233852809-a395d560-e6a5-4d26-99dc-d31dd7859cf7.png)
+
 
 ## Prerequisites to use Bot
 
@@ -92,18 +132,16 @@ To use Namma Yatri Service chatbot, you need to have an active WhatsApp account 
 internet connection. Ensure that your WhatsApp account is registered with the phone number you wish to use to interact
 with the chatbot.
 
-## Bot in Action
+## Try It Out
+We are excited about the Karna Chat bot and can't wait for you to try it out. While we are not ready to make it public yet, we are building a waitlist for early access. Joining our waitlist will give you an exclusive opportunity to try out the Karna Chat bot. To join our waitlist, please register here [Link Goes Here]
 
-> Watch the video to get a better idea on how bot works
+## Roadmap & Future Scope
+- [X] Analytics Dashboard
+- [ ] Build Adapter model to easily integrate with multiple Messaging Platforms
+- [ ] DashBoard to manage Template and Conversation
 
-<center>
-<a href="https://youtu.be/7F42Z0mBuok" target="_blank" rel="noopener"><img src="./public/obs-studio-video.png"/></a>
-</center>
 
 
-## Try it out
-
-TODO
 
 ## How to set up
 
