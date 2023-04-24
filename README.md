@@ -112,7 +112,7 @@ Watch the video to get a better idea on how bot works
 
 ## System Architecture
 
-TODO section
+![](assets/design/karna-bot-hld-v1.png)
 
 ## Technical Documentation
 
