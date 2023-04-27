@@ -43,8 +43,7 @@ public class UserServiceImpl implements UserService {
         userSaved.setProcessInstanceId(processInstanceId);
         return updateUserByPhone(userSaved.getPhoneNumber(), userSaved);
     }
-
-    @Cacheable("users")
+    @Cacheable(value = "users", unless = "#result == null")
     @Override
     public Optional<User> findUserByPhoneNumber(String phoneNumber) {
         return userRepository.findUserByPhoneNumber(phoneNumber);
