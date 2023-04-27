@@ -31,7 +31,7 @@ public class CancelRideUpdateFlow implements JavaDelegate {
 
             // Remove sub process instance id to DB ( TODO : Use new backend user table & correlate when actual namma yatri api is provided )
             user.setSubProcessInstanceId(null);
-            userService.updateUser(execution.getBusinessKey(), user);
+            userService.updateUserByPhone(execution.getBusinessKey(), user);
         } catch (Exception e) {
             log.warning("Exception occurred in Service Activity : " + this.getClass().getName() + " " + e.getMessage());
             throw new BpmnError("ride_update_flow_error", "Error sending message.....");
