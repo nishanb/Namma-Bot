@@ -29,7 +29,7 @@ public class ErrorHandler implements JavaDelegate {
                 commonMessageService.sendErrorMessage(user);
                 user.setProcessInstanceId(null);
                 user.setSubProcessInstanceId(null);
-                userService.updateUser(user.getId(), user);
+                userService.updateUserByPhone(user.getPhoneNumber(), user);
             } else {
                 System.out.println("User is null couldn't send message");
             }
