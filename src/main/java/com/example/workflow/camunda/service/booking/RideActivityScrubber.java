@@ -24,7 +24,7 @@ public class RideActivityScrubber implements JavaDelegate {
 
             // as part of cleanup detach process instance id , sub process instance id from user
             user.setProcessInstanceId(null);
-            userService.updateUser(execution.getBusinessKey(), user);
+            userService.updateUserByPhone(execution.getBusinessKey(), user);
 
         } catch (Exception e) {
             log.warning("Exception occurred in Service Task : " + this.getClass().getName() + " " + e.getMessage());
