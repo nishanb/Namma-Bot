@@ -10,10 +10,15 @@ public interface UserService {
 
     User createUser(User user);
 
-    User updateUserByPhone(String phoneNumber, User user);
+    User updateUser(String userId, User user);
+
+    User updateProcessInstanceIdByUserId(String userId, String processInstanceId);
 
     User updateProcessInstanceIdByPhoneNumber(String phoneNumber, String processInstanceId);
 
+    Optional<User> findUserByProcessInstanceId(String processInstanceId);
+
     Optional<User> findUserByPhoneNumber(String phoneNumber);
 
+    User updateUserLanguageByPhoneNumber(String phoneNumber, String preferredLanguage);
 }

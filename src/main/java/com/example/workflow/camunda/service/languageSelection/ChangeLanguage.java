@@ -28,7 +28,7 @@ public class ChangeLanguage implements JavaDelegate {
             user.setPreferredLanguage(execution.getVariable("preferred_language").toString().toLowerCase());
             // update instance id to null to initiate new flows
             user.setProcessInstanceId(null);
-            userService.updateUserByPhone(execution.getBusinessKey(), user);
+            userService.updateUser(execution.getBusinessKey(), user);
         } catch (Exception e) {
             log.warning("Exception occurred in Service Activity : " + this.getClass().getName() + " " + e.getMessage());
             throw new BpmnError("language_flow_error", "Error sending message.....");

@@ -34,7 +34,7 @@ public class InitiateRide implements JavaDelegate {
 
             // Attach sub process instance id to DB ( TODO : Create new backend user table & correlate when actual namma yatri api is provided )
             user.setSubProcessInstanceId(subprocessRideFlowId);
-            userService.updateUserByPhone(execution.getBusinessKey(), user);
+            userService.updateUser(execution.getBusinessKey(), user);
         } catch (Exception e) {
             log.warning("Exception occurred in Service Task : " + this.getClass().getName() + " " + e.getMessage());
             throw new BpmnError("booking_flow_error", "Error sending message.....");

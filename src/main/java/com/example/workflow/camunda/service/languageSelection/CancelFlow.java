@@ -28,7 +28,7 @@ public class CancelFlow implements JavaDelegate {
             // as part of cancellation detach process instance id from user
             user.setProcessInstanceId(null);
             user.setSubProcessInstanceId(null);
-            userService.updateUserByPhone(execution.getBusinessKey(), user);
+            userService.updateUser(execution.getBusinessKey(), user);
         } catch (Exception e) {
             log.warning("Exception occurred in Service Activity : " + this.getClass().getName() + " " + e.getMessage());
             throw new BpmnError("language_flow_error", "Error sending message.....");

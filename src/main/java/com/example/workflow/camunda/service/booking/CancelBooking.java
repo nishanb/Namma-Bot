@@ -35,7 +35,7 @@ public class CancelBooking implements JavaDelegate {
             User user = userSaved.get();
 
             //Updating user process instance by empty string
-            userService.updateProcessInstanceIdByPhoneNumber(user.getPhoneNumber(), null);
+            userService.updateProcessInstanceIdByUserId(user.getId(), null);
             if(!(user.getSubProcessInstanceId() == null)){
                 Map<String, Object> variables = new HashMap<>();
                 variables.put("cancel_ride_request", true);
