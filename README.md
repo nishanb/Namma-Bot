@@ -152,6 +152,15 @@ The Karna Chat bot is a system composed of multiple components, each responsible
 
 - **CI / CD Pipeline** : to deploy the code to the cloud and manage the deployment and versioning of the code.
 
+
+## Low Level Design 
+
+The low-level class diagram illustrates the implementation details of the Namma Yatri chatbot, including the classes and their relationships.
+
+
+![image](https://user-images.githubusercontent.com/21797317/234819065-d393d668-b0f1-48f6-bcdb-7df323e1def5.png)
+
+
 ## Technical Documentation
 
 TODO section
