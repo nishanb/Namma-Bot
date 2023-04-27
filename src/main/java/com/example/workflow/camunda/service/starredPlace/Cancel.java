@@ -40,7 +40,7 @@ public class Cancel implements JavaDelegate {
 
             // as part of cancellation detach process instance id from user
             user.setProcessInstanceId(null);
-            userService.updateUserByPhone(execution.getBusinessKey(), user);
+            userService.updateUser(execution.getBusinessKey(), user);
 
             if (execution.hasVariable("NoResponseClose")) {
                 return;
