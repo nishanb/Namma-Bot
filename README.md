@@ -174,9 +174,8 @@ The analytics dashboard provides insights into the usage of the Karna Chat bot, 
 
 [View Live Analytics DashBoard ](https://charts.mongodb.com/charts-test-hwppi/public/dashboards/5f6a3bd3-8ed8-44e9-8480-f9915f290cc7)
 
-[//]: # (![Screenshot 2023-04-23 at 10 12 49 PM]&#40;https://user-images.githubusercontent.com/21797317/233852809-a395d560-e6a5-4d26-99dc-d31dd7859cf7.png&#41;)
 
-<img src="https://user-images.githubusercontent.com/21797317/233852809-a395d560-e6a5-4d26-99dc-d31dd7859cf7.png" width="" height="" />
+<img src="https://user-images.githubusercontent.com/21797317/235187436-86ea953a-d405-4f8d-a116-95fa64c2c08f.png" width="" height="" />
 
 
 ## Roadmap & Future Scope
