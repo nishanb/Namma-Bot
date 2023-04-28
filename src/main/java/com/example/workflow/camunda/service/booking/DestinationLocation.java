@@ -87,7 +87,7 @@ public class DestinationLocation implements JavaDelegate {
                 List<ListMessageItem> listMessageGroup = new ArrayList<>();
 
                 //Other section listGREET_OTHER_SUB_HEADER
-                ListMessageItem favouritePlacesOption = new ListMessageItem(templateService.format(MessageTemplate.GREET_OTHER_SUB_HEADER, user.getPreferredLanguage()));
+                ListMessageItem favouritePlacesOption = new ListMessageItem(templateService.format(MessageTemplate.GREET_MAIN_OPTION_MANAGE_STARRED_PLACE, user.getPreferredLanguage()));
                 List<ListMessageItemOption> favouritePlaces = new ArrayList<>();
 
                 //List message options - only one section is being used
