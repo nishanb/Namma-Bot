@@ -108,7 +108,7 @@ Watch the video to get a better idea on how bot works
 
 ## System Architecture Overview
 
-![](assets/design/karna-bot-hld-v4.png)
+![](assets/design/karna-bot-hld-v5.png)
 
 
 The Karna Chat bot is a system composed of multiple components, each responsible for a specific function in the overall architecture. The following are the key system components: 
