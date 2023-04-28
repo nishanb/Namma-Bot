@@ -108,8 +108,7 @@ Watch the video to get a better idea on how bot works
 
 ## System Architecture Overview
 
-![](assets/design/karna-bot-hld-v5.png)
-
+![](https://raw.githubusercontent.com/nishanb/Namma-Bot/feature/readme-beta/assets/design/karna-bot-hld-v5.png?token=GHSAT0AAAAAAB7E5IXXHK4QPQEW22SNYEGCZCL4N5A)
 
 The Karna Chat bot is a system composed of multiple components, each responsible for a specific function in the overall architecture. The following are the key system components: 
 
@@ -152,7 +151,7 @@ The Karna Chat bot is a system composed of multiple components, each responsible
 ## Low Level Design 
 
 The low-level class diagram illustrates the implementation details of the Namma Yatri chatbot, including the classes and their relationships.
-![](assets/design/karna-bot-lld-v3.png)
+![](https://raw.githubusercontent.com/nishanb/Namma-Bot/feature/readme-beta/assets/design/karna-bot-lld-v3.png?token=GHSAT0AAAAAAB7E5IXWLT5PKNQVDHBIMBTGZCL4NNQ)
 
 ## Technical Documentation
 
