@@ -5,6 +5,8 @@ import com.example.workflow.models.User;
 import com.example.workflow.repository.UserRepository;
 import com.example.workflow.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -16,7 +18,6 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
 
-
     @Override
     public Optional<User> viewUser(String userId) {
         return Optional.of(userRepository.findById(userId).get());
@@ -27,43 +28,24 @@ public class UserServiceImpl implements UserService {
         return userRepository.save(user);
     }
 
+    @CacheEvict(value = "users", key = "#phoneNumber")
     @Override
-    public User updateUser(String userId, User user) {
+    public User updateUserByPhone(String phoneNumber, User user) {
         user.setUpdatedAt(new Date());
         return userRepository.save(user);
     }
 
-    @Override
-    public User updateProcessInstanceIdByUserId(String userId, String processInstanceId) {
-        Optional<User> user = Optional.of(viewUser(userId).get());
-        User userSaved = user.get();
-        userSaved.setProcessInstanceId(processInstanceId);
-        return updateUser(userId, userSaved);
-    }
-
+    @CacheEvict(value = "users", key = "#phoneNumber")
     @Override
     public User updateProcessInstanceIdByPhoneNumber(String phoneNumber, String processInstanceId) {
         Optional<User> user = Optional.of(findUserByPhoneNumber(phoneNumber).get());
         User userSaved = user.get();
         userSaved.setProcessInstanceId(processInstanceId);
-        return updateUser(userSaved.getId(), userSaved);
+        return updateUserByPhone(userSaved.getPhoneNumber(), userSaved);
     }
-
-    @Override
-    public Optional<User> findUserByProcessInstanceId(String processInstanceId) {
-        return userRepository.findUserByProcessInstanceId(processInstanceId);
-    }
-
+    @Cacheable(value = "users", unless = "#result == null")
     @Override
     public Optional<User> findUserByPhoneNumber(String phoneNumber) {
         return userRepository.findUserByPhoneNumber(phoneNumber);
-    }
-
-    @Override
-    public User updateUserLanguageByPhoneNumber(String phoneNumber, String preferredLanguage) {
-        Optional<User> user = Optional.of(findUserByPhoneNumber(phoneNumber).get());
-        User userSaved = user.get();
-        userSaved.setPreferredLanguage(preferredLanguage);
-        return updateUser(userSaved.getId(), userSaved);
     }
 }

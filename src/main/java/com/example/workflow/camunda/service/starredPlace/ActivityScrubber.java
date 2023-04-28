@@ -25,7 +25,7 @@ public class ActivityScrubber implements JavaDelegate {
             assert user != null;
             user.setProcessInstanceId(null);
 
-            userService.updateUser(execution.getBusinessKey(), user);
+            userService.updateUserByPhone(execution.getBusinessKey(), user);
         } catch (Exception e) {
             log.warning("Exception occurred in Service Activity : " + this.getClass().getName() + " " + e.getMessage());
             throw new BpmnError("starred_place_flow_error", "Error sending message.....");
