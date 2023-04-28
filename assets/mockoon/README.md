@@ -9,6 +9,7 @@ to perform from chat-bot side
 1. download and install mockoon client https://mockoon.com/download/
 2. import Namma_yathri-API.json to to mockoon 
 3. backend api's are now accessible on http://localhost:3000
+4. or else build using docker file provided 
 
 ### Additional links
 https://mockoon.com/docs/latest/about/

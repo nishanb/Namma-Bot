@@ -35,6 +35,11 @@ Usage
 "rideEndedDelay": 1000
 }'`
 
+### Setup
+- Install Node.js and npm on your machine.
+- Install the dependencies by running npm install in the project directory.
+- Start the application by running `npm start`.
+
 ### Docker
 This application can also be run inside a Docker container. To build a Docker image of the application, run docker build -t ride-event-simulator . in the project directory. To run the application inside a Docker container, run docker run -p 3000:3000 ride-event-simulator.
 
