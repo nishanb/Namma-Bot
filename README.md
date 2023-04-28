@@ -73,10 +73,10 @@ enhance user experience.
 
 ## Tech Stack
 
-- [Camunda](https://camunda.com/): A popular open-source platform for workflow automation and business process management.
+- [Camunda](https://camunda.com/): is a popular open-source platform for workflow automation and business process management.
 
 
-- [Spring Boot](https://spring.io/projects/spring-boot): A popular framework for building REST APIs in Java.
+- [Spring Boot](https://spring.io/projects/spring-boot): is a popular framework for building REST APIs in Java.
 
 
 - [Redis](https://redis.io/): is an in-memory data structure store that is often used as a database, cache, and message broker.
@@ -95,24 +95,20 @@ Watch the video to get a better idea on how bot works
 
 > Booking Ride on Namma Yatri Service
 
-`Drop Video or video links here`
+[TODO]
 
-
-> Cancelling Ride on Namma Yatri Service
-
-`Drop Video or video links here`
 
 > Multi Lingual Support
 
-`Drop Video or video links here`
+[TODO]
 
 > Managing Starred Places
 
-`Drop Video or video links here`
+[TODO]
 
 ## System Architecture Overview
 
-![](assets/design/karna-bot-hld-v2.png)
+![](assets/design/karna-bot-hld-v4.png)
 
 
 The Karna Chat bot is a system composed of multiple components, each responsible for a specific function in the overall architecture. The following are the key system components: 
@@ -156,12 +152,11 @@ The Karna Chat bot is a system composed of multiple components, each responsible
 ## Low Level Design 
 
 The low-level class diagram illustrates the implementation details of the Namma Yatri chatbot, including the classes and their relationships.
-![karna-bot-lld-v2](https://user-images.githubusercontent.com/21797317/235164249-a0142315-a047-4049-8450-8787b5fafbb9.png)
-
+![](assets/design/karna-bot-lld-v3.png)
 
 ## Technical Documentation
 
-TODO section
+[TODO section]
 
 ## Prerequisites to use Bot
 
@@ -178,7 +173,7 @@ with the Namma Yatri Service.
 ## Open Analytics Dashboard
 The analytics dashboard provides insights into the usage of the Karna Chat bot, such as the number of users, user trends, and active conversations. This information can be used to improve the bot's performance and user experience.
 
-[Click here to view Live Analytics DashBoard ](https://charts.mongodb.com/charts-test-hwppi/public/dashboards/5f6a3bd3-8ed8-44e9-8480-f9915f290cc7)
+[View Live Analytics DashBoard ](https://charts.mongodb.com/charts-test-hwppi/public/dashboards/5f6a3bd3-8ed8-44e9-8480-f9915f290cc7)
 
 [//]: # (![Screenshot 2023-04-23 at 10 12 49 PM]&#40;https://user-images.githubusercontent.com/21797317/233852809-a395d560-e6a5-4d26-99dc-d31dd7859cf7.png&#41;)
 
@@ -188,18 +183,80 @@ The analytics dashboard provides insights into the usage of the Karna Chat bot, 
 ## Roadmap & Future Scope
 
 - [X] Live Analytics Dashboard.
-- [ ] Integrate with namma yatri SDK.
-- [ ] View Conversation history of the user.
-- [ ] Takeover the conversation from the bot and handle it manually if needed for support cases.
-- [ ] Improve Live Analytics Dashboard.
-- [ ] Build Adapter model to easily integrate with multiple Messaging Platforms.
-- [ ] DashBoard to manage Template and Conversation flow.
-- [ ] Campaign Management.
+- [ ] Replacing mock server with Namma Yatri server SDK integration
+- [ ] Sharing driver’s live location as message to end users after ride assignment.
+- [ ] Maintaining conversation history for users.
+- [ ] Adapter design pattern for messaging client to easily integrate with multiple message platforms.
+- [ ] Building admin dashboards to manage templates and conversation flow.
+- [ ] Integration of alerting tool for app exceptions alerts.
 - [ ] Integrate with PostHog for product analytics, user analytics and more.
+- [ ] Manual takeover of bot replies and handling it by humans.
+- [ ] Campaign management using Karna bot.
+- [ ] Multi tenant support for using Karna bot.
 
 ## How to set up
+This guide will walk you through the process of setting up the Karna Chatbot on your local machine. Please make sure that you have the following prerequisites installed before proceeding:
 
-`docker-compose --env-file ~/.env.prod build`
+* Node.js (v14 or higher)
+* Java 17 or higher
+* Docker (v20.10 or higher)
+* Docker Compose (v1.29 or higher)
+
+**Step 1: Clone the repository**
+
+The first step is to clone the Karna ChatBot repository from GitHub:
+
+```sh
+git clone git@github.com:nishanb/Namma-Bot.git
+```
+
+**Step 2: Setup Gupshup and get API Credentials**
+
+Follow this doc to set up WhatsApp access api on [GupShup](https://docs.gupshup.io/docs/quickstart-create-and-configure-access-api)
+
+**Step 3: Setup Mock API Server**
+
+Follow this doc to set up [Mockoon](assets/mockoon/README.md)
+
+**Step 4: Setup Event Simulator Service**
+
+Follow this doc to set up [Ride Event Simulator](assets/driver-ride-event-simulator/README.md)
+
+**Step 5: Setup MongoDB**
+
+Follow this doc to set up [MongoDB](https://www.mongodb.com/basics/mongodb-atlas-tutorial)
+
+**Step 6: Setup Karna Bot Env File**
+
+Create a `.env` file in the root directory of the project and add the following environment variables:
+
+```sh
+# Gupshup API Credentials
+GUPSHUP_API_KEY=
+GUPSHUP_APP_NAME=
+GUPSHUP_HOST=https://api.gupshup.io/
+GUPSHUP_SOURCE_CONTACT=
+# Mongo Config
+DB_URI=
+# Mock Api Server config
+BACKEND_HOST=http://localhost:3000/api/v1
+# Event simulator host config
+EVENT_SIMULATOR_HOST=http://localhost:3001
+# Camunda config (used by cpo)
+CAMUNDA_PASSWORD=secret
+## Kana bot host config  
+CALLBACK_HOST=http://localhost:8000
+ ```
+
+**Step 7: Setup & Deploy Karna Bot**
+
+To deploy an KarnaBot using docker compose you can run the following:
+
+```sh
+sudo docker-compose --env-file ~/.env up --build
+```
+- Now to access the camunda dashboard you can go to http://localhost:8080. The default username is `demo` and password is `demo`.
+- Send a message to registered WhatsApp number to start the conversation with Karna Bot.
 
 ## License
 
@@ -216,6 +273,6 @@ If you encounter any issues while using this project, please create a new issue 
 
 ## Conclusion
 
-In conclusion, the chatbot solution presented here provides an efficient and user-friendly way for interacting with various services. By leveraging popular messaging platforms like WhatsApp, the chatbot enables a seamless conversation-based experience for users to perform different actions without leaving the chat interface. The chatbot solution also includes various components such as a message platform, message gateway, workflow orchestrator, template engine, incoming message handler, backend event handler, conversation process orchestrator, document database, and more. These components work together to provide a robust and scalable architecture for handling large volumes of user interactions.
+In conclusion, the ChatBot solution presented here provides an efficient and user-friendly way for interacting with various services. By leveraging popular messaging platforms like WhatsApp, the chatbot enables a seamless conversation-based experience for users to perform different actions without leaving the chat interface. The chatbot solution also includes various components such as a message platform, message gateway, workflow orchestrator, template engine, incoming message handler, backend event handler, conversation process orchestrator, document database, and more. These components work together to provide a robust and scalable architecture for handling large volumes of user interactions.
 
 We welcome any feedback or suggestions you may have to help improve the chatbot solution further. With the ability to integrate with different messaging platforms and services, this solution can be adapted to various use cases and industries. As the chatbot ecosystem continues to grow, we believe that solutions like this will play an increasingly important role in providing seamless and efficient interactions between users and services.
