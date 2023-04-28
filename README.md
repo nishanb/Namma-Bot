@@ -73,19 +73,19 @@ enhance user experience.
 
 ## Tech Stack
 
-- [Camunda](https://camunda.com/): Camunda is a popular open-source platform for workflow automation and business process management.
+- [Camunda](https://camunda.com/): A popular open-source platform for workflow automation and business process management.
 
 
-- [Spring Boot](https://spring.io/projects/spring-boot): Spring Boot is a popular framework for building REST APIs in Java.
+- [Spring Boot](https://spring.io/projects/spring-boot): A popular framework for building REST APIs in Java.
 
 
-- [Redis](https://redis.io/):  Redis is an in-memory data structure store that is often used as a database, cache, and message broker.
+- [Redis](https://redis.io/): is an in-memory data structure store that is often used as a database, cache, and message broker.
 
 
-- [Mockoon](https://mockoon.com/): Mockoon is an open-source tool that helps developers to simulate APIs. Mockoon was used to simulate Namma Yatri APIs.
+- [Mockoon](https://mockoon.com/): is an open-source tool that helps developers to simulate APIs. Mockoon was used to simulate Namma Yatri APIs.
 
 
-- [MongoDB](https://www.mongodb.com/): MongoDB is a popular NoSQL document database. We used MongoDB, to store our system's data and analytics details.
+- [MongoDB](https://www.mongodb.com/): is a popular NoSQL document database. We used MongoDB, to store our system's data and analytics details.
 
 By using open-source technologies, we were able to build a scalable and robust ride-booking system that is both efficient and cost-effective.
 
@@ -156,9 +156,7 @@ The Karna Chat bot is a system composed of multiple components, each responsible
 ## Low Level Design 
 
 The low-level class diagram illustrates the implementation details of the Namma Yatri chatbot, including the classes and their relationships.
-
-
-![image](https://user-images.githubusercontent.com/21797317/234819065-d393d668-b0f1-48f6-bcdb-7df323e1def5.png)
+![karna-bot-lld-v2](https://user-images.githubusercontent.com/21797317/235164249-a0142315-a047-4049-8450-8787b5fafbb9.png)
 
 
 ## Technical Documentation
@@ -221,6 +219,3 @@ If you encounter any issues while using this project, please create a new issue 
 In conclusion, the chatbot solution presented here provides an efficient and user-friendly way for interacting with various services. By leveraging popular messaging platforms like WhatsApp, the chatbot enables a seamless conversation-based experience for users to perform different actions without leaving the chat interface. The chatbot solution also includes various components such as a message platform, message gateway, workflow orchestrator, template engine, incoming message handler, backend event handler, conversation process orchestrator, document database, and more. These components work together to provide a robust and scalable architecture for handling large volumes of user interactions.
 
 We welcome any feedback or suggestions you may have to help improve the chatbot solution further. With the ability to integrate with different messaging platforms and services, this solution can be adapted to various use cases and industries. As the chatbot ecosystem continues to grow, we believe that solutions like this will play an increasingly important role in providing seamless and efficient interactions between users and services.
-
-
-
