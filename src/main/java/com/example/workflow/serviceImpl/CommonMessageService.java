@@ -129,4 +129,10 @@ public class CommonMessageService {
         logger.info("Invoking global cancellation context message for " + user.getPhoneNumber());
         messageService.sendTextMessage(new SendMessageRequestDto(user.getPhoneNumber(), templateService.format(MessageTemplate.GLOBAL_CANCELLATION_CONTEXT, user.getPreferredLanguage())));
     }
+
+    public void sendUserOnboardingMessage(String phoneNumber) throws Exception {
+        //TODO: Need to add language support and user onboarding to user schema
+        logger.info("Invoking user onboarding message for " + phoneNumber);
+        messageService.sendTextMessage(new SendMessageRequestDto(phoneNumber, templateService.format(MessageTemplate.USER_ONBOARDING, "english")));
+    }
 }

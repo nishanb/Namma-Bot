@@ -7,6 +7,10 @@ import java.util.HashMap;
 public class Constants {
     public static final String INBOUND_WEBHOOK_EVENTS = "message";
 
+    public static final String INBOUND_WEBHOOK_USER_EVENTS = "user-event";
+
+    public static final String GUPSHUP_OPTED_IN = "opted-in";
+
     public static final String MESSAGE_TYPE_LIST = "list";
 
     public static final String MESSAGE_TYPE_TEXT = "text";
