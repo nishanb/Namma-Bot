@@ -1,6 +1,7 @@
+<img src="https://user-images.githubusercontent.com/21797317/235289685-c0b04c71-c457-44f0-a4e7-71055392ac28.png" width="140px" height="80px"/>
+
 # Karna Bot
 
-<!--  logo & tag goes here -->
 
 
 > Smarter , Flexible, State-Aware Conversation Chat Bots for Your Quick Services
