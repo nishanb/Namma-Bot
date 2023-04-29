@@ -1,7 +1,6 @@
-<img src="https://user-images.githubusercontent.com/21797317/235289685-c0b04c71-c457-44f0-a4e7-71055392ac28.png" width="140px" height="80px"/>
+<img src="https://user-images.githubusercontent.com/21797317/235289685-c0b04c71-c457-44f0-a4e7-71055392ac28.png" width="160px" height="80px"/>
 
 # Karna Bot
-
 
 
 > Smarter , Flexible, State-Aware Conversation Chat Bots for Your Quick Services
@@ -92,20 +91,12 @@ By using open-source technologies, we were able to build a scalable and robust r
 
 ## Bot In Action
 
-Watch the video to get a better idea on how bot works
-
-> Booking Ride on Namma Yatri Service
-
-[TODO]
+> Watch the below video to get a better idea on how bot works
 
 
-> Multi Lingual Support
+[![Krana Bot Demo](http://img.youtube.com/vi/OnFfGXlYvUA/0.jpg)](https://youtu.be/OnFfGXlYvUA "Video Title")
 
-[TODO]
 
-> Managing Starred Places
-
-[TODO]
 
 ## System Architecture Overview
 
@@ -156,7 +147,7 @@ The low-level class diagram illustrates the implementation details of the Namma 
 
 ## Technical Documentation
 
-[TODO section]
+[View Detailed Technical Documentaion](https://github.com/nishanb/Namma-Bot/blob/master/assets/documentaion/Karna%20Bot%20-%20Deep%20Dive.pdf)
 
 ## Prerequisites to use Bot
 
