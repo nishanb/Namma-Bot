@@ -19,7 +19,8 @@ enhance user experience.
 ## Try It Out
 Experience the convenience of seamless communication with Karna, our WhatsApp bot! Simply scan the QR code below and embark on a journey of effortless interaction.
 
-![](assets/media/bot-invite.png)
+<img src="assets/media/bot-invite.png" width="400">
+
 
 ## Features
 
