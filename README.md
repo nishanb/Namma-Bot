@@ -16,6 +16,12 @@ integrated with WhatsApp and provides multilingual support to users. Its primary
 convenient booking experience, free of any complications. Additionally, Karna offers a range of other features to
 enhance user experience.
 
+## Try It Out
+Experience the convenience of seamless communication with Karna, our WhatsApp bot! Simply scan the QR code below and embark on a journey of effortless interaction.
+
+<img src="assets/media/bot-invite.png" width="400">
+
+
 ## Features
 
 > System Features
@@ -154,11 +160,6 @@ The low-level class diagram illustrates the implementation details of the Namma 
 To use Karna bot, you need to have an active WhatsApp account and a smartphone with a reliable
 internet connection. Ensure that your WhatsApp account is registered with the phone number you wish to use to interact
 with the Namma Yatri Service.
-
-
-[//]: # (## Try It Out)
-
-[//]: # (We are excited about the Karna Chat bot and can't wait for you to try it out. While we are not ready to make it public yet, we are building a waitlist for early access. Joining our waitlist will give you an exclusive opportunity to try out the Karna Chat bot. To join our waitlist, please register here [Link Goes Here])
 
 
 ## Open Analytics Dashboard
