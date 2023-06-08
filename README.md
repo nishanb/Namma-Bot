@@ -1,3 +1,4 @@
+![](https://eool6f1uvkdvuh0.m.pipedream.net/?project=karna-bot)
 <img src="https://user-images.githubusercontent.com/21797317/235289685-c0b04c71-c457-44f0-a4e7-71055392ac28.png" width="160px" height="80px"/>
 
 # Karna Bot
@@ -17,7 +18,7 @@ convenient booking experience, free of any complications. Additionally, Karna of
 enhance user experience.
 
 ## Try It Out
-Experience the convenience of seamless communication with Karna, our WhatsApp bot! Simply scan the QR code below and embark on a journey of effortless interaction.
+Experience the convenience of seamless communication with Karna, our WhatsApp bot! Simply scan the QR code below or click on this [Link](shorturl.at/euSTW)  and embark on a journey of effortless interaction.
 
 <img src="assets/media/bot-invite.png" width="400">
 
