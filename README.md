@@ -18,7 +18,7 @@ convenient booking experience, free of any complications. Additionally, Karna of
 enhance user experience.
 
 ## Try It Out
-Experience the convenience of seamless communication with Karna, our WhatsApp bot! Simply scan the QR code below or click on this [Link](shorturl.at/euSTW)  and embark on a journey of effortless interaction.
+Experience the convenience of seamless communication with Karna, our WhatsApp bot! Simply scan the QR code below or click on this [Link](https://shorturl.at/euSTW)  and embark on a journey of effortless interaction.
 
 <img src="assets/media/bot-invite.png" width="400">
 
