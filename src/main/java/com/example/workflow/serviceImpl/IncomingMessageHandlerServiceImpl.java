@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-import static com.example.workflow.utils.Constants.INBOUND_WEBHOOK_EVENTS;
+import static com.example.workflow.utils.Constants.*;
 
 @Service
 public class IncomingMessageHandlerServiceImpl implements MessageWebhookHandlerService {
@@ -24,6 +24,9 @@ public class IncomingMessageHandlerServiceImpl implements MessageWebhookHandlerS
     UserService userService;
     @Autowired
     WorkflowService workflowService;
+
+    @Autowired
+    CommonMessageService commonMessageService;
 
     @Override
     public Boolean handleWebhookEvent(WebhookEventRequestDto webhookEventRequestDto) throws JSONException {
@@ -36,7 +39,11 @@ public class IncomingMessageHandlerServiceImpl implements MessageWebhookHandlerS
 
                 logger.info(">>> Received : Incoming message from " + inBoundUserDetails.getPhone());
                 handleIncomingMessage(inBoundUserDetails, webhookEventRequestDto.getWebhookMessagePayload().getType(), webhookEventRequestDto.getWebhookMessagePayload());
-            } else {
+            } else if (webhookEventRequestDto.getType().equals(INBOUND_WEBHOOK_USER_EVENTS)) {
+                if(webhookEventRequestDto.getWebhookMessagePayload().getType().equals(GUPSHUP_OPTED_IN)) {
+                    logger.info(">>> Received : User added event from " + webhookEventRequestDto.getWebhookMessagePayload().getPhone());
+                    commonMessageService.sendUserOnboardingMessage(webhookEventRequestDto.getWebhookMessagePayload().getPhone());
+                }
                 logger.info("<--- Ignoring : Received message webhook ---> " + webhookEventRequestDto.getType());
             }
         } catch (Exception e) {

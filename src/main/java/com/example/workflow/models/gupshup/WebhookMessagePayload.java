@@ -14,6 +14,8 @@ public class WebhookMessagePayload {
     private Map<String, String> payload;
     private Map<String, String> sender;
 
+    private String phone;
+
     public WebhookMessagePayload() {
     }
 
@@ -59,5 +61,13 @@ public class WebhookMessagePayload {
 
     public String getPostbackText() {
         return this.getPayload().get("postbackText");
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 }
