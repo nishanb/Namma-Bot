@@ -97,7 +97,7 @@ public class RideAssignment implements JavaDelegate {
             execution.setVariable("eta_to_drop_location", etaToDropLocation);
 
             //Simulate backend events - 40 seconds , 30 seconds , 2 minutes
-            backendEventSimulatorHelper.simulateRideEvents(execution.getBusinessKey(), 25000, 10000, 50000);
+            backendEventSimulatorHelper.simulateRideEvents(execution.getBusinessKey(), 10000, 10000, 10000);
         } catch (Exception e) {
             log.warning("Exception occurred in Service Task : " + this.getClass().getName() + " " + e.getMessage());
             throw new BpmnError("booking_flow_error", "Error sending message.....");
