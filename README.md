@@ -12,10 +12,17 @@
 ![Contributors workflow](https://img.shields.io/github/contributors/nishanb/Namma-Bot)
 ![GitHub issues](https://img.shields.io/github/issues/nishanb/Namma-Bot)
 
+
 Karna is a Chatbot designed to facilitate ride booking on the Namma Yatri Ride Hailing Platform. The chatbot is
 integrated with WhatsApp and provides multilingual support to users. Its primary goal is to deliver a seamless and
 convenient booking experience, free of any complications. Additionally, Karna offers a range of other features to
 enhance user experience.
+
+#
+### Namma Yatri Hackathon Winner 🏆
+
+This project was selected as the **Grand Prize Winner** in the [Namma Yatri Open Mobility Hackathon ](https://nammayatri.in/challenge/).
+#
 
 ## Try It Out
 Experience the convenience of seamless communication with Karna, our WhatsApp bot! Simply scan the QR code below or click on this [Link](https://shorturl.at/euSTW)  and embark on a journey of effortless interaction.
