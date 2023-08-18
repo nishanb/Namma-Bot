@@ -21,7 +21,7 @@ enhance user experience.
 #
 ### Namma Yatri Hackathon Winner 🏆
 
-This project was selected as the **Grand Prize Winner** in the [Namma Yatri Open Mobility Hackathon ](https://nammayatri.in/challenge/).
+This project was selected as the **Grand Prize Winner** in the [Namma Yatri Open Mobility Hackathon ](https://nammayatri.in/challenge/), Among 170,000 participants.
 #
 
 ## Try It Out
